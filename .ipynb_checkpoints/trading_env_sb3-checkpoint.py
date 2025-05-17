@@ -2,10 +2,7 @@ import gymnasium as gym
 from gymnasium import Env,Wrapper
 from gymnasium.spaces import Discrete, Box
 import numpy as np
-from stable_baselines3.common.callbacks import BaseCallback
 
-# TradingEnv
-debug = False
 
 class TradingEnv(Env):
     def __init__(self, df):
@@ -22,6 +19,8 @@ class TradingEnv(Env):
         self.position_open = False  # Track open positions
         self.round_trip_trades = 0  # Counter for buy-sell cycles
         self.max_steps = 0
+        self.debug = False
+        self.episode_num = 0
         reward = 0
 
         # Action Space: 0 = Hold, 1 = Buy, 2 = Sell
@@ -51,6 +50,11 @@ class TradingEnv(Env):
             valid_actions.append(2)
         return valid_actions
 
+    def set_debug(self, value: bool):
+            """Method to set debug mode for this environment."""
+            self.debug = value
+            print(f"Debug mode {'ON' if value else 'OFF'} for this environment.")
+        
     def get_obs(self):
 
         # Include the current position
@@ -68,11 +72,11 @@ class TradingEnv(Env):
         # Concatenate the observation with the mask (resulting shape: (9+3=12,))
         combined_obs = np.concatenate([obs, mask])
         
-        if debug: 
+        if self.debug: 
             print("Observation with mask:", combined_obs)
 
         # Debugging output
-        if debug:
+        if self.debug:
             print(f"Step {self.current_step}:")
             print(f"  - Original Observation (shape {obs.shape}): {obs}")
             print(f"  - Action Mask (shape {mask.shape}): {mask}")
@@ -93,22 +97,23 @@ class TradingEnv(Env):
         self.buy_price = 0
         self.max_steps = 0
         self.total_reward = 0
+        self.episode_num += 1
         reward = 0
         obs = self.get_obs()  # Use the updated observation method
 
-        if debug:
+        if self.debug:
             print(f"Environment reset: Initial Observation (shape {obs.shape}): {obs}")
         
         return obs, {}
 
     def step(self, action): 
-        if debug: print("Current Step:", self.current_step)
+        if self.debug: print("Current Step:", self.current_step)
         
         if self.current_step >= len(self.df) - 1:
             return np.zeros(self.observation_space.shape), 0, True, False, {}
     
         close_price = self.df.iloc[self.current_step]["close"]
-        if debug: print(' Close_price:', close_price)
+        if self.debug: print(' Close_price:', close_price)
         
         reward = 0
         done = False
@@ -120,7 +125,7 @@ class TradingEnv(Env):
         for act in valid_actions:
             action_mask[act] = 1.0
 
-        if debug: print(' Action', action)
+        if self.debug: print(' Action', action)
 
         if action == 1:  # Buy
             self.shares = 1000
@@ -131,7 +136,7 @@ class TradingEnv(Env):
         elif action == 2:  # Sell
             self.balance += close_price*self.shares
             reward = (close_price - self.buy_price)*self.shares  # Reward profit
-            if debug: print('Trade profit (PnL):', reward)
+            if self.debug: print('Trade profit (PnL):', reward)
             self.shares = 0
             self.buy_price = 0
             self.position_open = False
@@ -146,135 +151,39 @@ class TradingEnv(Env):
         # Update the max net worth
         self.max_net_worth = max(self.net_worth, self.max_net_worth)
 
-        if debug: print(" Market Data:", self.df.iloc[self.current_step][["open", "high", "low", "close", "volume"]].values)
-        if debug: print(" Shares:", self.shares)
-        if debug: print(" Balance:", self.balance)
-        if debug: print(" Market position:", self.shares*close_price)
-        if debug: print(" Net Worth:", self.net_worth)
-            
+        #if debug: print(" Market Data:", self.df.iloc[self.current_step][["open", "high", "low", "close", "volume"]].values)
+        if self.debug: print(" Market Data:", self.df.iloc[self.current_step][["close"]].values)
+        if self.debug: print(" Shares:", self.shares)
+        if self.debug: print(" Balance:", self.balance)
+        if self.debug: print(" Market position:", self.shares*close_price)
+        if self.debug: print(" Net Worth:", self.net_worth)
+
+        info = {
+            "valid_actions": valid_actions,
+            "action_mask": action_mask,
+            "current_step": self.current_step
+        }
+        
         # Terminate after 10 round-trip trades or end of data
         if self.round_trip_trades >= 10:
             done = True
         if self.current_step >= len(self.df) - 1:
             done = True
-        # Check if the episode is done
-        if self.net_worth <= 0:
-            done = True
 
-        if debug: print(" Max Steps:", self.max_steps)
+        if self.debug: print(" Max Steps:", self.max_steps)
             
         self.current_step += 1
         
-        if debug: print(f"Step: {self.current_step}, Valid Actions: {valid_actions}, Action Mask: {action_mask}, Selected Action: {original_action}, Invalid Action: {str(original_action not in valid_actions)}")
+        if self.debug: print(f"Step: {self.current_step}, Valid Actions: {valid_actions}, Action Mask: {action_mask}")
         obs = self.get_obs()  # Use the updated observation method
-        info = {"valid_actions": valid_actions, "action_mask": action_mask}  # Include action mask in info
+        
 
-        if debug: 
+
+        if self.debug: 
             print(f"  - New Observation (shape {obs.shape}): {obs}")
             print(f"  - Action Mask (shape {action_mask.shape}): {action_mask}")
+            print(f"Episode {self.episode_num}: done={done}")
+
         
         return obs, reward, done, truncated, info
-
-class RewardCallback(BaseCallback):
-    def __init__(self, verbose=0, debug=False):
-        super(RewardCallback, self).__init__(verbose)
-        self.debug = debug
-        
-        # Metrics for tracking actions and rewards
-        self.episode_rewards = []
-        self.episode_steps = []
-        self.iteration_rewards = []
-        self.iteration_invalid_actions = []
-        self.invalid_actions = []
-        self.valid_actions = []
-        self.current_episode_steps = 0
-        
-        # Metrics for TensorBoard logging
-        self.total_reward = 0
-        self.reward = 0
-        self.num_trades = 0
-
-    def _on_step(self) -> bool:
-        # Collect rewards and actions
-        rewards = self.locals.get("rewards", [])
-        actions = self.locals.get("actions", [])
-        
-        if len(rewards) > 0:  # Check if rewards is not empty
-            self.episode_rewards.extend(rewards)
-        if len(actions) > 0:  # Check if actions is not empty
-            infos = self.locals.get("infos", [])
-            for idx, info in enumerate(infos):
-                valid_actions = info.get("valid_actions", [0, 1, 2])
-                action = actions[idx]
-                if action not in valid_actions:
-                    self.invalid_actions.append(action)
-                else:
-                    self.valid_actions.append(action)
-
-        self.current_episode_steps += 1
-
-        # Access the environment metrics using get_attr for SubprocVecEnv
-        if isinstance(self.training_env, SubprocVecEnv):
-            try:
-                inner_envs = self.training_env.get_attr('env')  # ActionMasker
-                for env in inner_envs:
-                    if hasattr(env, 'env'):  # Unwrap ActionMasker
-                        env = env.env
-                    self.total_reward += getattr(env, "total_reward", 0)
-                    self.num_trades += getattr(env, "round_trip_trades", 0)
-            except Exception as e:
-                if self.debug:
-                    print(f"Failed to access env attributes: {e}")
-        else:
-            # For DummyVecEnv or single environments
-            for env in self.training_env.envs:
-                if hasattr(env, 'env'):
-                    env = env.env
-                self.total_reward += getattr(env, "total_reward", 0)
-                self.num_trades += getattr(env, "round_trip_trades", 0)
-
-        # TensorBoard logging
-        self.logger.record("custom/num_trades", self.num_trades)
-        self.logger.record("custom/total_reward", self.total_reward)
-
-        # Entropy logging
-        if hasattr(self.model.policy, "action_dist"):
-            action_dist = self.model.policy.action_dist
-            entropy = action_dist.entropy().mean().item()
-            self.logger.record("policy/entropy", entropy)
-        elif hasattr(self.model.policy, "get_distribution"):
-            obs = self.locals.get("obs", [])
-            if len(obs) > 0:  # Check if observations exist
-                action_dist = self.model.policy.get_distribution(obs)
-                entropy = action_dist.entropy().mean().item()
-                self.logger.record("policy/entropy", entropy)
-
-        # Value loss logging
-        if "value_loss" in self.locals:
-            value_loss = self.locals["value_loss"]
-            self.logger.record("loss/value_loss", value_loss)
-
-        # Episode done handling
-        dones = self.locals.get("dones", [])
-        if any(dones):
-            self.episode_steps.append(self.current_episode_steps)
-            self.current_episode_steps = 0
-            total_reward = np.sum(self.episode_rewards)
-            self.iteration_rewards.append(total_reward)
-            self.episode_rewards = []
-
-            invalid_count = len(self.invalid_actions)
-            valid_count = len(self.valid_actions)
-            self.iteration_invalid_actions.append(invalid_count)
-
-            if self.debug:
-                print(f"Invalid actions in this episode: {invalid_count}")
-                print(f"Valid actions in this episode: {valid_count}")
-                print(f"Invalid actions: {self.invalid_actions}")
-
-            self.invalid_actions = []
-
-        return True
-
-
 
