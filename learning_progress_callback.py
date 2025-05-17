@@ -46,10 +46,6 @@ class LearningProgressCallback(BaseCallback):
                 if episode_reward > self.best_reward:
                     self.best_reward = episode_reward
                     print(f"\nNew best reward: {self.best_reward:.4f} at episode {self.episode_count}")
-                    # Save the model
-                    model_path = os.path.join(self.save_path, f"best_model_ep{self.episode_count}_rew{self.best_reward:.4f}")
-                    self.model.save(model_path)
-                    print(f"Saved model to {model_path}")
                 
                 # Print episode stats every 50 episodes
                 if self.episode_count % 50 == 0 and self.episode_count != self.last_stats_print:

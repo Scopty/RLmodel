@@ -34,21 +34,21 @@ class TradingEnv(Env):
     def get_action_mask(self) -> np.ndarray:
         """
         Returns a binary mask indicating valid actions.
-        1 indicates a valid action, 0 indicates an invalid action.
+        True indicates a valid action, False indicates an invalid action.
         """
-        action_mask = np.zeros(self.action_space.n, dtype=np.float32)
+        action_mask = np.zeros(self.action_space.n, dtype=bool)
         for act in self.get_valid_actions():
-            action_mask[act] = 1.0
+            action_mask[act] = True
         return action_mask
     
     def action_masks(self) -> np.ndarray:
         """
         Returns a binary mask indicating valid actions.
-        1 indicates a valid action, 0 indicates an invalid action.
+        True indicates a valid action, False indicates an invalid action.
         """
-        action_mask = np.zeros(self.action_space.n, dtype=np.float32)
+        action_mask = np.zeros(self.action_space.n, dtype=bool)
         for act in self.get_valid_actions():
-            action_mask[act] = 1.0
+            action_mask[act] = True
         return action_mask
 
     def get_valid_actions(self):
