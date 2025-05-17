@@ -93,5 +93,5 @@ if __name__ == "__main__":
             net_arch=dict(pi=[256, 256], vf=[256, 256])
         )
     )
-    model.learn(total_timesteps=100000, tb_log_name="ppo_custom")
+    model.learn(total_timesteps=10000, tb_log_name="ppo_custom")
     model.save("ppo_custom")
