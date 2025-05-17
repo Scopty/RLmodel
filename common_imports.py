@@ -22,9 +22,9 @@ from sb3_contrib.ppo_mask import MaskablePPO
 
 # Environment imports
 import importlib
-import trading_env_sb3_ver2c
-importlib.reload(trading_env_sb3_ver2c)
-from trading_env_sb3_ver2c import TradingEnv
+import trading_env
+importlib.reload(trading_env)
+from trading_env import TradingEnv
 from stable_baselines3.common.env_checker import check_env
 
 # Callback imports
@@ -50,6 +50,6 @@ df = df.drop(columns=['symbol', 'frame'])
 # Reorder columns to match mplfinance expectations while keeping all other columns
 df = df[['open', 'high', 'low', 'close', 'volume']].copy()
 
-df = df.iloc[:30]  # Subset the rows to maintain 30-bar window
+# Use all available bars for training
 df_original = df.copy()
 # Keep all OHLC data for plotting, but only use close for training

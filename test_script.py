@@ -1,6 +1,6 @@
 from common_imports import *
 from common_imports import df
-from trading_env_sb3_ver2d import TradingEnv
+from trading_env import TradingEnv
 import pickle
 
 # Load the model and normalization stats
