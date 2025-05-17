@@ -51,6 +51,5 @@ df = df.drop(columns=['symbol', 'frame'])
 df = df[['open', 'high', 'low', 'close', 'volume']].copy()
 
 df = df.iloc[:30]  # Subset the rows to maintain 30-bar window
-df_original = df.copy()  # Save the full DataFrame before filtering
-df = df[['close']]
+df_original = df.copy()
 # Keep all OHLC data for plotting, but only use close for training

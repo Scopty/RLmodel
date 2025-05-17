@@ -25,8 +25,8 @@ class TradingEnv(Env):
         # Action Space: 0 = Hold, 1 = Buy, 2 = Sell
         self.action_space = Discrete(3)
 
-        # Features: close price, shares, balance, net worth, current step
-        self.obs_shape = 8  # Original shape to match trained model
+        # Features: open, high, low, close, volume, shares, balance, net worth, current step
+        self.obs_shape = 10  # Updated shape to include all features
         self.observation_space = Box(
             low=-np.inf, high=np.inf, shape=(self.obs_shape,), dtype=np.float32
         )
@@ -64,19 +64,26 @@ class TradingEnv(Env):
         return self.current_step
 
     def get_obs(self):
+        # Get current row of data
+        current_row = self.df.iloc[self.current_step]
+        
         # Ensure all observations are float32
         obs = np.concatenate([
-            self.df.iloc[self.current_step][["close"]].values.astype(np.float32),  # (1,)
-            np.array([self.shares], dtype=np.float32),   # (1,)
-            np.array([self.balance], dtype=np.float32),  # (1,)
-            np.array([self.net_worth], dtype=np.float32),# (1,)
-            np.array([self.current_step], dtype=np.float32),  # (1,)
-            np.zeros(3, dtype=np.float32)  # Add zeros for mask placeholders
+            current_row[['open']].values.astype(np.float32),  # (1,)
+            current_row[['high']].values.astype(np.float32),  # (1,)
+            current_row[['low']].values.astype(np.float32),   # (1,)
+            current_row[['close']].values.astype(np.float32), # (1,)
+            current_row[['volume']].values.astype(np.float32),# (1,)
+            np.array([self.shares], dtype=np.float32),        # (1,)
+            np.array([self.balance], dtype=np.float32),       # (1,)
+            np.array([self.net_worth], dtype=np.float32),     # (1,)
+            np.array([self.current_step], dtype=np.float32)   # (1,)
         ])
         
         if self.debug:
             print(f"Step {self.current_step}:")
             print(f"  - Observation (shape {obs.shape}): {obs}")
+            print(f"  - Current Row Data: {current_row}")
         
         return obs
     
