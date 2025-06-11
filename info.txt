@@ -1,0 +1,65 @@
+This project uses PPO in SB3 to train a model for intraday charts of stocks gapping up 50%.
+
+=== Setup ===
+- Python scripts should be executed using "source ~/jupyter_env/bin/activate"
+- Check scripts for indentation errors and that code is not unreachable behind a return statement
+- common_imports.py contains all imports that are used in the project
+- trading_env.py is the environment that is used for training and testing
+- test_script_debug.txt contains the output of the test script
+- plot_signals.py is the script that is used to plot the signals
+
+=== File Structure ===
+- training_output/
+  - output_<max_steps>_bars_<total_timesteps>_timesteps_<timestamp>/
+    - best_model_<suffix>       # Best model during training
+    - final_model_<suffix>       # Final trained model
+    - vec_normalize_<suffix>.pkl # Normalization stats
+    - training_script.py         # Copy of training script
+    - training_config.json       # Training configuration
+    - test_results/              # Test results (if tested)
+      - trade_signals_<model>.csv
+
+=== training_script.py ===
+Train a new trading model with specified parameters.
+
+Usage:
+  python training_script.py [options]
+
+Required Environment:
+  source ~/jupyter_env/bin/activate
+
+Options:
+  --max_steps MAX_STEPS       Maximum number of steps per episode (default: 100)
+  --total_timesteps STEPS     Total number of timesteps for training (default: 500,000)
+  --num_cpu NUM_CPUS         Number of parallel environments (default: 12)
+  --debug                     Enable debug output (default: False)
+
+Example:
+  python training_script.py --max_steps 200 --total_timesteps 1000000 --num_cpu 8 --debug
+
+=== test_script.py ===
+Test a trained trading model.
+
+Usage:
+  python test_script.py [options]
+
+Required Environment:
+  source ~/jupyter_env/bin/activate
+
+Options:
+  --input INPUT_DIR       Path to directory containing model files (default: 'best_model/best_model.zip')
+  --output_dir DIR        Directory to save test outputs (default: 'test_output')
+  --debug                 Enable debug mode (default: False)
+
+Notes:
+- Automatically extracts the number of bars from the model directory name
+- Looks for model files starting with 'best_model_' or 'final_model_'
+- Looks for normalization files starting with 'vec_normalize_'
+
+Example:
+  python test_script.py --input training_output/output_100_bars_500000_timesteps_20250606_054849 --output_dir test_results --debug
+
+=== Notes ===
+- All trained models and their outputs are saved in the 'training_output' directory
+- Each training run creates a new timestamped directory
+- Test results are saved in a 'test_results' subdirectory within each model's directory

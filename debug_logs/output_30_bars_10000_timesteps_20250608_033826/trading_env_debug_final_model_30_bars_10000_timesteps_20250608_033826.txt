@@ -1,0 +1,463 @@
+TradingEnv Debug Log - 2025-06-10 14:45:52
+Model: final_model_30_bars_10000_timesteps_20250608_033826
+========================================
+
+Normalized time (first row): 0.0
+Normalized time until close (first row): 1.0
+
+Debug information for session periods:
+4:00 AM - Start of day:
+
+9:30 AM - End of pre-market:
+
+4:00 PM - Start of after-hours:
+
+7:59 PM - End of day:
+
+[DEBUG] Step 0 - Action: BUY (1)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 10000
+[DEBUG_REWARD] BUY action - Valid: +0.0100 (new position)
+[DEBUG_ACTION] Model action: BUY (1)
+[DEBUG_ACTION] Executing action: BUY (1)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] BUY executed at 2025-02-07 04:00:00 - Price: 0.3386, Shares: 1000, Balance: 9661.4, Net Worth: 10000.0
+[DEBUG] Step 1 completed
+[DEBUG] Action taken: BUY (1)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9661.4, Net Worth: 10000.0
+[DEBUG] Current price: 0.3386
+[DEBUG] Position profit: 0.0%
+----------------------------------------
+
+[DEBUG] Step 1 - Action: SELL (2)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9661.4
+[DEBUG_REWARD] SELL action - Raw profit: $-12.1 (Bought @ 0.3386, Sold @ 0.3265, Shares: 1000)
+[DEBUG_REWARD]   Applying pre-market bonus: 1.1x
+[DEBUG_REWARD]   Final reward after time mod: $-13.31 (Raw: $-12.1 * 1.1)
+[DEBUG_ACTION] Model action: SELL (2)
+[DEBUG_ACTION] Executing action: SELL (2)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] SELL executed at 2025-02-07 04:01:00 - Price: 0.3265, Profit: -12.100000000000023, Balance: 9987.9, Net Worth: 9987.9
+[DEBUG] Step 2 completed
+[DEBUG] Action taken: SELL (2)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9987.9, Net Worth: 9987.9
+[DEBUG] Current price: 0.3265
+----------------------------------------
+
+[DEBUG] Step 2 - Action: BUY (1)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9987.9
+[DEBUG_REWARD] BUY action - Valid: +0.0100 (new position)
+[DEBUG_ACTION] Model action: BUY (1)
+[DEBUG_ACTION] Executing action: BUY (1)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] BUY executed at 2025-02-07 04:02:00 - Price: 0.3288, Shares: 1000, Balance: 9659.1, Net Worth: 9987.9
+[DEBUG] Step 3 completed
+[DEBUG] Action taken: BUY (1)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9659.1, Net Worth: 9987.9
+[DEBUG] Current price: 0.3288
+[DEBUG] Position profit: 0.0%
+----------------------------------------
+
+[DEBUG] Step 3 - Action: SELL (2)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9659.1
+[DEBUG_REWARD] SELL action - Raw profit: $-16.499999999999957 (Bought @ 0.3288, Sold @ 0.3123, Shares: 1000)
+[DEBUG_REWARD]   Applying pre-market bonus: 1.1x
+[DEBUG_REWARD]   Final reward after time mod: $-18.149999999999956 (Raw: $-16.499999999999957 * 1.1)
+[DEBUG_ACTION] Model action: SELL (2)
+[DEBUG_ACTION] Executing action: SELL (2)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] SELL executed at 2025-02-07 04:03:00 - Price: 0.3123, Profit: -16.499999999999943, Balance: 9971.4, Net Worth: 9971.4
+[DEBUG] Step 4 completed
+[DEBUG] Action taken: SELL (2)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9971.4, Net Worth: 9971.4
+[DEBUG] Current price: 0.3123
+----------------------------------------
+
+[DEBUG] Step 4 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9971.4
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Step 5 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9971.4, Net Worth: 9971.4
+[DEBUG] Current price: 0.3124
+----------------------------------------
+
+[DEBUG] Step 5 - Action: BUY (1)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9971.4
+[DEBUG_REWARD] BUY action - Valid: +0.0100 (new position)
+[DEBUG_ACTION] Model action: BUY (1)
+[DEBUG_ACTION] Executing action: BUY (1)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] BUY executed at 2025-02-07 04:05:00 - Price: 0.3011, Shares: 1000, Balance: 9670.3, Net Worth: 9971.4
+[DEBUG] Step 6 completed
+[DEBUG] Action taken: BUY (1)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9670.3, Net Worth: 9971.4
+[DEBUG] Current price: 0.3011
+[DEBUG] Position profit: 0.0%
+----------------------------------------
+
+[DEBUG] Step 6 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9670.3
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 7 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9670.3, Net Worth: 9977.199999999999
+[DEBUG] Current price: 0.3069
+[DEBUG] Position profit: 1.9262703420790526%
+----------------------------------------
+
+[DEBUG] Step 7 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9670.3
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 8 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9670.3, Net Worth: 9981.8
+[DEBUG] Current price: 0.3115
+[DEBUG] Position profit: 3.4540019926934646%
+----------------------------------------
+
+[DEBUG] Step 8 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9670.3
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 9 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9670.3, Net Worth: 9984.0
+[DEBUG] Current price: 0.3137
+[DEBUG] Position profit: 4.184656260378612%
+----------------------------------------
+
+[DEBUG] Step 9 - Action: SELL (2)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9670.3
+[DEBUG_REWARD] SELL action - Raw profit: $3.500000000000003 (Bought @ 0.3011, Sold @ 0.3046, Shares: 1000)
+[DEBUG_REWARD]   Applying pre-market bonus: 1.1x
+[DEBUG_REWARD]   Final reward after time mod: $3.8500000000000036 (Raw: $3.500000000000003 * 1.1)
+[DEBUG_ACTION] Model action: SELL (2)
+[DEBUG_ACTION] Executing action: SELL (2)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] SELL executed at 2025-02-07 04:09:00 - Price: 0.3046, Profit: 3.5, Balance: 9974.9, Net Worth: 9974.9
+[DEBUG] Step 10 completed
+[DEBUG] Action taken: SELL (2)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9974.9, Net Worth: 9974.9
+[DEBUG] Current price: 0.3046
+----------------------------------------
+
+[DEBUG] Step 10 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9974.9
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Step 11 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9974.9, Net Worth: 9974.9
+[DEBUG] Current price: 0.2954
+----------------------------------------
+
+[DEBUG] Step 11 - Action: BUY (1)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9974.9
+[DEBUG_REWARD] BUY action - Valid: +0.0100 (new position)
+[DEBUG_ACTION] Model action: BUY (1)
+[DEBUG_ACTION] Executing action: BUY (1)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] BUY executed at 2025-02-07 04:11:00 - Price: 0.295, Shares: 1000, Balance: 9679.9, Net Worth: 9974.9
+[DEBUG] Step 12 completed
+[DEBUG] Action taken: BUY (1)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9679.9, Net Worth: 9974.9
+[DEBUG] Current price: 0.295
+[DEBUG] Position profit: 0.0%
+----------------------------------------
+
+[DEBUG] Step 12 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9679.9
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 13 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9679.9, Net Worth: 9986.1
+[DEBUG] Current price: 0.3062
+[DEBUG] Position profit: 3.7966101694915406%
+----------------------------------------
+
+[DEBUG] Step 13 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9679.9
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 14 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9679.9, Net Worth: 9984.1
+[DEBUG] Current price: 0.3042
+[DEBUG] Position profit: 3.1186440677966245%
+----------------------------------------
+
+[DEBUG] Step 14 - Action: SELL (2)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9679.9
+[DEBUG_REWARD] SELL action - Raw profit: $7.20000000000004 (Bought @ 0.295, Sold @ 0.3022, Shares: 1000)
+[DEBUG_REWARD]   Applying pre-market bonus: 1.1x
+[DEBUG_REWARD]   Final reward after time mod: $7.920000000000045 (Raw: $7.20000000000004 * 1.1)
+[DEBUG_ACTION] Model action: SELL (2)
+[DEBUG_ACTION] Executing action: SELL (2)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] SELL executed at 2025-02-07 04:14:00 - Price: 0.3022, Profit: 7.2000000000000455, Balance: 9982.1, Net Worth: 9982.1
+[DEBUG] Step 15 completed
+[DEBUG] Action taken: SELL (2)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9982.1, Net Worth: 9982.1
+[DEBUG] Current price: 0.3022
+----------------------------------------
+
+[DEBUG] Step 15 - Action: BUY (1)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9982.1
+[DEBUG_REWARD] BUY action - Valid: +0.0100 (new position)
+[DEBUG_ACTION] Model action: BUY (1)
+[DEBUG_ACTION] Executing action: BUY (1)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] BUY executed at 2025-02-07 04:15:00 - Price: 0.3005, Shares: 1000, Balance: 9681.6, Net Worth: 9982.1
+[DEBUG] Step 16 completed
+[DEBUG] Action taken: BUY (1)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6, Net Worth: 9982.1
+[DEBUG] Current price: 0.3005
+[DEBUG] Position profit: 0.0%
+----------------------------------------
+
+[DEBUG] Step 16 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 17 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6, Net Worth: 9977.1
+[DEBUG] Current price: 0.2955
+[DEBUG] Position profit: -1.6638935108153095%
+----------------------------------------
+
+[DEBUG] Step 17 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 18 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6, Net Worth: 9980.1
+[DEBUG] Current price: 0.2985
+[DEBUG] Position profit: -0.6655574043261238%
+----------------------------------------
+
+[DEBUG] Step 18 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 19 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6, Net Worth: 9981.6
+[DEBUG] Current price: 0.3
+[DEBUG] Position profit: -0.16638935108153094%
+----------------------------------------
+
+[DEBUG] Step 19 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 20 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6, Net Worth: 9990.2
+[DEBUG] Current price: 0.3086
+[DEBUG] Position profit: 2.6955074875207976%
+----------------------------------------
+
+[DEBUG] Step 20 - Action: SELL (2)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9681.6
+[DEBUG_REWARD] SELL action - Raw profit: $15.400000000000025 (Bought @ 0.3005, Sold @ 0.3159, Shares: 1000)
+[DEBUG_REWARD]   Applying pre-market bonus: 1.1x
+[DEBUG_REWARD]   Final reward after time mod: $16.94000000000003 (Raw: $15.400000000000025 * 1.1)
+[DEBUG_ACTION] Model action: SELL (2)
+[DEBUG_ACTION] Executing action: SELL (2)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] SELL executed at 2025-02-07 04:20:00 - Price: 0.3159, Profit: 15.400000000000034, Balance: 9997.5, Net Worth: 9997.5
+[DEBUG] Step 21 completed
+[DEBUG] Action taken: SELL (2)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9997.5, Net Worth: 9997.5
+[DEBUG] Current price: 0.3159
+----------------------------------------
+
+[DEBUG] Step 21 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9997.5
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Step 22 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9997.5, Net Worth: 9997.5
+[DEBUG] Current price: 0.3096
+----------------------------------------
+
+[DEBUG] Step 22 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9997.5
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Step 23 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9997.5, Net Worth: 9997.5
+[DEBUG] Current price: 0.31
+----------------------------------------
+
+[DEBUG] Step 23 - Action: BUY (1)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9997.5
+[DEBUG_REWARD] BUY action - Valid: +0.0100 (new position)
+[DEBUG_ACTION] Model action: BUY (1)
+[DEBUG_ACTION] Executing action: BUY (1)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] BUY executed at 2025-02-07 04:23:00 - Price: 0.3068, Shares: 1000, Balance: 9690.7, Net Worth: 9997.5
+[DEBUG] Step 24 completed
+[DEBUG] Action taken: BUY (1)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9690.7, Net Worth: 9997.5
+[DEBUG] Current price: 0.3068
+[DEBUG] Position profit: 0.0%
+----------------------------------------
+
+[DEBUG] Step 24 - Action: SELL (2)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9690.7
+[DEBUG_REWARD] SELL action - Raw profit: $-4.300000000000026 (Bought @ 0.3068, Sold @ 0.3025, Shares: 1000)
+[DEBUG_REWARD]   Applying pre-market bonus: 1.1x
+[DEBUG_REWARD]   Final reward after time mod: $-4.730000000000029 (Raw: $-4.300000000000026 * 1.1)
+[DEBUG_ACTION] Model action: SELL (2)
+[DEBUG_ACTION] Executing action: SELL (2)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] SELL executed at 2025-02-07 04:24:00 - Price: 0.3025, Profit: -4.300000000000011, Balance: 9993.2, Net Worth: 9993.2
+[DEBUG] Step 25 completed
+[DEBUG] Action taken: SELL (2)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9993.2, Net Worth: 9993.2
+[DEBUG] Current price: 0.3025
+----------------------------------------
+
+[DEBUG] Step 25 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9993.2
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Step 26 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9993.2, Net Worth: 9993.2
+[DEBUG] Current price: 0.3051
+----------------------------------------
+
+[DEBUG] Step 26 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9993.2
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Step 27 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9993.2, Net Worth: 9993.2
+[DEBUG] Current price: 0.3034
+----------------------------------------
+
+[DEBUG] Step 27 - Action: BUY (1)
+[DEBUG] Valid actions: ['HOLD', 'BUY']
+[DEBUG] Position open: False, Shares: 0, Balance: 9993.2
+[DEBUG_REWARD] BUY action - Valid: +0.0100 (new position)
+[DEBUG_ACTION] Model action: BUY (1)
+[DEBUG_ACTION] Executing action: BUY (1)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'BUY']
+[DEBUG] BUY executed at 2025-02-07 04:27:00 - Price: 0.3027, Shares: 1000, Balance: 9690.5, Net Worth: 9993.2
+[DEBUG] Step 28 completed
+[DEBUG] Action taken: BUY (1)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9690.5, Net Worth: 9993.2
+[DEBUG] Current price: 0.3027
+[DEBUG] Position profit: 0.0%
+----------------------------------------
+
+[DEBUG] Step 28 - Action: HOLD (0)
+[DEBUG] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9690.5
+[DEBUG_REWARD] HOLD action - Reward: 0 (no position)
+[DEBUG_ACTION] Model action: HOLD (0)
+[DEBUG_ACTION] Executing action: HOLD (0)
+[DEBUG_ACTION] Valid actions: ['HOLD', 'SELL']
+[DEBUG] Step 29 completed
+[DEBUG] Action taken: HOLD (0)
+[DEBUG] Next valid actions: ['HOLD', 'SELL']
+[DEBUG] Position open: True, Shares: 1000, Balance: 9690.5, Net Worth: 9997.6
+[DEBUG] Current price: 0.3071
+[DEBUG] Position profit: 1.4535844070036206%
+----------------------------------------

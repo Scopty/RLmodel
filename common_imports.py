@@ -36,20 +36,62 @@ import learning_progress_callback
 importlib.reload(learning_progress_callback)
 from learning_progress_callback import LearningProgressCallback
 
-# Load Data
-df = pd.read_csv("MGOL.csv")  # Replace with actual file
-df['datetime'] = pd.to_datetime(df['datetime'], format='%m/%d/%y %H:%M')
-df.set_index('datetime', inplace=True)
+def load_data(max_steps=None):
+    """
+    Load and preprocess the MGOL data.
+    
+    Args:
+        max_steps (int, optional): Maximum number of rows to return. If None, returns all data.
+        
+    Returns:
+        tuple: (df, df_original) where df is the processed DataFrame and df_original is a copy
+               of the original data before any modifications.
+    """
+    # Load Data
+    df = pd.read_csv("MGOL.csv")
+    
+    # If max_steps is provided, limit the data
+    if max_steps is not None and max_steps > 0:
+        df = df.head(max_steps)
+    
+    # Parse datetime with explicit year setting
+    # First split datetime into date and time parts
+    df['date'] = df['datetime'].str.split(' ').str[0]
+    df['time'] = df['datetime'].str.split(' ').str[1]
+    
+    # Convert date to datetime with explicit year setting
+    df['date'] = pd.to_datetime(df['date'], format='%m/%d/%y')
+    # Set the year to 2025 explicitly
+    df['date'] = df['date'].apply(lambda x: x.replace(year=2025))
+    
+    # Combine date and time back together
+    df['datetime'] = df['date'].astype(str) + ' ' + df['time']
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    
+    # Create a copy of the original data before modifying the index
+    df_original = df.copy()
+    
+    # Drop temporary date and time columns
+    df = df.drop(['date', 'time'], axis=1)
+    
+    # Keep all columns except symbol and frame
+    df = df.drop(columns=['symbol', 'frame'])
+    
+    # Make sure to keep the datetime column for TradingEnv
+    if 'datetime' not in df.columns:
+        df.reset_index(inplace=True)
+        df.rename(columns={'Date': 'datetime'}, inplace=True)
+        df.set_index('datetime', inplace=True)
+    
+    # Set index to datetime and add 3 hours offset
+    df.set_index('datetime', inplace=True)
+    df.index = df.index + pd.Timedelta(hours=3)
+    df.index.name = 'Date'
+    
+    # Reorder columns to match mplfinance expectations while keeping all other columns
+    df = df[['open', 'high', 'low', 'close', 'volume']].copy()
+    
+    return df, df_original
 
-df.index = df.index + pd.Timedelta(hours=3)
-df.index.name = 'Date'
-
-# Keep all columns except symbol and frame
-df = df.drop(columns=['symbol', 'frame'])
-
-# Reorder columns to match mplfinance expectations while keeping all other columns
-df = df[['open', 'high', 'low', 'close', 'volume']].copy()
-
-# Use all available bars for training
-df_original = df.copy()
-# Keep all OHLC data for plotting, but only use close for training
+# Load the full dataset by default
+df, df_original = load_data()

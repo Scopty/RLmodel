@@ -1,0 +1,82 @@
+from common_imports import *
+from common_imports import df
+from trading_env import TradingEnv
+import pickle
+import mplfinance as mpf
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def plot_signals(buy_signals, sell_signals, title):
+    # Filter signals to only include those within the DataFrame's length
+    buy_signals = [i for i in buy_signals if i >= 0 and i < len(df)]
+    sell_signals = [i for i in sell_signals if i >= 0 and i < len(df)]
+
+    # Convert step indices to datetime indices
+    buy_signals = [df.index[i] for i in buy_signals]
+    sell_signals = [df.index[i] for i in sell_signals]
+
+    # Create addplots for buy and sell signals
+    addplots = []
+    if buy_signals:
+        buy_signal_prices = df['close'].copy()
+        buy_signal_prices[~df.index.isin(buy_signals)] = float('nan')
+        buy_signal_plot = mpf.make_addplot(buy_signal_prices, type='scatter', markersize=40, marker='^', color='green')
+        addplots.append(buy_signal_plot)
+    
+    if sell_signals:
+        sell_signal_prices = df['close'].copy()
+        sell_signal_prices[~df.index.isin(sell_signals)] = float('nan')
+        sell_signal_plot = mpf.make_addplot(sell_signal_prices, type='scatter', markersize=40, marker='v', color='red')
+        addplots.append(sell_signal_plot)
+
+    # Plot with the added buy and sell signals
+    fig, axes = mpf.plot(
+        df,
+        type='ohlc',
+        datetime_format='%Y-%m-%d %H:%M',
+        addplot=addplots,
+        returnfig=True,
+        figsize=(16, 8),
+        warn_too_much_data=10000,
+        title=title
+    )
+
+    return fig, axes
+
+def test_and_plot():
+    # Test both models
+    model_names = ['best_model', 'final_model']
+    for model_name in model_names:
+        print(f"\nTesting {model_name}...")
+        try:
+            # Load signals from CSV file
+            df_signals = pd.read_csv(f'trade_signals_{model_name.split(".")[0]}.csv')
+            
+            # Get signals
+            buy_signals = eval(df_signals['buy_signals'][0])
+            sell_signals = eval(df_signals['sell_signals'][0])
+            
+            # Plot the signals
+            fig, axes = plot_signals(
+                buy_signals,
+                sell_signals,
+                title=f"RL Model Buy/Sell Signals - {model_name}"
+            )
+            
+            # Save the plot
+            plt.savefig(f'trade_signals_{model_name.split(".")[0]}.png')
+            print(f"Saved plot to trade_signals_{model_name}.png")
+            
+        except Exception as e:
+            print(f"Error processing {model_name}: {str(e)}")
+            continue
+
+if __name__ == "__main__":
+    # Run test script
+    print("Running test script...")
+    import subprocess
+    subprocess.run(["python", "test_script.py"])
+    
+    # Run plotting
+    print("\nPlotting signals...")
+    test_and_plot()
