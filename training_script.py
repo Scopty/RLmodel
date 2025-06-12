@@ -4,6 +4,7 @@ importlib.reload(common_imports)
 from common_imports import *
 import time
 import os
+import sys
 import shutil
 import json
 import argparse
@@ -45,38 +46,97 @@ if args.debug:
 
 def get_next_run_id():
     """Get the next run ID in sequence (A0001, A0002, etc.)"""
+    print("\n=== Starting get_next_run_id() ===")
+    
     # Create training_output directory if it doesn't exist
+    print("Ensuring training_output directory exists...")
     os.makedirs("training_output", exist_ok=True)
     
-    # Try to read the last used serial from file
-    serial_file = os.path.join("training_output", ".last_serial")
+    # Get list of all A* directories (only actual directories, not files)
+    print("\nScanning for existing run directories...")
+    existing_dirs = []
+    all_items = os.listdir("training_output")
+    print(f"Found {len(all_items)} items in training_output/")
     
-    try:
-        if os.path.exists(serial_file):
-            with open(serial_file, 'r') as f:
-                last_serial = int(f.read().strip())
-        else:
-            # If file doesn't exist, find the highest existing run ID
-            last_serial = 0
-            for name in os.listdir("training_output"):
-                if name.startswith('A') and name[5] == '_' and name[1:5].isdigit():
-                    run_num = int(name[1:5])
-                    if run_num > last_serial:
-                        last_serial = run_num
+    for name in all_items:
+        full_path = os.path.join("training_output", name)
+        is_dir = os.path.isdir(full_path)
+        print(f"  - Item: {name} (is_dir: {is_dir})")
         
-        # Increment the serial
-        next_serial = last_serial + 1
-        
-        # Save the new serial for next time
-        with open(serial_file, 'w') as f:
-            f.write(str(next_serial))
+        if not is_dir:
+            continue
             
-        return f"A{next_serial:04d}"
+        # Check if directory name matches pattern A####_*
+        if (name.startswith('A') and 
+            len(name) >= 6 and 
+            name[5] == '_' and 
+            name[1:5].isdigit()):
+            try:
+                run_num = int(name[1:5])
+                existing_dirs.append(run_num)
+                print(f"    ✓ Valid run directory: {name} (number: {run_num})")
+            except (ValueError, IndexError) as e:
+                print(f"    ✗ Skipping {name}: {e}")
+                continue
+    
+    # Find the next available number
+    next_serial = 1
+    if existing_dirs:
+        next_serial = max(existing_dirs) + 1
+    
+    # Keep trying numbers until we find an available one
+    max_attempts = 10
+    print(f"\nLooking for next available run ID starting from A{next_serial:04d}...")
+    
+    for attempt in range(max_attempts):
+        # Generate the directory name to test
+        test_dir = f"A{next_serial:04d}_test"
+        test_path = os.path.join("training_output", test_dir)
         
-    except Exception as e:
-        print(f"Warning: Could not read/write serial file: {e}")
-        # Fallback to timestamp-based ID if there's an error
-        return f"T{int(time.time())}"
+        print(f"\nAttempt {attempt + 1}/{max_attempts}: Trying {test_dir}")
+        print(f"  Checking if {test_path} exists...")
+        
+        if os.path.exists(test_path):
+            print(f"  ✗ {test_path} already exists")
+            next_serial += 1
+            continue
+            
+        try:
+            # Try to create the directory
+            print(f"  Creating test directory: {test_path}")
+            os.mkdir(test_path)
+            print("  ✓ Directory created successfully")
+            
+            # Verify we can remove it
+            print("  Attempting to remove test directory...")
+            os.rmdir(test_path)
+            print("  ✓ Directory removed successfully")
+            
+            print(f"\n✅ Successfully verified A{next_serial:04d} is available")
+            return f"A{next_serial:04d}"
+            
+        except FileExistsError:
+            print(f"  ✗ Race condition: {test_path} was just created by another process")
+            next_serial += 1
+            continue
+            
+        except Exception as e:
+            print(f"  ✗ Error during directory test: {e}")
+            next_serial += 1
+            
+        print(f"  Will try next number: A{next_serial:04d}")
+    
+    # If we've tried too many times, fall back to timestamp
+    print(f"Warning: Could not find available run ID after {max_attempts} attempts")
+    return f"T{int(time.time())}"
+
+def save_training_info(output_dir, **kwargs):
+    """Save training information to a file."""
+    info_file = os.path.join(output_dir, "training_info.txt")
+    with open(info_file, 'w') as f:
+        f.write("=== Training Information ===\n")
+        for key, value in kwargs.items():
+            f.write(f"{key}: {value}\n")
 
 def setup_output_dir():
     """Set up the output directory with a sequential run ID."""
@@ -93,14 +153,19 @@ def setup_output_dir():
     
     # Create the directory
     os.makedirs(output_dir, exist_ok=True)
+    
+    # Save initial training info
+    save_training_info(
+        output_dir,
+        run_id=run_id,
+        start_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        max_steps=max_steps,
+        total_timesteps=total_timesteps,
+        num_cpu=num_cpu,
+        status="Started"
+    )
+    
     return file_suffix, output_dir
-
-# Set up output directory
-file_suffix, output_dir = setup_output_dir()
-
-# Load the data
-df, _ = load_data(max_steps=max_steps)
-
 
 def make_env():
     env = TradingEnv(df, max_steps=max_steps)  # Pass max_steps to TradingEnv
@@ -108,11 +173,20 @@ def make_env():
     return env
 
 if __name__ == "__main__":
+    # Record start time
+    start_time = time.time()
+    
+    # Load the data
+    df, _ = load_data(max_steps=max_steps)
+    
     # Set up output directory with timestamp
     file_suffix, output_dir = setup_output_dir()
     
+    # Save a copy of this script to the output directory for reference
+    script_path = os.path.abspath(__file__)
+    shutil.copy2(script_path, os.path.join(output_dir, "training_script.py.bak"))
+    
     # Add timing measurements
-    start_time = time.time()
     print(f"Starting training at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Output will be saved to: {os.path.abspath(output_dir)}")
     
@@ -178,12 +252,24 @@ if __name__ == "__main__":
             tb_log_name=os.path.basename(output_dir)
         )
         
-        # Save final model and normalization stats
-        final_model_path = os.path.join(output_dir, f"final_model_{file_suffix}")
-        norm_stats_path = os.path.join(output_dir, f"vec_normalize_{file_suffix}.pkl")
+        # Calculate training duration
+        training_duration = time.time() - start_time
+        hours, rem = divmod(training_duration, 3600)
+        minutes, seconds = divmod(rem, 60)
+        duration_str = "{:0>2}:{:0>2}:{:05.2f}".format(int(hours), int(minutes), seconds)
         
+        # Save the final model
+        final_model_path = os.path.join(output_dir, f"final_model_{file_suffix}")
         model.save(final_model_path)
-        train_env.save(norm_stats_path)
+        print(f"Final model saved to {final_model_path}")
+        
+        # Update training info with completion time and duration
+        save_training_info(
+            output_dir,
+            end_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            training_duration=duration_str,
+            status="Completed"
+        )
         
         # Save a copy of the training script for reference
         training_script_path = os.path.join(output_dir, "training_script.py.bak")
@@ -217,7 +303,7 @@ if __name__ == "__main__":
         try:
             final_model_path = os.path.join(output_dir, f'final_model_{file_suffix}')
             model.save(final_model_path)
-            print(f"\nFinal model saved to: {final_model_path}")
+            print(f"Final model saved to {final_model_path}")
             print(f"Best model saved to: {best_model_path}")
         except Exception as save_error:
             print(f"Failed to save partial model: {str(save_error)}")

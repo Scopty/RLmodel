@@ -1,65 +1,102 @@
-This project uses PPO in SB3 to train a model for intraday charts of stocks gapping up 50%.
+# RL Trading Model Project
 
-=== Setup ===
-- Python scripts should be executed using "source ~/jupyter_env/bin/activate"
-- Check scripts for indentation errors and that code is not unreachable behind a return statement
-- common_imports.py contains all imports that are used in the project
-- trading_env.py is the environment that is used for training and testing
-- test_script_debug.txt contains the output of the test script
-- plot_signals.py is the script that is used to plot the signals
+This project implements a Reinforcement Learning (RL) trading system using Proximal Policy Optimization (PPO) from Stable Baselines 3 (SB3). The model is designed for intraday trading on stocks that have gapped up 50%.
 
-=== File Structure ===
-- training_output/
-  - output_<max_steps>_bars_<total_timesteps>_timesteps_<timestamp>/
-    - best_model_<suffix>       # Best model during training
-    - final_model_<suffix>       # Final trained model
-    - vec_normalize_<suffix>.pkl # Normalization stats
-    - training_script.py         # Copy of training script
-    - training_config.json       # Training configuration
-    - test_results/              # Test results (if tested)
-      - trade_signals_<model>.csv
+## Project Structure
 
-=== training_script.py ===
-Train a new trading model with specified parameters.
+```
+RLmodel/
+├── common_imports.py           # Shared imports and utilities
+├── common_imports_ver1a.py     # Version-specific imports
+├── trading_env.py             # Trading environment (gym.Env implementation)
+├── training_script.py         # Script to train new models
+├── test_script.py             # Script to test trained models
+├── plot_signals.py            # Visualization of trading signals
+├── debug_logs/                # Debug logs from test runs
+│   └── [input_dir_name]/      # Logs organized by input directory
+│       └── *.txt              # Debug log files
+└── training_output/           # Output from training runs
+    └── A[ID]_output_[bars]_[steps]_[timestamp]/
+        ├── best_model_[suffix].zip    # Best model checkpoint
+        ├── final_model_[suffix].zip   # Final trained model
+        ├── vec_normalize_[suffix].pkl # Normalization stats
+        ├── training_script.py         # Copy of training script
+        ├── training_config.json       # Training configuration
+        └── test_results/              # Test results (if tested)
+            ├── trade_signals_*.csv    # Trade signals
+            └── *.png                   # Performance plots
+```
 
-Usage:
-  python training_script.py [options]
+## Key Components
 
-Required Environment:
-  source ~/jupyter_env/bin/activate
+### 1. Trading Environment (`trading_env.py`)
+- Implements the trading environment using OpenAI Gym's `gym.Env`
+- Action space: 0=HOLD, 1=BUY, 2=SELL
+- Observation space: 13 features including OHLCV, position info, and time features
+- Reward function includes:
+  - Small positive reward (+0.01) for BUY actions
+  - Position-based rewards for SELL actions
+  - Penalties for invalid actions
 
-Options:
-  --max_steps MAX_STEPS       Maximum number of steps per episode (default: 100)
-  --total_timesteps STEPS     Total number of timesteps for training (default: 500,000)
-  --num_cpu NUM_CPUS         Number of parallel environments (default: 12)
-  --debug                     Enable debug output (default: False)
+### 2. Training Script (`training_script.py`)
+- Handles model training with PPO
+- Supports parallel environments for faster training
+- Saves checkpoints and training metrics
+- Configurable hyperparameters
 
-Example:
-  python training_script.py --max_steps 200 --total_timesteps 1000000 --num_cpu 8 --debug
+### 3. Testing Script (`test_script.py`)
+- Evaluates trained models
+- Generates trading signals and performance metrics
+- Saves detailed test results and debug logs
+- Supports visualization of trades
 
-=== test_script.py ===
-Test a trained trading model.
+### 4. Visualization (`plot_signals.py`)
+- Plots trading signals on price charts
+- Visualizes buy/sell points
+- Saves performance charts
 
-Usage:
-  python test_script.py [options]
+## Setup
 
-Required Environment:
-  source ~/jupyter_env/bin/activate
+1. Activate the Python environment:
+   ```bash
+   source ~/jupyter_env/bin/activate
+   ```
 
-Options:
-  --input INPUT_DIR       Path to directory containing model files (default: 'best_model/best_model.zip')
-  --output_dir DIR        Directory to save test outputs (default: 'test_output')
-  --debug                 Enable debug mode (default: False)
+2. Install required packages (from `requirements.txt`)
 
-Notes:
-- Automatically extracts the number of bars from the model directory name
-- Looks for model files starting with 'best_model_' or 'final_model_'
-- Looks for normalization files starting with 'vec_normalize_'
+## Usage
 
-Example:
-  python test_script.py --input training_output/output_100_bars_500000_timesteps_20250606_054849 --output_dir test_results --debug
+### Training a New Model
+```bash
+python training_script.py \
+    --max_steps 100 \
+    --total_timesteps 1000000 \
+    --num_cpu 12 \
+    --debug
+```
 
-=== Notes ===
-- All trained models and their outputs are saved in the 'training_output' directory
-- Each training run creates a new timestamped directory
-- Test results are saved in a 'test_results' subdirectory within each model's directory
+### Testing a Trained Model
+```bash
+python test_script.py \
+    --input training_output/A0001_output_100_bars_500000_timesteps_20250612_120000 \
+    --output_dir test_results \
+    --debug
+```
+
+### Plotting Trading Signals
+```bash
+python plot_signals.py \
+    --input training_output/.../test_results/trade_signals_*.csv \
+    --output_dir plots/
+```
+
+## Debugging
+- Set `--debug` flag for verbose output
+- Check `debug_logs/` for detailed logs
+- Debug logs are organized by input directory and model name
+
+## Notes
+- Models are saved with sequential IDs (A0001, A0002, etc.)
+- Each training run creates a timestamped directory in `training_output/`
+- Test results include trade signals and performance metrics
+- The reward function was modified to encourage more BUY actions (see memory for details)

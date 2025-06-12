@@ -6,6 +6,7 @@ import sys
 import datetime
 import io
 import os
+import re
 import traceback
 from collections import defaultdict
 
@@ -325,8 +326,6 @@ def analyze_time_patterns(buy_signals, sell_signals, time_features):
     }
 
 def test_trading_model(model_path, norm_path, render=True, debug=False, output_dir=None, input_dir_name=None):
-    # Extract model name for logging
-    model_name = os.path.basename(model_path).replace('.zip', '')
     """Test the trained trading model with normalization and return signals.
     
     Args:
@@ -335,10 +334,26 @@ def test_trading_model(model_path, norm_path, render=True, debug=False, output_d
         render: Whether to render the environment
         debug: Whether to print debug information
         output_dir: Directory to save output files (default: same as model directory)
+        input_dir_name: Name of the input directory (for logging purposes)
     """
+    # Extract model name for logging
+    model_name = os.path.basename(model_path).replace('.zip', '')
+    
+    # Create a null device to suppress output
+    class NullDevice():
+        def write(self, s):
+            pass
+        def flush(self):
+            pass
+    
+    # Set up output buffer for logging
+    output_buffer = io.StringIO()
+    
+    # Save original stdout/stderr
     original_stdout = sys.stdout
     original_stderr = sys.stderr
-    output_buffer = io.StringIO()
+    
+    # Redirect stdout/stderr to buffer only (suppress terminal output)
     sys.stdout = output_buffer
     sys.stderr = output_buffer
     
@@ -718,116 +733,170 @@ def test_trading_model(model_path, norm_path, render=True, debug=False, output_d
         debug_print(f"Full traceback:\n{traceback.format_exc()}", model_name)
         print(f"TEST FAILED: {error_msg}", file=sys.stderr)
         return None
-
+        
 def find_model_files(directory):
     """Find model and normalization files in the given directory."""
-    files = os.listdir(directory)
+    print(f"\n=== find_model_files({directory}) ===")
+    print(f"Directory exists: {os.path.exists(directory)}")
+    print(f"Is directory: {os.path.isdir(directory)}")
     
-    # Look for model files (including .zip files)
-    model_files = [f for f in files if f.startswith(('best_model_', 'final_model_')) and f.endswith('.zip')]
+    model_files = []
+    norm_files = []
     
-    # Look for normalization file
-    norm_files = [f for f in files if f.startswith('vec_normalize_') and f.endswith('.pkl')]
-    
-    # Sort model files to ensure consistent order (best_model first, then final_model)
-    model_files.sort()
-    
-    return model_files, norm_files
-
-if __name__ == "__main__":
-    import argparse
-    
-    # Set up argument parser
-    parser = argparse.ArgumentParser(description='Test a trained trading model')
-    parser.add_argument('--input', type=str,
-                      help='Path to the input model directory or file')
-    parser.add_argument('--output_dir', type=str, default='test_output',
-                      help='Directory to save test outputs')
-    parser.add_argument('--debug', action='store_true',
-                      help='Enable debug mode')
-    args = parser.parse_args()
-    
-    # Set up output directory with input directory name as subdirectory
-    input_dir_name = os.path.basename(os.path.normpath(args.input))
-    output_dir = os.path.join(args.output_dir, input_dir_name)
-    os.makedirs(output_dir, exist_ok=True)  # Ensure output directory exists
-
-    if args.input:
-        # Use the specified input directory
-        input_dir = args.input
-        if not os.path.isdir(input_dir):
-            print(f"Error: Directory not found: {input_dir}")
-            
-        # Extract number of bars from the input directory name
-        import re
-        match = re.search(r'(\d+)_bars', input_dir)
-        if not match:
-            print("Error: Could not determine number of bars from directory name.")
-            sys.exit(1)
-            
-        max_steps = int(match.group(1))
+    try:
+        # List all files in the directory
+        files = os.listdir(directory)
+        print(f"Found {len(files)} files in directory")
         
         # Find model and normalization files
-        model_files, norm_files = find_model_files(input_dir)
+        for file in files:
+            print(f"  - {file} (is_file: {os.path.isfile(os.path.join(directory, file))})")
+            if file.startswith('best_model') and file.endswith('.zip'):
+                model_files.append(file)
+                print(f"    Added as model file")
+            elif file.startswith('final_model') and file.endswith('.zip'):
+                model_files.append(file)
+                print(f"    Added as model file")
+            elif file.startswith('vec_normalize') and file.endswith('.pkl'):
+                norm_files.append(file)
+                print(f"    Added as normalization file")
+        
+        # Sort model files to ensure consistent order (best_model first, then final_model)
+        model_files.sort()
+        
+        print(f"Found {len(model_files)} model files and {len(norm_files)} normalization files")
+        return model_files, norm_files
+        
+    except Exception as e:
+        print(f"Error in find_model_files: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return [], []
+
+def main():
+    try:
+        print("=== Starting test script ===")
+        print(f"Current working directory: {os.getcwd()}")
+        
+        # Set up argument parser
+        parser = argparse.ArgumentParser(description='Test a trained trading model')
+        parser.add_argument('--input', type=str, required=True,
+                          help='Path to the input model directory or file')
+        parser.add_argument('--output_dir', type=str, default='test_output',
+                          help='Directory to save test outputs')
+        parser.add_argument('--debug', action='store_true',
+                          help='Enable debug mode')
+        args = parser.parse_args()
+        
+        print(f"Input path: {args.input}")
+        print(f"Output directory: {args.output_dir}")
+        print(f"Debug mode: {args.debug}")
+        
+        # Set up output directory with input directory name as subdirectory
+        input_dir_name = os.path.basename(os.path.normpath(args.input))
+        output_dir = os.path.join(args.output_dir, input_dir_name)
+        os.makedirs(output_dir, exist_ok=True)  # Ensure output directory exists
+        
+        print(f"Input directory name: {input_dir_name}")
+        print(f"Full output directory: {output_dir}")
+        print(f"Output directory exists: {os.path.exists(output_dir)}")
+        
+        if not os.path.exists(args.input):
+            raise FileNotFoundError(f"Input path does not exist: {args.input}")
+            
+        if not os.path.isdir(args.input):
+            raise NotADirectoryError(f"Input path is not a directory: {args.input}")
+
+        # Extract number of bars from the input directory name
+        import re
+        match = re.search(r'(\d+)_bars', input_dir_name)
+        if not match:
+            raise ValueError(f"Could not determine number of bars from directory name: {input_dir_name}")
+            
+        max_steps = int(match.group(1))
+        print(f"Using max_steps: {max_steps}")
+        
+        # Find model and normalization files
+        print("\n=== Finding model files ===")
+        model_files, norm_files = find_model_files(args.input)
+        print(f"Found {len(model_files)} model files and {len(norm_files)} normalization files")
 
         # Check if there are any model files
         if not model_files:
-            print("Error: No model files found in the specified directory")
-            sys.exit(1)
-            
+            raise FileNotFoundError("No model files found in the specified directory")
+        
         # Test each model file found
         for model_file in model_files:
-            model_path = os.path.join(input_dir, model_file)
-            norm_path = os.path.join(input_dir, norm_files[0]) if norm_files else None
-            model_name = os.path.splitext(os.path.basename(model_file))[0]
+            print(f"\n=== Testing model: {model_file} ===")
+            model_path = os.path.join(args.input, model_file)
+            norm_path = os.path.join(args.input, norm_files[0]) if norm_files else None
             
-            # Print model name with clean formatting
-            print(f"\nTesting {model_name}")
-            print("-" * (len(model_name) + 9))
+            if not os.path.exists(model_path):
+                print(f"Warning: Model file not found: {model_path}")
+                continue
+                
+            if norm_path and not os.path.exists(norm_path):
+                print(f"Warning: Normalization file not found: {norm_path}")
+                norm_path = None
             
-            results = test_trading_model(
-                model_path=model_path,
-                norm_path=norm_path,
-                render=False,
-                debug=args.debug,
-                output_dir=output_dir,
-                input_dir_name=input_dir_name
-            )
-            
-            if results:
-                print(f"\n=== Results ===")
-                print(f"Total reward: {results['reward']:.2f}")
-                print(f"Buy signals: {len(results['buy_signals'])}")
-                print(f"Sell signals: {len(results['sell_signals'])}")
+            try:
+                results = test_trading_model(
+                    model_path=model_path,
+                    norm_path=norm_path,
+                    render=False,
+                    debug=args.debug,
+                    output_dir=output_dir,
+                    input_dir_name=input_dir_name
+                )
                 
-                if 'time_analysis' in results:
-                    print("\nTime Analysis:")
-                    time_dist = results['time_analysis']['time_distribution']
-                    print(f"Morning: {time_dist['Morning (4:00-9:29)']}")
-                    print(f"Regular: {time_dist['Regular Hours (9:30-15:59)']}")
-                    print(f"Afternoon: {time_dist['Afternoon (16:00-19:59)']}")
+                if results:
+                    print(f"\n=== Results ===")
+                    print(f"Total reward: {results.get('reward', 0):.2f}")
+                    print(f"Buy signals: {len(results.get('buy_signals', []))}")
+                    print(f"Sell signals: {len(results.get('sell_signals', []))}")
+                    
+                    if 'time_analysis' in results:
+                        print("\nTime Analysis:")
+                        time_dist = results['time_analysis'].get('time_distribution', {})
+                        for time_range, count in time_dist.items():
+                            print(f"{time_range}: {count}")
+                    
+                    # Save signals for plotting
+                    model_base_name = os.path.splitext(model_file)[0]
+                    signals_df = pd.DataFrame({
+                        'model': [model_base_name],
+                        'max_steps': [max_steps],
+                        'reward': [results.get('reward', 0)],
+                        'buy_signals': [str(results.get('buy_signal_indices', []))],
+                        'sell_signals': [str(results.get('sell_signal_indices', []))],
+                        'actions': [str(results.get('actions', []))],
+                        'timesteps': [str(results.get('timesteps', []))]
+                    })
+                    
+                    csv_filename = os.path.join(output_dir, f'trade_signals_{model_base_name}.csv')
+                    signals_df.to_csv(csv_filename, index=False)
+                    print(f"\nTrade signals saved to '{csv_filename}'")
                 
-                # Save signals for plotting
-                model_base_name = os.path.splitext(model_file)[0]
-                
-                # Get max_steps from the model path (e.g., output_30_bars_... -> 30)
-                max_steps = int(os.path.basename(os.path.dirname(model_path)).split('_')[1])
-                
-                signals_df = pd.DataFrame({
-                    'model': [model_base_name],
-                    'max_steps': [max_steps],  # Use max_steps from model path
-                    'reward': [results['reward']],
-                    'buy_signals': [str(results['buy_signal_indices'])],
-                    'sell_signals': [str(results['sell_signal_indices'])],
-                    'actions': [str(results['actions'])],
-                    'timesteps': [str(results['timesteps'])]
-                })
-                
-                # Use the specified output directory or default to model directory
-                if not output_dir:
-                    output_dir = os.path.join(input_dir, 'test_results')
-                os.makedirs(output_dir, exist_ok=True)
-                
-                csv_filename = os.path.join(output_dir, f'trade_signals_{model_base_name}.csv')
-                signals_df.to_csv(csv_filename, index=False)
-                print(f"\nTrade signals saved to '{csv_filename}'")
+            except Exception as e:
+                print(f"\nError testing model {model_file}:")
+                print(f"Type: {type(e).__name__}")
+                print(f"Message: {str(e)}")
+                print("\nTraceback:")
+                import traceback
+                traceback.print_exc()
+                print("\nContinuing with next model...")
+    
+    except Exception as e:
+        print(f"\nFatal error in main execution:")
+        print(f"Type: {type(e).__name__}")
+        print(f"Message: {str(e)}")
+        print("\nTraceback:")
+        import traceback
+        traceback.print_exc()
+        return 1
+    
+    return 0
+
+if __name__ == "__main__":
+    import argparse
+    sys.exit(main())
