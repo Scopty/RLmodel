@@ -34,26 +34,43 @@ A Reinforcement Learning (RL) based trading system using Proximal Policy Optimiz
 
 ### Training a New Model
 ```bash
-python training_script.py \
-    --max_steps 100 \
-    --total_timesteps 1000000 \
-    --num_cpu 12 \
-    --debug
+python training_script.py [options]
 ```
 
 ### Testing a Trained Model
 ```bash
-python test_script.py \
-    --input training_output/A0001_output_100_bars_500000_timesteps_20250612_120000 \
-    --output_dir test_results \
-    --debug
+python test_script.py [options]
 ```
 
 ### Visualizing Results
 ```bash
-python plot_signals.py \
-    --input training_output/.../test_results/trade_signals_*.csv \
-    --output_dir plots/
+python plot_signals.py [options]
+```
+
+### Examples
+
+#### Training Example
+```bash
+# Train a model with default settings
+python training_script.py
+
+# Train with custom parameters
+python training_script.py --max_steps 200 --total_timesteps 500000 --num_cpu 8 --debug
+```
+
+#### Testing Example
+```bash
+# Test a trained model
+python test_script.py --input training_output/A0001_output_100_bars_500000_timesteps
+
+# Test with custom output directory
+python test_script.py --input training_output/A0002_output_200_bars_1000000_timesteps --output_dir my_test_results
+```
+
+#### Visualization Example
+```bash
+# Plot signals from test results
+python plot_signals.py --input training_output/A0001_output_100_bars_500000_timesteps/test_results/trade_signals_*.csv
 ```
 
 ## Project Structure
@@ -84,13 +101,4 @@ Customize the trading environment and training parameters in the respective scri
 
 ## License
 
-[Your License Here]  
-*Note: Please add appropriate license information.*
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Contact
-
-[Your Contact Information]
+This project is proprietary and private. All rights reserved.
