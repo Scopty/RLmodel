@@ -1,0 +1,7 @@
+=== Training Information ===
+run_id: A0012
+start_time: 2025-06-12 23:46:07
+max_steps: 100
+total_timesteps: 10000
+num_cpu: 12
+status: Started

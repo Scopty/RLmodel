@@ -168,7 +168,6 @@ def setup_output_dir():
     return file_suffix, output_dir
 
 def make_env():
-    from env_action_wrapper import ActionTupleWrapper  # Import inside function for subprocess safety
     env = TradingEnv(
         df,
         max_steps=max_steps,
@@ -176,7 +175,6 @@ def make_env():
         stoploss_min=0.01,  # 1% minimum stoploss
         stoploss_max=0.10   # 10% maximum stoploss (adjust as needed)
     )
-    env = ActionTupleWrapper(env)
     check_env(env, warn=True)
     return env
 

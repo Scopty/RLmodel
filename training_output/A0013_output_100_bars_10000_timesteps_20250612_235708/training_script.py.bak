@@ -167,8 +167,9 @@ def setup_output_dir():
     
     return file_suffix, output_dir
 
+from env_action_wrapper import ActionTupleWrapper
+
 def make_env():
-    from env_action_wrapper import ActionTupleWrapper  # Import inside function for subprocess safety
     env = TradingEnv(
         df,
         max_steps=max_steps,
