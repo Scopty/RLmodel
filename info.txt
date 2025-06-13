@@ -79,7 +79,7 @@ python training_script.py \
 ```bash
 python test_script.py \
     --input training_output/A0001_output_100_bars_500000_timesteps_20250612_120000 \
-    --output_dir test_results \
+    --output_dir test_output \
     --debug
 ```
 

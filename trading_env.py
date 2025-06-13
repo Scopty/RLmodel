@@ -252,62 +252,86 @@ class TradingEnv(Env):
     def _calculate_reward(self, action, current_row):
         """Calculate reward for the given action.
         
-        Rewards are only given on SELL actions (actual profit/loss) and 
-        small fixed rewards for successful BUY actions. No rewards for holding.
+        Rewards are structured to:
+        - Heavily penalize buying to strongly discourage overtrading
+        - Reward holding longer positions more
+        - Only reward selling after minimum hold time
         """
         reward = 0
         current_price = current_row['close']
         
-        if action == 1:  # Buy action
-            if not self.position_open and self.balance >= current_price * 1000:
-                reward = 0.01  # Small fixed reward for entering a position
+        # Calculate holding period if in a position
+        hold_steps = (self.current_step - self.buy_step) if self.position_open else 0
+        
+        # Reward for holding to encourage patience
+        if action == 0:  # Hold action
+            if self.position_open:
+                # Scale reward with holding time (more reward the longer held)
+                hold_bonus = min(0.1 * (1 + hold_steps * 0.1), 1.0)  # Up to 1.0 max bonus (10x)
+                reward = 0.5 + hold_bonus  # Base reward + scaled bonus (10x)
                 if self.debug:
-                    self._debug_print(f"[DEBUG_REWARD] BUY action - Valid: +{reward:.4f} (new position)")
+                    self._debug_print(f"[DEBUG_REWARD] HOLD action - Reward: +{reward:.4f} "
+                                     f"(held for {hold_steps} steps, bonus: {hold_bonus:.4f})")
             else:
-                # Invalid BUY action, should be prevented by action masking.
-                # Setting reward to 0 as this state should ideally not be reached.
+                # Minimal reward when not in a position
+                reward = 0.001  # 10x
+                if self.debug:
+                    self._debug_print(f"[DEBUG_REWARD] HOLD action - Reward: +{reward:.4f} (no position)")
+        
+        # Strongly penalize buying to discourage overtrading
+        elif action == 1:  # Buy action
+            if not self.position_open and self.balance >= current_price * 1000:
+                # Base penalty + additional penalty based on recent trades
+                reward = -1.0  # 10x increased base penalty
+                if self.debug:
+                    self._debug_print(f"[DEBUG_REWARD] BUY action - Penalty: {reward:.4f}")
+            else:
+                # Invalid BUY action - should be masked
                 reward = 0
                 if self.debug:
-                    reason = "position already open" if self.position_open else "insufficient balance"
-                    self._debug_print(f"[DEBUG_REWARD] BUY action - Invalid (Masking should prevent this): {reward} ({reason})")
+                    self._debug_print("[DEBUG_REWARD] BUY action - Invalid (masked), reward: 0")
         
+        # Reward selling based on position P&L and hold time
         elif action == 2:  # Sell action
             if self.position_open and self.shares > 0:
-                # Calculate raw profit/loss
-                raw_profit = (current_price - self.buy_price) * self.shares
-                reward = raw_profit  # Start with raw profit/loss
+                # Base profit/loss
+                reward = (current_price - self.buy_price) * self.shares
                 
                 if self.debug:
-                    self._debug_print(f"[DEBUG_REWARD] SELL action - Raw profit: ${raw_profit} (Bought @ {self.buy_price}, Sold @ {current_price}, Shares: {self.shares})")
+                    self._debug_print(f"[DEBUG_REWARD] SELL action - Raw profit: ${reward:.2f} "
+                                     f"(Bought @ {self.buy_price:.4f}, Sold @ {current_price:.4f}, "
+                                     f"Shares: {self.shares}, Held for: {hold_steps} steps)")
                 
-                # Apply time-based modifiers
-                time_modifier = 1.0
-                if current_row['is_pre_market']:
-                    time_modifier = 1.1  # 10% bonus during pre-market
+                # Strong penalty for very quick trades (10x)
+                if hold_steps < 10:  # First 10 steps
+                    quick_sell_penalty = 1.0 * (10 - hold_steps)  # Up to 10.0 penalty (10x)
+                    reward -= quick_sell_penalty
                     if self.debug:
-                        self._debug_print(f"[DEBUG_REWARD]   Applying pre-market bonus: {time_modifier}x")
-                elif current_row['is_after_hours']:
-                    time_modifier = 0.9  # 10% penalty during after-hours
-                    if self.debug:
-                        self._debug_print(f"[DEBUG_REWARD]   Applying after-hours penalty: {time_modifier}x")
+                        self._debug_print(f"[DEBUG_REWARD]   Quick sell penalty: -{quick_sell_penalty:.4f}")
                 
-                reward *= time_modifier
+                # Bonus for holding longer (10x)
+                if hold_steps >= 10:  # Only reward if held for minimum period
+                    hold_bonus = min(0.01 * hold_steps, 0.5)  # Up to 0.5 bonus (10x)
+                    reward += hold_bonus
+                    if self.debug:
+                        self._debug_print(f"[DEBUG_REWARD]   Hold time bonus: +{hold_bonus:.4f}")
+                
+                # Additional profit bonus (only for profitable trades held long enough) (10x)
+                if reward > 0 and hold_steps >= 5:
+                    profit_bonus = min(reward * 0.1, 1.0)  # Up to 1.0 bonus (10x)
+                    reward += profit_bonus
+                    if self.debug:
+                        self._debug_print(f"[DEBUG_REWARD]   Profit bonus: +{profit_bonus:.4f}")
                 
                 if self.debug:
-                    self._debug_print(f"[DEBUG_REWARD]   Final reward after time mod: ${reward} (Raw: ${raw_profit} * {time_modifier})")
+                    self._debug_print(f"[DEBUG_REWARD]   Final reward: ${reward:.4f}")
             else:
-                # Invalid SELL action, should be prevented by action masking.
-                # Setting reward to 0 as this state should ideally not be reached.
+                # Invalid SELL action - should be masked
                 reward = 0
                 if self.debug:
-                    reason = "no position open" if not self.position_open else "no shares to sell"
-                    self._debug_print(f"[DEBUG_REWARD] SELL action - Invalid (Masking should prevent this): {reward} ({reason})")
+                    self._debug_print("[DEBUG_REWARD] SELL action - Invalid (masked), reward: 0")
         
-        # No reward for HOLD action (action == 0)
         self.total_reward += reward
-        if action == 0 and self.debug:
-            self._debug_print(f"[DEBUG_REWARD] HOLD action - Reward: 0 (no position)")
-        
         return reward
 
     def _update_state(self, action, current_row):

@@ -733,6 +733,10 @@ def test_trading_model(model_path, norm_path, render=True, debug=False, output_d
         debug_print(f"Full traceback:\n{traceback.format_exc()}", model_name)
         print(f"TEST FAILED: {error_msg}", file=sys.stderr)
         return None
+    finally:
+        # Always restore stdout and stderr
+        sys.stdout = original_stdout
+        sys.stderr = original_stderr
         
 def find_model_files(directory):
     """Find model and normalization files in the given directory."""
@@ -782,20 +786,18 @@ def main():
         parser = argparse.ArgumentParser(description='Test a trained trading model')
         parser.add_argument('--input', type=str, required=True,
                           help='Path to the input model directory or file')
-        parser.add_argument('--output_dir', type=str, default='test_output',
-                          help='Directory to save test outputs')
         parser.add_argument('--debug', action='store_true',
                           help='Enable debug mode')
         args = parser.parse_args()
         
         print(f"Input path: {args.input}")
-        print(f"Output directory: {args.output_dir}")
         print(f"Debug mode: {args.debug}")
         
-        # Set up output directory with input directory name as subdirectory
+        # Set up fixed output directory
         input_dir_name = os.path.basename(os.path.normpath(args.input))
-        output_dir = os.path.join(args.output_dir, input_dir_name)
-        os.makedirs(output_dir, exist_ok=True)  # Ensure output directory exists
+        output_dir = os.path.join('test_output', input_dir_name)
+        os.makedirs('test_output', exist_ok=True)  # Ensure base output directory exists
+        os.makedirs(output_dir, exist_ok=True)  # Ensure model-specific directory exists
         
         print(f"Input directory name: {input_dir_name}")
         print(f"Full output directory: {output_dir}")

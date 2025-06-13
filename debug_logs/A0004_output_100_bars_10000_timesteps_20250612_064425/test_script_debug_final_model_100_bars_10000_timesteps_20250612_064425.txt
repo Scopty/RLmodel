@@ -1,0 +1,3665 @@
+=== Debug Log - final_model_100_bars_10000_timesteps_20250612_064425 - 2025-06-12 06:54:42 ===
+Input Directory: A0004_output_100_bars_10000_timesteps_20250612_064425
+Model: final_model_100_bars_10000_timesteps_20250612_064425
+========================================
+
+Using 100 steps from model path
+
+=== Starting Trading Simulation ===
+Model path: training_output/A0004_output_100_bars_10000_timesteps_20250612_064425/final_model_100_bars_10000_timesteps_20250612_064425.zip
+Normalization path: training_output/A0004_output_100_bars_10000_timesteps_20250612_064425/vec_normalize_100_bars_10000_timesteps_20250612_064425.pkl
+Max steps: 100
+Render mode: False
+
+=== Loading Model ===
+Model path: training_output/A0004_output_100_bars_10000_timesteps_20250612_064425/final_model_100_bars_10000_timesteps_20250612_064425.zip
+Normalization path: training_output/A0004_output_100_bars_10000_timesteps_20250612_064425/vec_normalize_100_bars_10000_timesteps_20250612_064425.pkl
+Using 100 bars from model directory name
+Loading data using common_imports.load_data()...
+Loaded 100 rows of data
+Loading model...
+Model loaded successfully
+Model observation space shape: (13,)
+Model unnormalized observation space: Box(-inf, inf, (13,), float32)
+Model action space: Discrete(3)
+Creating environment...
+Loading normalization stats from training_output/A0004_output_100_bars_10000_timesteps_20250612_064425/vec_normalize_100_bars_10000_timesteps_20250612_064425.pkl...
+Using normalization stats from file
+Environment created with max_steps=100
+Environment observation space: Box(-inf, inf, (13,), float32)
+Environment configuration complete
+
+=== Resetting Environment ===
+Initial observation shape: (1, 13)
+Initial observation: [[ 0.998345    3.7072082   1.3034052   2.9288611   5.7022266  -0.91943604
+   0.95771694  0.39153337 -0.919436   -1.6810368   0.79616565  0.
+   1.6810293 ]]
+
+=== Loop Step: 0/100, Env Step: 0 ===
+Current time: 2025-02-07 04:00:00, Price: 0.3386
+Position: Closed, Shares: 0, Balance: 10000
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.998345    3.7072082   1.3034052   2.9288611   5.7022266  -0.91943604
+   0.95771694  0.39153337 -0.919436   -1.6810368   0.79616565  0.
+   1.6810293 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 0 ---
+Current price: 0.34
+Current position: CLOSED
+Current shares: 0
+Current balance: 10000.00
+Current net worth: 10000.00
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9661.40
+New net worth: 10000.00
+New observation shape: (1, 13)
+New observation: [[ 0.998345    3.7072082   1.3034052   2.9288611   5.7022266   1.0876232
+  -1.3047955   0.39153337  1.0876232  -1.6810368   0.79616565  0.
+   1.6810293 ]]
+Incremented step counter to: 1
+Post-action: Position: Open, Shares: 1000, Balance: 9661.4
+
+=== Loop Step: 1/100, Env Step: 1 ===
+Current time: 2025-02-07 04:01:00, Price: 0.3265
+Position: Open, Shares: 1000, Balance: 9661.4
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.998345    3.7072082   1.3034052   2.9288611   5.7022266   1.0876232
+  -1.3047955   0.39153337  1.0876232  -1.6810368   0.79616565  0.
+   1.6810293 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 1 ---
+Current price: 0.33
+Current position: OPEN
+Current shares: 1000
+Current balance: 9661.40
+Current net worth: 10000.00
+Position profit: -3.57%
+Executing action: [2] (SELL)
+Action result - Reward: -13.3100, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9987.90
+New net worth: 9987.90
+New observation shape: (1, 13)
+New observation: [[ 3.0824432   2.381188    2.5431695   2.0720472   2.2874813  -0.91943604
+   0.8768677  -0.21990399 -0.919436   -1.6462672   0.79616565  0.
+   1.6462604 ]]
+Incremented step counter to: 2
+Post-action: Position: Closed, Shares: 0, Balance: 9987.9
+
+=== Loop Step: 2/100, Env Step: 2 ===
+Current time: 2025-02-07 04:02:00, Price: 0.3288
+Position: Closed, Shares: 0, Balance: 9987.9
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 3.0824432   2.381188    2.5431695   2.0720472   2.2874813  -0.91943604
+   0.8768677  -0.21990399 -0.919436   -1.6462672   0.79616565  0.
+   1.6462604 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 2 ---
+Current price: 0.33
+Current position: CLOSED
+Current shares: 0
+Current balance: 9987.90
+Current net worth: 9987.90
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9987.90
+New net worth: 9987.90
+New observation shape: (1, 13)
+New observation: [[ 2.3678942   2.1549473   2.348238    2.2349122   1.4443543  -0.91943604
+   0.8768677  -0.21990399 -0.919436   -1.6114975   0.79616565  0.
+   1.6114894 ]]
+Incremented step counter to: 3
+Post-action: Position: Closed, Shares: 0, Balance: 9987.9
+
+=== Loop Step: 3/100, Env Step: 3 ===
+Current time: 2025-02-07 04:03:00, Price: 0.3123
+Position: Closed, Shares: 0, Balance: 9987.9
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 2.3678942   2.1549473   2.348238    2.2349122   1.4443543  -0.91943604
+   0.8768677  -0.21990399 -0.919436   -1.6114975   0.79616565  0.
+   1.6114894 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 3 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 9987.90
+Current net worth: 9987.90
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9987.90
+New net worth: 9987.90
+New observation shape: (1, 13)
+New observation: [[ 2.0776098   1.6710421   1.1006751   1.0665306   1.6251397  -0.91943604
+   0.8768677  -0.21990399 -0.919436   -1.5767279   0.79616565  0.
+   1.5767205 ]]
+Incremented step counter to: 4
+Post-action: Position: Closed, Shares: 0, Balance: 9987.9
+
+=== Loop Step: 4/100, Env Step: 4 ===
+Current time: 2025-02-07 04:04:00, Price: 0.3124
+Position: Closed, Shares: 0, Balance: 9987.9
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 2.0776098   1.6710421   1.1006751   1.0665306   1.6251397  -0.91943604
+   0.8768677  -0.21990399 -0.919436   -1.5767279   0.79616565  0.
+   1.5767205 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 4 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 9987.90
+Current net worth: 9987.90
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9675.50
+New net worth: 9987.90
+New observation shape: (1, 13)
+New observation: [[ 1.1323228   1.0740185   1.3345923   1.0736128   0.6682147   1.0876232
+  -1.2105824  -0.21990399  1.0876232  -1.5419582   0.79616565  0.
+   1.5419515 ]]
+Incremented step counter to: 5
+Post-action: Position: Open, Shares: 1000, Balance: 9675.5
+
+=== Loop Step: 5/100, Env Step: 5 ===
+Current time: 2025-02-07 04:05:00, Price: 0.3011
+Position: Open, Shares: 1000, Balance: 9675.5
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 1.1323228   1.0740185   1.3345923   1.0736128   0.6682147   1.0876232
+  -1.2105824  -0.21990399  1.0876232  -1.5419582   0.79616565  0.
+   1.5419515 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 5 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9675.50
+Current net worth: 9987.90
+Position profit: -3.62%
+Executing action: [2] (SELL)
+Action result - Reward: -12.4300, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9976.60
+New net worth: 9976.60
+New observation shape: (1, 13)
+New observation: [[ 1.1323228   0.8540634  -0.67710173  0.27344644  2.4445925  -0.91943604
+   0.80135626 -0.79097366 -0.919436   -1.5071886   0.79616565  0.
+   1.5071826 ]]
+Incremented step counter to: 6
+Post-action: Position: Closed, Shares: 0, Balance: 9976.6
+
+=== Loop Step: 6/100, Env Step: 6 ===
+Current time: 2025-02-07 04:06:00, Price: 0.3069
+Position: Closed, Shares: 0, Balance: 9976.6
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 1.1323228   0.8540634  -0.67710173  0.27344644  2.4445925  -0.91943604
+   0.80135626 -0.79097366 -0.919436   -1.5071886   0.79616565  0.
+   1.5071826 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 6 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 9976.60
+Current net worth: 9976.60
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9976.60
+New net worth: 9976.60
+New observation shape: (1, 13)
+New observation: [[ 0.26890934  0.56497705  0.4379066   0.68415093  0.45084175 -0.91943604
+   0.80135626 -0.79097366 -0.919436   -1.4724189   0.79616565  0.
+   1.4724116 ]]
+Incremented step counter to: 7
+Post-action: Position: Closed, Shares: 0, Balance: 9976.6
+
+=== Loop Step: 7/100, Env Step: 7 ===
+Current time: 2025-02-07 04:07:00, Price: 0.3115
+Position: Closed, Shares: 0, Balance: 9976.6
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.26890934  0.56497705  0.4379066   0.68415093  0.45084175 -0.91943604
+   0.80135626 -0.79097366 -0.919436   -1.4724189   0.79616565  0.
+   1.4724116 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 7 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 9976.60
+Current net worth: 9976.60
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9665.10
+New net worth: 9976.60
+New observation shape: (1, 13)
+New observation: [[ 0.58152497  0.6718137   0.77318895  1.0098829   0.31928813  1.0876232
+  -1.2800775  -0.79097366  1.0876232  -1.4376493   0.79616565  0.
+   1.4376427 ]]
+Incremented step counter to: 8
+Post-action: Position: Open, Shares: 1000, Balance: 9665.1
+
+=== Loop Step: 8/100, Env Step: 8 ===
+Current time: 2025-02-07 04:08:00, Price: 0.3137
+Position: Open, Shares: 1000, Balance: 9665.1
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.58152497  0.6718137   0.77318895  1.0098829   0.31928813  1.0876232
+  -1.2800775  -0.79097366  1.0876232  -1.4376493   0.79616565  0.
+   1.4376427 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 8 ---
+Current price: 0.31
+Current position: OPEN
+Current shares: 1000
+Current balance: 9665.10
+Current net worth: 9976.60
+Position profit: 0.71%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9665.10
+New net worth: 9978.80
+New observation shape: (1, 13)
+New observation: [[ 1.0876628   0.84777784  1.3034052   1.1656655  -0.02076057  1.0876232
+  -1.2800775  -0.6797898   1.0876232  -1.4028796   0.79616565  0.
+   1.4028738 ]]
+Incremented step counter to: 9
+Post-action: Position: Open, Shares: 1000, Balance: 9665.1
+
+=== Loop Step: 9/100, Env Step: 9 ===
+Current time: 2025-02-07 04:09:00, Price: 0.3046
+Position: Open, Shares: 1000, Balance: 9665.1
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 1.0876628   0.84777784  1.3034052   1.1656655  -0.02076057  1.0876232
+  -1.2800775  -0.6797898   1.0876232  -1.4028796   0.79616565  0.
+   1.4028738 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 9 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9665.10
+Current net worth: 9978.80
+Position profit: -2.22%
+Executing action: [2] (SELL)
+Action result - Reward: -7.5900, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9969.70
+New net worth: 9969.70
+New observation shape: (1, 13)
+New observation: [[ 1.206754    0.8037868   0.69521725  0.521286    0.2950758  -0.91943604
+   0.75525457 -1.1396263  -0.919436   -1.36811     0.79616565  0.
+   1.3681047 ]]
+Incremented step counter to: 10
+Post-action: Position: Closed, Shares: 0, Balance: 9969.7
+
+=== Loop Step: 10/100, Env Step: 10 ===
+Current time: 2025-02-07 04:10:00, Price: 0.2954
+Position: Closed, Shares: 0, Balance: 9969.7
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 1.206754    0.8037868   0.69521725  0.521286    0.2950758  -0.91943604
+   0.75525457 -1.1396263  -0.919436   -1.36811     0.79616565  0.
+   1.3681047 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 10 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9969.70
+Current net worth: 9969.70
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9969.70
+New net worth: 9969.70
+New observation shape: (1, 13)
+New observation: [[ 0.5070916   0.25703982 -0.2794402  -0.1301758   0.6224803  -0.91943604
+   0.75525457 -1.1396263  -0.919436   -1.3333404   0.79616565  0.
+   1.3333338 ]]
+Incremented step counter to: 11
+Post-action: Position: Closed, Shares: 0, Balance: 9969.7
+
+=== Loop Step: 11/100, Env Step: 11 ===
+Current time: 2025-02-07 04:11:00, Price: 0.295
+Position: Closed, Shares: 0, Balance: 9969.7
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.5070916   0.25703982 -0.2794402  -0.1301758   0.6224803  -0.91943604
+   0.75525457 -1.1396263  -0.919436   -1.3333404   0.79616565  0.
+   1.3333338 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 11 ---
+Current price: 0.29
+Current position: CLOSED
+Current shares: 0
+Current balance: 9969.70
+Current net worth: 9969.70
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9674.70
+New net worth: 9969.70
+New observation shape: (1, 13)
+New observation: [[-0.1330241   0.15020311 -0.01433326 -0.15850069 -0.08129139  1.0876232
+  -1.2159266  -1.1396263   1.0876232  -1.2985708   0.79616565  0.
+   1.2985648 ]]
+Incremented step counter to: 12
+Post-action: Position: Open, Shares: 1000, Balance: 9674.7
+
+=== Loop Step: 12/100, Env Step: 12 ===
+Current time: 2025-02-07 04:12:00, Price: 0.3062
+Position: Open, Shares: 1000, Balance: 9674.7
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-0.1330241   0.15020311 -0.01433326 -0.15850069 -0.08129139  1.0876232
+  -1.2159266  -1.1396263   1.0876232  -1.2985708   0.79616565  0.
+   1.2985648 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 12 ---
+Current price: 0.31
+Current position: OPEN
+Current shares: 1000
+Current balance: 9674.70
+Current net worth: 9969.70
+Position profit: 3.80%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9674.70
+New net worth: 9980.90
+New observation shape: (1, 13)
+New observation: [[-0.16279744  0.5084169   0.08702944  0.6345835   0.03223752  1.0876232
+  -1.2159266  -0.5736395   1.0876232  -1.2638011   0.79616565  0.
+   1.2637959 ]]
+Incremented step counter to: 13
+Post-action: Position: Open, Shares: 1000, Balance: 9674.7
+
+=== Loop Step: 13/100, Env Step: 13 ===
+Current time: 2025-02-07 04:13:00, Price: 0.3042
+Position: Open, Shares: 1000, Balance: 9674.7
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-0.16279744  0.5084169   0.08702944  0.6345835   0.03223752  1.0876232
+  -1.2159266  -0.5736395   1.0876232  -1.2638011   0.79616565  0.
+   1.2637959 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 13 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9674.70
+Current net worth: 9980.90
+Position profit: 3.12%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9674.70
+New net worth: 9978.90
+New observation shape: (1, 13)
+New observation: [[ 0.68572944  0.50213325  0.70301354  0.49296114 -0.19239907  1.0876232
+  -1.2159266  -0.6747068   1.0876232  -1.2290314   0.79616565  0.
+   1.2290269 ]]
+Incremented step counter to: 14
+Post-action: Position: Open, Shares: 1000, Balance: 9674.7
+
+=== Loop Step: 14/100, Env Step: 14 ===
+Current time: 2025-02-07 04:14:00, Price: 0.3022
+Position: Open, Shares: 1000, Balance: 9674.7
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.68572944  0.50213325  0.70301354  0.49296114 -0.19239907  1.0876232
+  -1.2159266  -0.6747068   1.0876232  -1.2290314   0.79616565  0.
+   1.2290269 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 14 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9674.70
+Current net worth: 9978.90
+Position profit: 2.44%
+Executing action: [2] (SELL)
+Action result - Reward: 7.9400, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9976.90
+New net worth: 9976.90
+New observation shape: (1, 13)
+New observation: [[ 0.514536    0.21304879  0.46909618  0.3513388  -0.27176172 -0.91943604
+   0.80336607 -0.77577406 -0.919436   -1.1942618   0.79616565  0.
+   1.194256  ]]
+Incremented step counter to: 15
+Post-action: Position: Closed, Shares: 0, Balance: 9976.900000000001
+
+=== Loop Step: 15/100, Env Step: 15 ===
+Current time: 2025-02-07 04:15:00, Price: 0.3005
+Position: Closed, Shares: 0, Balance: 9976.900000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.514536    0.21304879  0.46909618  0.3513388  -0.27176172 -0.91943604
+   0.80336607 -0.77577406 -0.919436   -1.1942618   0.79616565  0.
+   1.194256  ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 15 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9976.90
+Current net worth: 9976.90
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9976.90
+New net worth: 9976.90
+New observation shape: (1, 13)
+New observation: [[ 0.37311378  0.08107381  0.484691    0.23096122 -0.34009427 -0.91943604
+   0.80336607 -0.77577406 -0.919436   -1.1594921   0.79616565  0.
+   1.159487  ]]
+Incremented step counter to: 16
+Post-action: Position: Closed, Shares: 0, Balance: 9976.900000000001
+
+=== Loop Step: 16/100, Env Step: 16 ===
+Current time: 2025-02-07 04:16:00, Price: 0.2955
+Position: Closed, Shares: 0, Balance: 9976.900000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.37311378  0.08107381  0.484691    0.23096122 -0.34009427 -0.91943604
+   0.80336607 -0.77577406 -0.919436   -1.1594921   0.79616565  0.
+   1.159487  ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 16 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9976.90
+Current net worth: 9976.90
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9681.40
+New net worth: 9976.90
+New observation shape: (1, 13)
+New observation: [[ 0.25402266  0.00566088  0.08702944 -0.12309352  0.07070822  1.0876232
+  -1.171156   -0.77577406  1.0876232  -1.1247225   0.79616565  0.
+   1.1247181 ]]
+Incremented step counter to: 17
+Post-action: Position: Open, Shares: 1000, Balance: 9681.400000000001
+
+=== Loop Step: 17/100, Env Step: 17 ===
+Current time: 2025-02-07 04:17:00, Price: 0.2985
+Position: Open, Shares: 1000, Balance: 9681.400000000001
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.25402266  0.00566088  0.08702944 -0.12309352  0.07070822  1.0876232
+  -1.171156   -0.77577406  1.0876232  -1.1247225   0.79616565  0.
+   1.1247181 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 17 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9681.40
+Current net worth: 9976.90
+Position profit: 1.02%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9681.40
+New net worth: 9979.90
+New observation shape: (1, 13)
+New observation: [[-0.1330241   0.18791051 -0.02213182  0.0893389  -0.26907143  1.0876232
+  -1.171156   -0.62417316  1.0876232  -1.0899528   0.79616565  0.
+   1.0899471 ]]
+Incremented step counter to: 18
+Post-action: Position: Open, Shares: 1000, Balance: 9681.400000000001
+
+=== Loop Step: 18/100, Env Step: 18 ===
+Current time: 2025-02-07 04:18:00, Price: 0.3
+Position: Open, Shares: 1000, Balance: 9681.400000000001
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-0.1330241   0.18791051 -0.02213182  0.0893389  -0.26907143  1.0876232
+  -1.171156   -0.62417316  1.0876232  -1.0899528   0.79616565  0.
+   1.0899471 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 18 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9681.40
+Current net worth: 9979.90
+Position profit: 1.52%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9681.40
+New net worth: 9981.40
+New observation shape: (1, 13)
+New observation: [[ 0.09771595 -0.01319188  0.2429751   0.19555616 -0.27418295  1.0876232
+  -1.171156   -0.5483727   1.0876232  -1.0551832   0.79616565  0.
+   1.0551782 ]]
+Incremented step counter to: 19
+Post-action: Position: Open, Shares: 1000, Balance: 9681.400000000001
+
+=== Loop Step: 19/100, Env Step: 19 ===
+Current time: 2025-02-07 04:19:00, Price: 0.3086
+Position: Open, Shares: 1000, Balance: 9681.400000000001
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.09771595 -0.01319188  0.2429751   0.19555616 -0.27418295  1.0876232
+  -1.171156   -0.5483727   1.0876232  -1.0551832   0.79616565  0.
+   1.0551782 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 19 ---
+Current price: 0.31
+Current position: OPEN
+Current shares: 1000
+Current balance: 9681.40
+Current net worth: 9981.40
+Position profit: 4.43%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9681.40
+New net worth: 9990.00
+New observation shape: (1, 13)
+New observation: [[ 0.25402266  0.57126254  0.42231178  0.8045307   0.22136271  1.0876232
+  -1.171156   -0.11380307  1.0876232  -1.0204135   0.79616565  0.
+   1.0204092 ]]
+Incremented step counter to: 20
+Post-action: Position: Open, Shares: 1000, Balance: 9681.400000000001
+
+=== Loop Step: 20/100, Env Step: 20 ===
+Current time: 2025-02-07 04:20:00, Price: 0.3159
+Position: Open, Shares: 1000, Balance: 9681.400000000001
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.25402266  0.57126254  0.42231178  0.8045307   0.22136271  1.0876232
+  -1.171156   -0.11380307  1.0876232  -1.0204135   0.79616565  0.
+   1.0204092 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 20 ---
+Current price: 0.32
+Current position: OPEN
+Current shares: 1000
+Current balance: 9681.40
+Current net worth: 9990.00
+Position profit: 6.90%
+Executing action: [2] (SELL)
+Action result - Reward: 22.4600, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.30
+New net worth: 9997.30
+New observation shape: (1, 13)
+New observation: [[ 0.8420361   0.94833094  0.9447294   1.3214504   0.03681096 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.98564386  0.79616565  0.
+   0.9856403 ]]
+Incremented step counter to: 21
+Post-action: Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+=== Loop Step: 21/100, Env Step: 21 ===
+Current time: 2025-02-07 04:21:00, Price: 0.3096
+Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.8420361   0.94833094  0.9447294   1.3214504   0.03681096 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.98564386  0.79616565  0.
+   0.9856403 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 21 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.30
+Current net worth: 9997.30
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.30
+New net worth: 9997.30
+New observation shape: (1, 13)
+New observation: [[ 1.3630607   1.0740185   0.85116297  0.87534076  0.58131933 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.95087427  0.79616565  0.
+   0.9508693 ]]
+Incremented step counter to: 22
+Post-action: Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+=== Loop Step: 22/100, Env Step: 22 ===
+Current time: 2025-02-07 04:22:00, Price: 0.31
+Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 1.3630607   1.0740185   0.85116297  0.87534076  0.58131933 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.95087427  0.79616565  0.
+   0.9508693 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 22 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.30
+Current net worth: 9997.30
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.30
+New net worth: 9997.30
+New observation shape: (1, 13)
+New observation: [[ 0.87925166  0.8854853   0.9447294   0.90366566 -0.21795653 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.91610456  0.79616565  0.
+   0.9161004 ]]
+Incremented step counter to: 23
+Post-action: Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+=== Loop Step: 23/100, Env Step: 23 ===
+Current time: 2025-02-07 04:23:00, Price: 0.3068
+Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.87925166  0.8854853   0.9447294   0.90366566 -0.21795653 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.91610456  0.79616565  0.
+   0.9161004 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 23 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.30
+Current net worth: 9997.30
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.30
+New net worth: 9997.30
+New observation shape: (1, 13)
+New observation: [[ 0.9611273   0.78493404  0.5938523   0.6770708  -0.24189983 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.88133496  0.79616565  0.
+   0.88133144]]
+Incremented step counter to: 24
+Post-action: Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+=== Loop Step: 24/100, Env Step: 24 ===
+Current time: 2025-02-07 04:24:00, Price: 0.3025
+Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.9611273   0.78493404  0.5938523   0.6770708  -0.24189983 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.88133496  0.79616565  0.
+   0.88133144]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 24 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.30
+Current net worth: 9997.30
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.30
+New net worth: 9997.30
+New observation shape: (1, 13)
+New observation: [[ 0.62618273  0.55240977  0.6484329   0.37258354 -0.40035605 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.8465653   0.79616565  0.
+   0.8465625 ]]
+Incremented step counter to: 25
+Post-action: Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+=== Loop Step: 25/100, Env Step: 25 ===
+Current time: 2025-02-07 04:25:00, Price: 0.3051
+Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.62618273  0.55240977  0.6484329   0.37258354 -0.40035605 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.8465653   0.79616565  0.
+   0.8465625 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 25 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.30
+Current net worth: 9997.30
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.30
+New net worth: 9997.30
+New observation shape: (1, 13)
+New observation: [[ 0.3954449   0.47071135  0.47689474  0.55669105 -0.26530507 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.81179565  0.79616565  0.
+   0.81179154]]
+Incremented step counter to: 26
+Post-action: Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+=== Loop Step: 26/100, Env Step: 26 ===
+Current time: 2025-02-07 04:26:00, Price: 0.3034
+Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.3954449   0.47071135  0.47689474  0.55669105 -0.26530507 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.81179565  0.79616565  0.
+   0.81179154]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 26 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.30
+Current net worth: 9997.30
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.30
+New net worth: 9997.30
+New observation shape: (1, 13)
+New observation: [[ 0.58896714  0.47699496  0.6328381   0.43631348 -0.49801245 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.777026    0.79616565  0.
+   0.7770226 ]]
+Incremented step counter to: 27
+Post-action: Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+=== Loop Step: 27/100, Env Step: 27 ===
+Current time: 2025-02-07 04:27:00, Price: 0.3027
+Position: Closed, Shares: 0, Balance: 9997.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.58896714  0.47699496  0.6328381   0.43631348 -0.49801245 -0.91943604
+   0.9396743   0.25508267 -0.919436   -0.777026    0.79616565  0.
+   0.7770226 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 27 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.30
+Current net worth: 9997.30
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9694.60
+New net worth: 9997.30
+New observation shape: (1, 13)
+New observation: [[ 0.43266046  0.19419414  0.5236768   0.386746   -0.44044092  1.0876232
+  -1.0829593   0.25508267  1.0876232  -0.7422564   0.79616565  0.
+   0.7422536 ]]
+Incremented step counter to: 28
+Post-action: Position: Open, Shares: 1000, Balance: 9694.6
+
+=== Loop Step: 28/100, Env Step: 28 ===
+Current time: 2025-02-07 04:28:00, Price: 0.3071
+Position: Open, Shares: 1000, Balance: 9694.6
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.43266046  0.19419414  0.5236768   0.386746   -0.44044092  1.0876232
+  -1.0829593   0.25508267  1.0876232  -0.7422564   0.79616565  0.
+   0.7422536 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 28 ---
+Current price: 0.31
+Current position: OPEN
+Current shares: 1000
+Current balance: 9694.60
+Current net worth: 9997.30
+Position profit: 1.45%
+Executing action: [2] (SELL)
+Action result - Reward: 4.8600, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10001.70
+New net worth: 10001.70
+New observation shape: (1, 13)
+New observation: [[ 0.37311378  0.39529842  0.5704612   0.6983134  -0.4369436  -0.91943604
+   0.9690776   0.47745046 -0.919436   -0.7074867   0.79616565  0.
+   0.70748466]]
+Incremented step counter to: 29
+Post-action: Position: Closed, Shares: 0, Balance: 10001.7
+
+=== Loop Step: 29/100, Env Step: 29 ===
+Current time: 2025-02-07 04:29:00, Price: 0.3114
+Position: Closed, Shares: 0, Balance: 10001.7
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.37311378  0.39529842  0.5704612   0.6983134  -0.4369436  -0.91943604
+   0.9690776   0.47745046 -0.919436   -0.7074867   0.79616565  0.
+   0.70748466]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 29 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10001.70
+Current net worth: 10001.70
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10001.70
+New net worth: 10001.70
+New observation shape: (1, 13)
+New observation: [[ 0.73783165  0.8540634   0.93693316  1.0028006   0.14791864 -0.91943604
+   0.9690776   0.47745046 -0.919436   -0.6727171   0.79616565  0.
+   0.67271376]]
+Incremented step counter to: 30
+Post-action: Position: Closed, Shares: 0, Balance: 10001.7
+
+=== Loop Step: 30/100, Env Step: 30 ===
+Current time: 2025-02-07 04:30:00, Price: 0.307
+Position: Closed, Shares: 0, Balance: 10001.7
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.73783165  0.8540634   0.93693316  1.0028006   0.14791864 -0.91943604
+   0.9690776   0.47745046 -0.919436   -0.6727171   0.79616565  0.
+   0.67271376]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 30 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10001.70
+Current net worth: 10001.70
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9694.70
+New net worth: 10001.70
+New observation shape: (1, 13)
+New observation: [[ 1.0802184   0.740943    1.0227034   0.6912332  -0.13724877  1.0876232
+  -1.0822872   0.47745046  1.0876232  -0.63794744 -1.25602     0.
+   0.63794476]]
+Incremented step counter to: 31
+Post-action: Position: Open, Shares: 1000, Balance: 9694.7
+
+=== Loop Step: 31/100, Env Step: 31 ===
+Current time: 2025-02-07 04:31:00, Price: 0.3109
+Position: Open, Shares: 1000, Balance: 9694.7
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 1.0802184   0.740943    1.0227034   0.6912332  -0.13724877  1.0876232
+  -1.0822872   0.47745046  1.0876232  -0.63794744 -1.25602     0.
+   0.63794476]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 31 ---
+Current price: 0.31
+Current position: OPEN
+Current shares: 1000
+Current balance: 9694.70
+Current net worth: 10001.70
+Position profit: 1.27%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9694.70
+New net worth: 10005.60
+New observation shape: (1, 13)
+New observation: [[ 0.7303894   0.63410634  0.7186083   0.9673956  -0.09985418  1.0876232
+  -1.0822872   0.6745021   1.0876232  -0.6031778  -1.25602     0.
+   0.6031758 ]]
+Incremented step counter to: 32
+Post-action: Position: Open, Shares: 1000, Balance: 9694.7
+
+=== Loop Step: 32/100, Env Step: 32 ===
+Current time: 2025-02-07 04:32:00, Price: 0.3136
+Position: Open, Shares: 1000, Balance: 9694.7
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.7303894   0.63410634  0.7186083   0.9673956  -0.09985418  1.0876232
+  -1.0822872   0.6745021   1.0876232  -0.6031778  -1.25602     0.
+   0.6031758 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 32 ---
+Current price: 0.31
+Current position: OPEN
+Current shares: 1000
+Current balance: 9694.70
+Current net worth: 10005.60
+Position profit: 2.15%
+Executing action: [2] (SELL)
+Action result - Reward: 6.6200, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10008.30
+New net worth: 10008.30
+New observation shape: (1, 13)
+New observation: [[ 1.0132295   0.84777784  1.2566208   1.1585854   0.01152253 -0.91943604
+   1.013176    0.8109528  -0.919436   -0.5684081  -1.25602     0.
+   0.56840485]]
+Incremented step counter to: 33
+Post-action: Position: Closed, Shares: 0, Balance: 10008.300000000001
+
+=== Loop Step: 33/100, Env Step: 33 ===
+Current time: 2025-02-07 04:33:00, Price: 0.3128
+Position: Closed, Shares: 0, Balance: 10008.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 1.0132295   0.84777784  1.2566208   1.1585854   0.01152253 -0.91943604
+   1.013176    0.8109528  -0.919436   -0.5684081  -1.25602     0.
+   0.56840485]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 33 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10008.30
+Current net worth: 10008.30
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10008.30
+New net worth: 10008.30
+New observation shape: (1, 13)
+New observation: [[ 1.2811852   0.97975284  1.3345923   1.1019356   0.1037984  -0.91943604
+   1.013176    0.8109528  -0.919436   -0.5336385  -1.25602     0.
+   0.5336359 ]]
+Incremented step counter to: 34
+Post-action: Position: Closed, Shares: 0, Balance: 10008.300000000001
+
+=== Loop Step: 34/100, Env Step: 34 ===
+Current time: 2025-02-07 04:34:00, Price: 0.308
+Position: Closed, Shares: 0, Balance: 10008.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 1.2811852   0.97975284  1.3345923   1.1019356   0.1037984  -0.91943604
+   1.013176    0.8109528  -0.919436   -0.5336385  -1.25602     0.
+   0.5336359 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 34 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10008.30
+Current net worth: 10008.30
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10008.30
+New net worth: 10008.30
+New observation shape: (1, 13)
+New observation: [[ 1.0430028   0.740943    1.0304996   0.7620433  -0.36914906 -0.91943604
+   1.013176    0.8109528  -0.919436   -0.49886885 -1.25602     0.
+   0.49886698]]
+Incremented step counter to: 35
+Post-action: Position: Closed, Shares: 0, Balance: 10008.300000000001
+
+=== Loop Step: 35/100, Env Step: 35 ===
+Current time: 2025-02-07 04:35:00, Price: 0.3096
+Position: Closed, Shares: 0, Balance: 10008.300000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 1.0430028   0.740943    1.0304996   0.7620433  -0.36914906 -0.91943604
+   1.013176    0.8109528  -0.919436   -0.49886885 -1.25602     0.
+   0.49886698]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 35 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10008.30
+Current net worth: 10008.30
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9698.70
+New net worth: 10008.30
+New observation shape: (1, 13)
+New observation: [[ 0.80482054  0.58383167  1.0460944   0.87534076 -0.45900372  1.0876232
+  -1.0555593   0.8109528   1.0876232  -0.46409923 -1.25602     0.
+   0.464098  ]]
+Incremented step counter to: 36
+Post-action: Position: Open, Shares: 1000, Balance: 9698.7
+
+=== Loop Step: 36/100, Env Step: 36 ===
+Current time: 2025-02-07 04:36:00, Price: 0.3087
+Position: Open, Shares: 1000, Balance: 9698.7
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.80482054  0.58383167  1.0460944   0.87534076 -0.45900372  1.0876232
+  -1.0555593   0.8109528   1.0876232  -0.46409923 -1.25602     0.
+   0.464098  ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 36 ---
+Current price: 0.31
+Current position: OPEN
+Current shares: 1000
+Current balance: 9698.70
+Current net worth: 10008.30
+Position profit: -0.29%
+Executing action: [2] (SELL)
+Action result - Reward: -0.9000, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10007.40
+New net worth: 10007.40
+New observation shape: (1, 13)
+New observation: [[ 0.91646945  0.5461243   0.86675775  0.8116108  -0.30108553 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.42932948 -1.25602     0.
+   0.42932707]]
+Incremented step counter to: 37
+Post-action: Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+=== Loop Step: 37/100, Env Step: 37 ===
+Current time: 2025-02-07 04:37:00, Price: 0.3098
+Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.91646945  0.5461243   0.86675775  0.8116108  -0.30108553 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.42932948 -1.25602     0.
+   0.42932707]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 37 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10007.40
+Current net worth: 10007.40
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10007.40
+New net worth: 10007.40
+New observation shape: (1, 13)
+New observation: [[ 8.9413834e-01  9.4833094e-01  8.6675775e-01  8.8950318e-01
+   4.9247139e-04 -9.1943604e-01  1.0071661e+00  7.6550210e-01
+  -9.1943598e-01 -3.9455986e-01 -1.2560199e+00  0.0000000e+00
+   3.9455813e-01]]
+Incremented step counter to: 38
+Post-action: Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+=== Loop Step: 38/100, Env Step: 38 ===
+Current time: 2025-02-07 04:38:00, Price: 0.31
+Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 8.9413834e-01  9.4833094e-01  8.6675775e-01  8.8950318e-01
+   4.9247139e-04 -9.1943604e-01  1.0071661e+00  7.6550210e-01
+  -9.1943598e-01 -3.9455986e-01 -1.2560199e+00  0.0000000e+00
+   3.9455813e-01]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 38 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10007.40
+Current net worth: 10007.40
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10007.40
+New net worth: 10007.40
+New observation shape: (1, 13)
+New observation: [[ 0.8420361   0.7095211   1.0227034   0.90366566 -0.39282334 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.35979027 -1.25602     0.
+   0.35978916]]
+Incremented step counter to: 39
+Post-action: Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+=== Loop Step: 39/100, Env Step: 39 ===
+Current time: 2025-02-07 04:39:00, Price: 0.3097
+Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.8420361   0.7095211   1.0227034   0.90366566 -0.39282334 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.35979027 -1.25602     0.
+   0.35978916]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 39 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10007.40
+Current net worth: 10007.40
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10007.40
+New net worth: 10007.40
+New observation shape: (1, 13)
+New observation: [[ 0.95368505  0.5901153   0.9447294   0.88242304 -0.30727312 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.32502064 -1.25602     0.
+   0.32502022]]
+Incremented step counter to: 40
+Post-action: Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+=== Loop Step: 40/100, Env Step: 40 ===
+Current time: 2025-02-07 04:40:00, Price: 0.3073
+Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.95368505  0.5901153   0.9447294   0.88242304 -0.30727312 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.32502064 -1.25602     0.
+   0.32502022]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 40 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10007.40
+Current net worth: 10007.40
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10007.40
+New net worth: 10007.40
+New observation shape: (1, 13)
+New observation: [[ 0.909025    0.5586934   0.9681228   0.71247584 -0.5475132  -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.2902509  -1.25602     0.
+   0.29024926]]
+Incremented step counter to: 41
+Post-action: Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+=== Loop Step: 41/100, Env Step: 41 ===
+Current time: 2025-02-07 04:41:00, Price: 0.308
+Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.909025    0.5586934   0.9681228   0.71247584 -0.5475132  -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.2902509  -1.25602     0.
+   0.29024926]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 41 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10007.40
+Current net worth: 10007.40
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10007.40
+New net worth: 10007.40
+New observation shape: (1, 13)
+New observation: [[ 0.8197072   0.5084169   1.0149049   0.7620433  -0.55396986 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.2554813  -1.25602     0.
+   0.25548032]]
+Incremented step counter to: 42
+Post-action: Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+=== Loop Step: 42/100, Env Step: 42 ===
+Current time: 2025-02-07 04:42:00, Price: 0.3076
+Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.8197072   0.5084169   1.0149049   0.7620433  -0.55396986 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.2554813  -1.25602     0.
+   0.25548032]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 42 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10007.40
+Current net worth: 10007.40
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10007.40
+New net worth: 10007.40
+New observation shape: (1, 13)
+New observation: [[ 0.80482054  0.5084169   1.0304996   0.73371845 -0.55020344 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.22071168 -1.25602     0.
+   0.22071137]]
+Incremented step counter to: 43
+Post-action: Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+=== Loop Step: 43/100, Env Step: 43 ===
+Current time: 2025-02-07 04:43:00, Price: 0.3066
+Position: Closed, Shares: 0, Balance: 10007.400000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.80482054  0.5084169   1.0304996   0.73371845 -0.55020344 -0.91943604
+   1.0071661   0.7655021  -0.919436   -0.22071168 -1.25602     0.
+   0.22071137]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 43 ---
+Current price: 0.31
+Current position: CLOSED
+Current shares: 0
+Current balance: 10007.40
+Current net worth: 10007.40
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9700.80
+New net worth: 10007.40
+New observation shape: (1, 13)
+New observation: [[ 0.80482054  0.44557306  0.9057436   0.6629083  -0.4767594   1.0876232
+  -1.0415298   0.7655021   1.0876232  -0.18594207 -1.25602     0.
+   0.18594241]]
+Incremented step counter to: 44
+Post-action: Position: Open, Shares: 1000, Balance: 9700.800000000001
+
+=== Loop Step: 44/100, Env Step: 44 ===
+Current time: 2025-02-07 04:44:00, Price: 0.3067
+Position: Open, Shares: 1000, Balance: 9700.800000000001
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.80482054  0.44557306  0.9057436   0.6629083  -0.4767594   1.0876232
+  -1.0415298   0.7655021   1.0876232  -0.18594207 -1.25602     0.
+   0.18594241]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 44 ---
+Current price: 0.31
+Current position: OPEN
+Current shares: 1000
+Current balance: 9700.80
+Current net worth: 10007.40
+Position profit: 0.03%
+Executing action: [2] (SELL)
+Action result - Reward: 0.1200, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10007.50
+New net worth: 10007.50
+New observation shape: (1, 13)
+New observation: [[ 0.6782872   0.42672032  0.95252794  0.6699885  -0.3559668  -0.91943604
+   1.0078317   0.7705357  -0.919436   -0.15117233 -1.25602     0.
+   0.15117146]]
+Incremented step counter to: 45
+Post-action: Position: Closed, Shares: 0, Balance: 10007.500000000002
+
+=== Loop Step: 45/100, Env Step: 45 ===
+Current time: 2025-02-07 04:45:00, Price: 0.3047
+Position: Closed, Shares: 0, Balance: 10007.500000000002
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.6782872   0.42672032  0.95252794  0.6699885  -0.3559668  -0.91943604
+   1.0078317   0.7705357  -0.919436   -0.15117233 -1.25602     0.
+   0.15117146]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 45 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 10007.50
+Current net worth: 10007.50
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9702.80
+New net worth: 10007.50
+New observation shape: (1, 13)
+New observation: [[ 0.6782872   0.36387464  0.7965823   0.5283662  -0.2394786   1.0876232
+  -1.0281658   0.7705357   1.0876232  -0.11640272 -1.25602     0.
+   0.11640251]]
+Incremented step counter to: 46
+Post-action: Position: Open, Shares: 1000, Balance: 9702.800000000001
+
+=== Loop Step: 46/100, Env Step: 46 ===
+Current time: 2025-02-07 04:46:00, Price: 0.301
+Position: Open, Shares: 1000, Balance: 9702.800000000001
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.6782872   0.36387464  0.7965823   0.5283662  -0.2394786   1.0876232
+  -1.0281658   0.7705357   1.0876232  -0.11640272 -1.25602     0.
+   0.11640251]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 46 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9702.80
+Current net worth: 10007.50
+Position profit: -1.21%
+Executing action: [2] (SELL)
+Action result - Reward: -3.7000, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10003.80
+New net worth: 10003.80
+New observation shape: (1, 13)
+New observation: [[ 0.5443094   0.2507543   0.42231178  0.26636627 -0.01914642 -0.91943604
+   0.98310715  0.58355135 -0.919436   -0.0816331  -1.25602     0.
+   0.08163355]]
+Incremented step counter to: 47
+Post-action: Position: Closed, Shares: 0, Balance: 10003.800000000001
+
+=== Loop Step: 47/100, Env Step: 47 ===
+Current time: 2025-02-07 04:47:00, Price: 0.2972
+Position: Closed, Shares: 0, Balance: 10003.800000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.5443094   0.2507543   0.42231178  0.26636627 -0.01914642 -0.91943604
+   0.98310715  0.58355135 -0.919436   -0.0816331  -1.25602     0.
+   0.08163355]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 47 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 10003.80
+Current net worth: 10003.80
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9706.60
+New net worth: 10003.80
+New observation shape: (1, 13)
+New observation: [[ 0.28379598  0.01194451  0.2585699  -0.00271593  0.27516788  1.0876232
+  -1.0027757   0.58355135  1.0876232  -0.04686336 -1.25602     0.
+   0.04686261]]
+Incremented step counter to: 48
+Post-action: Position: Open, Shares: 1000, Balance: 9706.6
+
+=== Loop Step: 48/100, Env Step: 48 ===
+Current time: 2025-02-07 04:48:00, Price: 0.2922
+Position: Open, Shares: 1000, Balance: 9706.6
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.28379598  0.01194451  0.2585699  -0.00271593  0.27516788  1.0876232
+  -1.0027757   0.58355135  1.0876232  -0.04686336 -1.25602     0.
+   0.04686261]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 48 ---
+Current price: 0.29
+Current position: OPEN
+Current shares: 1000
+Current balance: 9706.60
+Current net worth: 10003.80
+Position profit: -1.68%
+Executing action: [2] (SELL)
+Action result - Reward: -5.0000, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9998.80
+New net worth: 9998.80
+New observation shape: (1, 13)
+New observation: [[ 0.02328482 -0.20801064 -0.14688788 -0.35677066  0.29668996 -0.91943604
+   0.94969726  0.33088315 -0.919436   -0.01209375 -1.25602     0.
+   0.01209365]]
+Incremented step counter to: 49
+Post-action: Position: Closed, Shares: 0, Balance: 9998.800000000001
+
+=== Loop Step: 49/100, Env Step: 49 ===
+Current time: 2025-02-07 04:49:00, Price: 0.298
+Position: Closed, Shares: 0, Balance: 9998.800000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.02328482 -0.20801064 -0.14688788 -0.35677066  0.29668996 -0.91943604
+   0.94969726  0.33088315 -0.919436   -0.01209375 -1.25602     0.
+   0.01209365]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 49 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9998.80
+Current net worth: 9998.80
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9998.80
+New net worth: 9998.80
+New observation shape: (1, 13)
+New observation: [[-0.3563197  -0.18287238 -0.13129309  0.05393384 -0.24405204 -0.91943604
+   0.94969726  0.33088315 -0.919436    0.02267587 -1.25602     0.
+  -0.0226753 ]]
+Incremented step counter to: 50
+Post-action: Position: Closed, Shares: 0, Balance: 9998.800000000001
+
+=== Loop Step: 50/100, Env Step: 50 ===
+Current time: 2025-02-07 04:50:00, Price: 0.2998
+Position: Closed, Shares: 0, Balance: 9998.800000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.3563197  -0.18287238 -0.13129309  0.05393384 -0.24405204 -0.91943604
+   0.94969726  0.33088315 -0.919436    0.02267587 -1.25602     0.
+  -0.0226753 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 50 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9998.80
+Current net worth: 9998.80
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9998.80
+New net worth: 9998.80
+New observation shape: (1, 13)
+New observation: [[ 0.02328482  0.18162501  0.28196326  0.18139371 -0.4194569  -0.91943604
+   0.94969726  0.33088315 -0.919436    0.05744548 -1.25602     0.
+  -0.05744425]]
+Incremented step counter to: 51
+Post-action: Position: Closed, Shares: 0, Balance: 9998.800000000001
+
+=== Loop Step: 51/100, Env Step: 51 ===
+Current time: 2025-02-07 04:51:00, Price: 0.301
+Position: Closed, Shares: 0, Balance: 9998.800000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.02328482  0.18162501  0.28196326  0.18139371 -0.4194569  -0.91943604
+   0.94969726  0.33088315 -0.919436    0.05744548 -1.25602     0.
+  -0.05744425]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 51 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9998.80
+Current net worth: 9998.80
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9697.80
+New net worth: 9998.80
+New observation shape: (1, 13)
+New observation: [[ 0.20936486  0.09992845  0.46129996  0.26636627 -0.3341757   1.0876232
+  -1.0615757   0.33088315  1.0876232   0.09221522 -1.25602     0.
+  -0.0922152 ]]
+Incremented step counter to: 52
+Post-action: Position: Open, Shares: 1000, Balance: 9697.800000000001
+
+=== Loop Step: 52/100, Env Step: 52 ===
+Current time: 2025-02-07 04:52:00, Price: 0.3008
+Position: Open, Shares: 1000, Balance: 9697.800000000001
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.20936486  0.09992845  0.46129996  0.26636627 -0.3341757   1.0876232
+  -1.0615757   0.33088315  1.0876232   0.09221522 -1.25602     0.
+  -0.0922152 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 52 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9697.80
+Current net worth: 9998.80
+Position profit: -0.07%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9697.80
+New net worth: 9998.60
+New observation shape: (1, 13)
+New observation: [[ 0.25402266  0.06850468  0.46129996  0.25220382 -0.5203416   1.0876232
+  -1.0615757   0.32076654  1.0876232   0.12698483 -1.25602     0.
+  -0.12698415]]
+Incremented step counter to: 53
+Post-action: Position: Open, Shares: 1000, Balance: 9697.800000000001
+
+=== Loop Step: 53/100, Env Step: 53 ===
+Current time: 2025-02-07 04:53:00, Price: 0.2991
+Position: Open, Shares: 1000, Balance: 9697.800000000001
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.25402266  0.06850468  0.46129996  0.25220382 -0.5203416   1.0876232
+  -1.0615757   0.32076654  1.0876232   0.12698483 -1.25602     0.
+  -0.12698415]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 53 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9697.80
+Current net worth: 9998.60
+Position profit: -0.63%
+Executing action: [2] (SELL)
+Action result - Reward: -1.9000, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9996.90
+New net worth: 9996.90
+New observation shape: (1, 13)
+New observation: [[ 0.20936486 -0.00690825  0.40671933  0.13182622 -0.648936   -0.91943604
+   0.93700546  0.23489882 -0.919436    0.16175444 -1.25602     0.
+  -0.1617531 ]]
+Incremented step counter to: 54
+Post-action: Position: Closed, Shares: 0, Balance: 9996.900000000001
+
+=== Loop Step: 54/100, Env Step: 54 ===
+Current time: 2025-02-07 04:54:00, Price: 0.2993
+Position: Closed, Shares: 0, Balance: 9996.900000000001
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.20936486 -0.00690825  0.40671933  0.13182622 -0.648936   -0.91943604
+   0.93700546  0.23489882 -0.919436    0.16175444 -1.25602     0.
+  -0.1617531 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 54 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9996.90
+Current net worth: 9996.90
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9697.60
+New net worth: 9996.90
+New observation shape: (1, 13)
+New observation: [[ 0.18703376 -0.05718291  0.32094908  0.14598656 -0.56849724  1.0876232
+  -1.0629134   0.23489882  1.0876232   0.19652405 -1.25602     0.
+  -0.19652206]]
+Incremented step counter to: 55
+Post-action: Position: Open, Shares: 1000, Balance: 9697.600000000002
+
+=== Loop Step: 55/100, Env Step: 55 ===
+Current time: 2025-02-07 04:55:00, Price: 0.2969
+Position: Open, Shares: 1000, Balance: 9697.600000000002
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.18703376 -0.05718291  0.32094908  0.14598656 -0.56849724  1.0876232
+  -1.0629134   0.23489882  1.0876232   0.19652405 -1.25602     0.
+  -0.19652206]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 55 ---
+Current price: 0.30
+Current position: OPEN
+Current shares: 1000
+Current balance: 9697.60
+Current net worth: 9996.90
+Position profit: -0.80%
+Executing action: [2] (SELL)
+Action result - Reward: -2.4000, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9994.50
+New net worth: 9994.50
+New observation shape: (1, 13)
+New observation: [[ 0.15726042 -0.10117581  0.13381383 -0.02395854 -0.53029555 -0.91943604
+   0.9209661   0.11359833 -0.919436    0.2312938  -1.25602     0.
+  -0.23129301]]
+Incremented step counter to: 56
+Post-action: Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+=== Loop Step: 56/100, Env Step: 56 ===
+Current time: 2025-02-07 04:56:00, Price: 0.2994
+Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.15726042 -0.10117581  0.13381383 -0.02395854 -0.53029555 -0.91943604
+   0.9209661   0.11359833 -0.919436    0.2312938  -1.25602     0.
+  -0.23129301]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 56 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9994.50
+Current net worth: 9994.50
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9994.50
+New net worth: 9994.50
+New observation shape: (1, 13)
+New observation: [[-0.02137519 -0.08860669  0.23517886  0.15306884 -0.6295661  -0.91943604
+   0.9209661   0.11359833 -0.919436    0.26606342 -1.25602     0.
+  -0.26606196]]
+Incremented step counter to: 57
+Post-action: Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+=== Loop Step: 57/100, Env Step: 57 ===
+Current time: 2025-02-07 04:57:00, Price: 0.2957
+Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.02137519 -0.08860669  0.23517886  0.15306884 -0.6295661  -0.91943604
+   0.9209661   0.11359833 -0.919436    0.26606342 -1.25602     0.
+  -0.26606196]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 57 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9994.50
+Current net worth: 9994.50
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9994.50
+New net worth: 9994.50
+New observation shape: (1, 13)
+New observation: [[ 0.13493152 -0.12002859  0.10262424 -0.10893108 -0.59378564 -0.91943604
+   0.9209661   0.11359833 -0.919436    0.30083302 -1.25602     0.
+  -0.3008309 ]]
+Incremented step counter to: 58
+Post-action: Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+=== Loop Step: 58/100, Env Step: 58 ===
+Current time: 2025-02-07 04:58:00, Price: 0.2982
+Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.13493152 -0.12002859  0.10262424 -0.10893108 -0.59378564 -0.91943604
+   0.9209661   0.11359833 -0.919436    0.30083302 -1.25602     0.
+  -0.3008309 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 58 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9994.50
+Current net worth: 9994.50
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9994.50
+New net worth: 9994.50
+New observation shape: (1, 13)
+New observation: [[-0.07347742 -0.13888134  0.14940864  0.06809629 -0.5200726  -0.91943604
+   0.9209661   0.11359833 -0.919436    0.33560264 -1.25602     0.
+  -0.33559987]]
+Incremented step counter to: 59
+Post-action: Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+=== Loop Step: 59/100, Env Step: 59 ===
+Current time: 2025-02-07 04:59:00, Price: 0.2971
+Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.07347742 -0.13888134  0.14940864  0.06809629 -0.5200726  -0.91943604
+   0.9209661   0.11359833 -0.919436    0.33560264 -1.25602     0.
+  -0.33559987]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 59 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9994.50
+Current net worth: 9994.50
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9994.50
+New net worth: 9994.50
+New observation shape: (1, 13)
+New observation: [[ 0.07538705 -0.16401961  0.15720487 -0.00979609 -0.6225714  -0.91943604
+   0.9209661   0.11359833 -0.919436    0.37037238 -1.25602     0.
+  -0.3703708 ]]
+Incremented step counter to: 60
+Post-action: Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+=== Loop Step: 60/100, Env Step: 60 ===
+Current time: 2025-02-07 05:00:00, Price: 0.2977
+Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.07538705 -0.16401961  0.15720487 -0.00979609 -0.6225714  -0.91943604
+   0.9209661   0.11359833 -0.919436    0.37037238 -1.25602     0.
+  -0.3703708 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 60 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9994.50
+Current net worth: 9994.50
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9994.50
+New net worth: 9994.50
+New observation shape: (1, 13)
+New observation: [[ 0.03072705 -0.19544151  0.16500343  0.03268912 -0.5617716  -0.91943604
+   0.9209661   0.11359833 -0.919436    0.40514198  0.79616565  0.
+  -0.40513977]]
+Incremented step counter to: 61
+Post-action: Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+=== Loop Step: 61/100, Env Step: 61 ===
+Current time: 2025-02-07 05:01:00, Price: 0.2964
+Position: Closed, Shares: 0, Balance: 9994.500000000002
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[ 0.03072705 -0.19544151  0.16500343  0.03268912 -0.5617716  -0.91943604
+   0.9209661   0.11359833 -0.919436    0.40514198  0.79616565  0.
+  -0.40513977]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 61 ---
+Current price: 0.30
+Current position: CLOSED
+Current shares: 0
+Current balance: 9994.50
+Current net worth: 9994.50
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9698.10
+New net worth: 9994.50
+New observation shape: (1, 13)
+New observation: [[ 0.03816927 -0.13888134  0.16500343 -0.05936359 -0.6190741   1.0876232
+  -1.0595725   0.11359833  1.0876232   0.4399116   0.79616565  0.
+  -0.4399087 ]]
+Incremented step counter to: 62
+Post-action: Position: Open, Shares: 1000, Balance: 9698.100000000002
+
+=== Loop Step: 62/100, Env Step: 62 ===
+Current time: 2025-02-07 05:02:00, Price: 0.2946
+Position: Open, Shares: 1000, Balance: 9698.100000000002
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[ 0.03816927 -0.13888134  0.16500343 -0.05936359 -0.6190741   1.0876232
+  -1.0595725   0.11359833  1.0876232   0.4399116   0.79616565  0.
+  -0.4399087 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 62 ---
+Current price: 0.29
+Current position: OPEN
+Current shares: 1000
+Current balance: 9698.10
+Current net worth: 9994.50
+Position profit: -0.61%
+Executing action: [2] (SELL)
+Action result - Reward: -1.9800, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9992.70
+New net worth: 9992.70
+New observation shape: (1, 13)
+New observation: [[-0.0660352  -0.27713993 -0.05332142 -0.18682346 -0.36672783 -0.91943604
+   0.90893984  0.02264764 -0.919436    0.47468123  0.79616565  0.
+  -0.47467965]]
+Incremented step counter to: 63
+Post-action: Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+=== Loop Step: 63/100, Env Step: 63 ===
+Current time: 2025-02-07 05:03:00, Price: 0.2903
+Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.0660352  -0.27713993 -0.05332142 -0.18682346 -0.36672783 -0.91943604
+   0.90893984  0.02264764 -0.919436    0.47468123  0.79616565  0.
+  -0.47467965]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 63 ---
+Current price: 0.29
+Current position: CLOSED
+Current shares: 0
+Current balance: 9992.70
+Current net worth: 9992.70
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9992.70
+New net worth: 9992.70
+New observation shape: (1, 13)
+New observation: [[-0.19256856 -0.31484735 -0.2794402  -0.49131072 -0.1614611  -0.91943604
+   0.90893984  0.02264764 -0.919436    0.50945085  0.79616565  0.
+  -0.5094486 ]]
+Incremented step counter to: 64
+Post-action: Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+=== Loop Step: 64/100, Env Step: 64 ===
+Current time: 2025-02-07 05:04:00, Price: 0.2874
+Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.19256856 -0.31484735 -0.2794402  -0.49131072 -0.1614611  -0.91943604
+   0.90893984  0.02264764 -0.919436    0.50945085  0.79616565  0.
+  -0.5094486 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 64 ---
+Current price: 0.29
+Current position: CLOSED
+Current shares: 0
+Current balance: 9992.70
+Current net worth: 9992.70
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9992.70
+New net worth: 9992.70
+New observation shape: (1, 13)
+New observation: [[-0.4828553  -0.55994076 -0.6069263  -0.69666296  0.20172381 -0.91943604
+   0.90893984  0.02264764 -0.919436    0.5442207   0.79616565  0.
+  -0.5442176 ]]
+Incremented step counter to: 65
+Post-action: Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+=== Loop Step: 65/100, Env Step: 65 ===
+Current time: 2025-02-07 05:05:00, Price: 0.284
+Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.4828553  -0.55994076 -0.6069263  -0.69666296  0.20172381 -0.91943604
+   0.90893984  0.02264764 -0.919436    0.5442207   0.79616565  0.
+  -0.5442176 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 65 ---
+Current price: 0.28
+Current position: CLOSED
+Current shares: 0
+Current balance: 9992.70
+Current net worth: 9992.70
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9992.70
+New net worth: 9992.70
+New observation shape: (1, 13)
+New observation: [[-0.6689353  -0.7359049  -0.8174526  -0.93742025  0.10675769 -0.91943604
+   0.90893984  0.02264764 -0.919436    0.5789903   0.79616565  0.
+  -0.5789865 ]]
+Incremented step counter to: 66
+Post-action: Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+=== Loop Step: 66/100, Env Step: 66 ===
+Current time: 2025-02-07 05:06:00, Price: 0.2777
+Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.6689353  -0.7359049  -0.8174526  -0.93742025  0.10675769 -0.91943604
+   0.90893984  0.02264764 -0.919436    0.5789903   0.79616565  0.
+  -0.5789865 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 66 ---
+Current price: 0.28
+Current position: CLOSED
+Current shares: 0
+Current balance: 9992.70
+Current net worth: 9992.70
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9992.70
+New net worth: 9992.70
+New observation shape: (1, 13)
+New observation: [[-1.0038798  -1.0626968  -1.355465   -1.3835298   1.4844391  -0.91943604
+   0.90893984  0.02264764 -0.919436    0.61375993  0.79616565  0.
+  -0.6137575 ]]
+Incremented step counter to: 67
+Post-action: Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+=== Loop Step: 67/100, Env Step: 67 ===
+Current time: 2025-02-07 05:07:00, Price: 0.278
+Position: Closed, Shares: 0, Balance: 9992.700000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-1.0038798  -1.0626968  -1.355465   -1.3835298   1.4844391  -0.91943604
+   0.90893984  0.02264764 -0.919436    0.61375993  0.79616565  0.
+  -0.6137575 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 67 ---
+Current price: 0.28
+Current position: CLOSED
+Current shares: 0
+Current balance: 9992.70
+Current net worth: 9992.70
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9992.70
+New observation shape: (1, 13)
+New observation: [[-1.4430288  -1.2323773  -1.3008821  -1.3622873   0.39596048  1.0876232
+  -0.9486478   0.02264764  1.0876232   0.6485295   0.79616565  0.
+  -0.64852643]]
+Incremented step counter to: 68
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 68/100, Env Step: 68 ===
+Current time: 2025-02-07 05:08:00, Price: 0.2686
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.4430288  -1.2323773  -1.3008821  -1.3622873   0.39596048  1.0876232
+  -0.9486478   0.02264764  1.0876232   0.6485295   0.79616565  0.
+  -0.64852643]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 68 ---
+Current price: 0.27
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9992.70
+Position profit: -3.38%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9983.30
+New observation shape: (1, 13)
+New observation: [[-1.3611532  -1.3832049  -1.9714491  -2.0279114   0.9305149   1.0876232
+  -0.9486478  -0.45238838  1.0876232   0.6832991   0.79616565  0.
+  -0.68329537]]
+Incremented step counter to: 69
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 69/100, Env Step: 69 ===
+Current time: 2025-02-07 05:09:00, Price: 0.2722
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.3611532  -1.3832049  -1.9714491  -2.0279114   0.9305149   1.0876232
+  -0.9486478  -0.45238838  1.0876232   0.6832991   0.79616565  0.
+  -0.68329537]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 69 ---
+Current price: 0.27
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9983.30
+Position profit: -2.09%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9986.90
+New observation shape: (1, 13)
+New observation: [[-2.023598   -1.8042644  -2.1663806  -1.7729918   0.62839884  1.0876232
+  -0.9486478  -0.27043763  1.0876232   0.7180688   0.79616565  0.
+  -0.7180643 ]]
+Incremented step counter to: 70
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 70/100, Env Step: 70 ===
+Current time: 2025-02-07 05:10:00, Price: 0.2761
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-2.023598   -1.8042644  -2.1663806  -1.7729918   0.62839884  1.0876232
+  -0.9486478  -0.27043763  1.0876232   0.7180688   0.79616565  0.
+  -0.7180643 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 70 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9986.90
+Position profit: -0.68%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9990.80
+New observation shape: (1, 13)
+New observation: [[-1.7630867  -1.3580667  -1.7843138  -1.4968272   0.37659064  1.0876232
+  -0.9486478  -0.07338603  1.0876232   0.7528384   0.79616565  0.
+  -0.7528353 ]]
+Incremented step counter to: 71
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 71/100, Env Step: 71 ===
+Current time: 2025-02-07 05:11:00, Price: 0.2777
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.7630867  -1.3580667  -1.7843138  -1.4968272   0.37659064  1.0876232
+  -0.9486478  -0.07338603  1.0876232   0.7528384   0.79616565  0.
+  -0.7528353 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 71 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9990.80
+Position profit: -0.11%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9992.40
+New observation shape: (1, 13)
+New observation: [[-1.56212    -1.2323773  -1.5036122  -1.3835298  -0.04524193  1.0876232
+  -0.9486478   0.00749742  1.0876232   0.78760797  0.79616565  0.
+  -0.7876042 ]]
+Incremented step counter to: 72
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 72/100, Env Step: 72 ===
+Current time: 2025-02-07 05:12:00, Price: 0.275
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.56212    -1.2323773  -1.5036122  -1.3835298  -0.04524193  1.0876232
+  -0.9486478   0.00749742  1.0876232   0.78760797  0.79616565  0.
+  -0.7876042 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 72 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9992.40
+Position profit: -1.08%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9989.70
+New observation shape: (1, 13)
+New observation: [[-1.5546756  -1.4083432  -1.6907474  -1.5747197  -0.2986643   1.0876232
+  -0.9486478  -0.1289533   1.0876232   0.82237786  0.79616565  0.
+  -0.82237315]]
+Incremented step counter to: 73
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 73/100, Env Step: 73 ===
+Current time: 2025-02-07 05:13:00, Price: 0.273
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.5546756  -1.4083432  -1.6907474  -1.5747197  -0.2986643   1.0876232
+  -0.9486478  -0.1289533   1.0876232   0.82237786  0.79616565  0.
+  -0.82237315]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 73 ---
+Current price: 0.27
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9989.70
+Position profit: -1.80%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9987.70
+New observation shape: (1, 13)
+New observation: [[-1.6514378  -1.5528855  -1.8544892  -1.716342   -0.28548202  1.0876232
+  -0.9486478  -0.23002058  1.0876232   0.85714746  0.79616565  0.
+  -0.85714215]]
+Incremented step counter to: 74
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 74/100, Env Step: 74 ===
+Current time: 2025-02-07 05:14:00, Price: 0.2788
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.6514378  -1.5528855  -1.8544892  -1.716342   -0.28548202  1.0876232
+  -0.9486478  -0.23002058  1.0876232   0.85714746  0.79616565  0.
+  -0.85714215]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 74 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9987.70
+Position profit: 0.29%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9993.50
+New observation shape: (1, 13)
+New observation: [[-1.8077466  -1.3266448  -1.6361667  -1.3056375  -0.51603717  1.0876232
+  -0.9486478   0.06306469  1.0876232   0.8919171   0.79616565  0.
+  -0.89191306]]
+Incremented step counter to: 75
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 75/100, Env Step: 75 ===
+Current time: 2025-02-07 05:15:00, Price: 0.2806
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.8077466  -1.3266448  -1.6361667  -1.3056375  -0.51603717  1.0876232
+  -0.9486478   0.06306469  1.0876232   0.8919171   0.79616565  0.
+  -0.89191306]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 75 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9993.50
+Position profit: 0.94%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9995.30
+New observation shape: (1, 13)
+New observation: [[-1.3685955  -1.1004041  -1.4256405  -1.1781776  -0.2801015   1.0876232
+  -0.9486478   0.15401538  1.0876232   0.9266867   0.79616565  0.
+  -0.92668205]]
+Incremented step counter to: 76
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 76/100, Env Step: 76 ===
+Current time: 2025-02-07 05:16:00, Price: 0.28
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.3685955  -1.1004041  -1.4256405  -1.1781776  -0.2801015   1.0876232
+  -0.9486478   0.15401538  1.0876232   0.9266867   0.79616565  0.
+  -0.92668205]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 76 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9995.30
+Position profit: 0.72%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9994.70
+New observation shape: (1, 13)
+New observation: [[-1.1825155  -1.163248   -1.355465   -1.2206649  -0.02560304  1.0876232
+  -0.9486478   0.12371493  1.0876232   0.9614563   0.79616565  0.
+  -0.961451  ]]
+Incremented step counter to: 77
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 77/100, Env Step: 77 ===
+Current time: 2025-02-07 05:17:00, Price: 0.2822
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.1825155  -1.163248   -1.355465   -1.2206649  -0.02560304  1.0876232
+  -0.9486478   0.12371493  1.0876232   0.9614563   0.79616565  0.
+  -0.961451  ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 77 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9994.70
+Position profit: 1.51%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9996.90
+New observation shape: (1, 13)
+New observation: [[-1.2420621  -1.1255424  -1.0825595  -1.0648801  -0.43667457  1.0876232
+  -0.9486478   0.23489882  1.0876232   0.99622595  0.79616565  0.
+  -0.9962219 ]]
+Incremented step counter to: 78
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 78/100, Env Step: 78 ===
+Current time: 2025-02-07 05:18:00, Price: 0.2845
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.2420621  -1.1255424  -1.0825595  -1.0648801  -0.43667457  1.0876232
+  -0.9486478   0.23489882  1.0876232   0.99622595  0.79616565  0.
+  -0.9962219 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 78 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9996.90
+Position profit: 2.34%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.70
+New net worth: 9999.20
+New observation shape: (1, 13)
+New observation: [[-1.0559821  -0.99985296 -0.9110191  -0.9020152  -0.47541428  1.0876232
+  -0.9486478   0.35111633  1.0876232   1.0309955   0.79616565  0.
+  -1.0309908 ]]
+Incremented step counter to: 79
+Post-action: Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+=== Loop Step: 79/100, Env Step: 79 ===
+Current time: 2025-02-07 05:19:00, Price: 0.2872
+Position: Open, Shares: 1000, Balance: 9714.700000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.0559821  -0.99985296 -0.9110191  -0.9020152  -0.47541428  1.0876232
+  -0.9486478   0.35111633  1.0876232   1.0309955   0.79616565  0.
+  -1.0309908 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 79 ---
+Current price: 0.29
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.70
+Current net worth: 9999.20
+Position profit: 3.31%
+Executing action: [2] (SELL)
+Action result - Reward: 10.1400, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10001.90
+New net worth: 10001.90
+New observation shape: (1, 13)
+New observation: [[-0.9815487  -0.62278455 -0.7706682  -0.7108254  -0.18701856 -0.91943604
+   0.9704153   0.48756704 -0.919436    1.0657654   0.79616565  0.
+  -1.0657598 ]]
+Incremented step counter to: 80
+Post-action: Position: Closed, Shares: 0, Balance: 10001.900000000003
+
+=== Loop Step: 80/100, Env Step: 80 ===
+Current time: 2025-02-07 05:20:00, Price: 0.2909
+Position: Closed, Shares: 0, Balance: 10001.900000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.9815487  -0.62278455 -0.7706682  -0.7108254  -0.18701856 -0.91943604
+   0.9704153   0.48756704 -0.919436    1.0657654   0.79616565  0.
+  -1.0657598 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 80 ---
+Current price: 0.29
+Current position: CLOSED
+Current shares: 0
+Current balance: 10001.90
+Current net worth: 10001.90
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10001.90
+New net worth: 10001.90
+New observation shape: (1, 13)
+New observation: [[-0.64660424 -0.55994076 -0.5211561  -0.44882548 -0.30996338 -0.91943604
+   0.9704153   0.48756704 -0.919436    1.100535    0.79616565  0.
+  -1.1005288 ]]
+Incremented step counter to: 81
+Post-action: Position: Closed, Shares: 0, Balance: 10001.900000000003
+
+=== Loop Step: 81/100, Env Step: 81 ===
+Current time: 2025-02-07 05:21:00, Price: 0.2902
+Position: Closed, Shares: 0, Balance: 10001.900000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.64660424 -0.55994076 -0.5211561  -0.44882548 -0.30996338 -0.91943604
+   0.9704153   0.48756704 -0.919436    1.100535    0.79616565  0.
+  -1.1005288 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 81 ---
+Current price: 0.29
+Current position: CLOSED
+Current shares: 0
+Current balance: 10001.90
+Current net worth: 10001.90
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10001.90
+New net worth: 10001.90
+New observation shape: (1, 13)
+New observation: [[-0.4233086  -0.12002859 -0.30283356 -0.498393   -0.09205242 -0.91943604
+   0.9704153   0.48756704 -0.919436    1.1353046   0.79616565  0.
+  -1.1352997 ]]
+Incremented step counter to: 82
+Post-action: Position: Closed, Shares: 0, Balance: 10001.900000000003
+
+=== Loop Step: 82/100, Env Step: 82 ===
+Current time: 2025-02-07 05:22:00, Price: 0.2877
+Position: Closed, Shares: 0, Balance: 10001.900000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.4233086  -0.12002859 -0.30283356 -0.498393   -0.09205242 -0.91943604
+   0.9704153   0.48756704 -0.919436    1.1353046   0.79616565  0.
+  -1.1352997 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 82 ---
+Current price: 0.29
+Current position: CLOSED
+Current shares: 0
+Current balance: 10001.90
+Current net worth: 10001.90
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 10001.90
+New net worth: 10001.90
+New observation shape: (1, 13)
+New observation: [[-0.5349575  -0.65420836 -0.5757367  -0.67542034 -0.3828694  -0.91943604
+   0.9704153   0.48756704 -0.919436    1.1700742   0.79616565  0.
+  -1.1700687 ]]
+Incremented step counter to: 83
+Post-action: Position: Closed, Shares: 0, Balance: 10001.900000000003
+
+=== Loop Step: 83/100, Env Step: 83 ===
+Current time: 2025-02-07 05:23:00, Price: 0.2867
+Position: Closed, Shares: 0, Balance: 10001.900000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.5349575  -0.65420836 -0.5757367  -0.67542034 -0.3828694  -0.91943604
+   0.9704153   0.48756704 -0.919436    1.1700742   0.79616565  0.
+  -1.1700687 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 83 ---
+Current price: 0.29
+Current position: CLOSED
+Current shares: 0
+Current balance: 10001.90
+Current net worth: 10001.90
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9715.20
+New net worth: 10001.90
+New observation shape: (1, 13)
+New observation: [[-0.7954687  -0.8427416  -0.9655997  -0.7462305  -0.23167685  1.0876232
+  -0.94530684  0.48756704  1.0876232   1.2048439   0.79616565  0.
+  -1.2048377 ]]
+Incremented step counter to: 84
+Post-action: Position: Open, Shares: 1000, Balance: 9715.200000000003
+
+=== Loop Step: 84/100, Env Step: 84 ===
+Current time: 2025-02-07 05:24:00, Price: 0.2859
+Position: Open, Shares: 1000, Balance: 9715.200000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-0.7954687  -0.8427416  -0.9655997  -0.7462305  -0.23167685  1.0876232
+  -0.94530684  0.48756704  1.0876232   1.2048439   0.79616565  0.
+  -1.2048377 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 84 ---
+Current price: 0.29
+Current position: OPEN
+Current shares: 1000
+Current balance: 9715.20
+Current net worth: 10001.90
+Position profit: -0.28%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9715.20
+New net worth: 10001.10
+New observation shape: (1, 13)
+New observation: [[-0.8177998  -0.88673264 -0.6381159  -0.8028802  -0.62310946  1.0876232
+  -0.94530684  0.44710067  1.0876232   1.2396134   0.79616565  0.
+  -1.2396066 ]]
+Incremented step counter to: 85
+Post-action: Position: Open, Shares: 1000, Balance: 9715.200000000003
+
+=== Loop Step: 85/100, Env Step: 85 ===
+Current time: 2025-02-07 05:25:00, Price: 0.2822
+Position: Open, Shares: 1000, Balance: 9715.200000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-0.8177998  -0.88673264 -0.6381159  -0.8028802  -0.62310946  1.0876232
+  -0.94530684  0.44710067  1.0876232   1.2396134   0.79616565  0.
+  -1.2396066 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 85 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9715.20
+Current net worth: 10001.10
+Position profit: -1.57%
+Executing action: [2] (SELL)
+Action result - Reward: -4.9500, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.40
+New net worth: 9997.40
+New observation shape: (1, 13)
+New observation: [[-0.8401287  -0.9370073  -0.9110191  -1.0648801  -0.5440159  -0.91943604
+   0.9403464   0.26016563 -0.919436    1.2743831   0.79616565  0.
+  -1.2743776 ]]
+Incremented step counter to: 86
+Post-action: Position: Closed, Shares: 0, Balance: 9997.400000000003
+
+=== Loop Step: 86/100, Env Step: 86 ===
+Current time: 2025-02-07 05:26:00, Price: 0.2778
+Position: Closed, Shares: 0, Balance: 9997.400000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.8401287  -0.9370073  -0.9110191  -1.0648801  -0.5440159  -0.91943604
+   0.9403464   0.26016563 -0.919436    1.2743831   0.79616565  0.
+  -1.2743776 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 86 ---
+Current price: 0.28
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.40
+Current net worth: 9997.40
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.40
+New net worth: 9997.40
+New observation shape: (1, 13)
+New observation: [[-1.1155266  -1.1129733  -1.355465   -1.3764497  -0.07133743 -0.91943604
+   0.9403464   0.26016563 -0.919436    1.3091527   0.79616565  0.
+  -1.3091465 ]]
+Incremented step counter to: 87
+Post-action: Position: Closed, Shares: 0, Balance: 9997.400000000003
+
+=== Loop Step: 87/100, Env Step: 87 ===
+Current time: 2025-02-07 05:27:00, Price: 0.2819
+Position: Closed, Shares: 0, Balance: 9997.400000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-1.1155266  -1.1129733  -1.355465   -1.3764497  -0.07133743 -0.91943604
+   0.9403464   0.26016563 -0.919436    1.3091527   0.79616565  0.
+  -1.3091465 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 87 ---
+Current price: 0.28
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.40
+Current net worth: 9997.40
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9997.40
+New net worth: 9997.40
+New observation shape: (1, 13)
+New observation: [[-1.4430288  -1.0878351  -1.4334366  -1.0861249  -0.31157753 -0.91943604
+   0.9403464   0.26016563 -0.919436    1.3439226   0.79616565  0.
+  -1.3439155 ]]
+Incremented step counter to: 88
+Post-action: Position: Closed, Shares: 0, Balance: 9997.400000000003
+
+=== Loop Step: 88/100, Env Step: 88 ===
+Current time: 2025-02-07 05:28:00, Price: 0.2852
+Position: Closed, Shares: 0, Balance: 9997.400000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-1.4430288  -1.0878351  -1.4334366  -1.0861249  -0.31157753 -0.91943604
+   0.9403464   0.26016563 -0.919436    1.3439226   0.79616565  0.
+  -1.3439155 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 88 ---
+Current price: 0.29
+Current position: CLOSED
+Current shares: 0
+Current balance: 9997.40
+Current net worth: 9997.40
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9712.20
+New net worth: 9997.40
+New observation shape: (1, 13)
+New observation: [[-1.2420621  -0.8741635  -1.0435737  -0.85244775 -0.44582143  1.0876232
+  -0.9653527   0.26016563  1.0876232   1.3786922   0.79616565  0.
+  -1.3786844 ]]
+Incremented step counter to: 89
+Post-action: Position: Open, Shares: 1000, Balance: 9712.200000000003
+
+=== Loop Step: 89/100, Env Step: 89 ===
+Current time: 2025-02-07 05:29:00, Price: 0.2858
+Position: Open, Shares: 1000, Balance: 9712.200000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.2420621  -0.8741635  -1.0435737  -0.85244775 -0.44582143  1.0876232
+  -0.9653527   0.26016563  1.0876232   1.3786922   0.79616565  0.
+  -1.3786844 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 89 ---
+Current price: 0.29
+Current position: OPEN
+Current shares: 1000
+Current balance: 9712.20
+Current net worth: 9997.40
+Position profit: 0.21%
+Executing action: [2] (SELL)
+Action result - Reward: 0.6800, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9998.00
+New net worth: 9998.00
+New observation shape: (1, 13)
+New observation: [[-0.8922309  -0.8113197  -0.7706682  -0.8099604  -0.5475132  -0.91943604
+   0.944353    0.2904661  -0.919436    1.4134618   0.79616565  0.
+  -1.4134554 ]]
+Incremented step counter to: 90
+Post-action: Position: Closed, Shares: 0, Balance: 9998.000000000002
+
+=== Loop Step: 90/100, Env Step: 90 ===
+Current time: 2025-02-07 05:30:00, Price: 0.2833
+Position: Closed, Shares: 0, Balance: 9998.000000000002
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.8922309  -0.8113197  -0.7706682  -0.8099604  -0.5475132  -0.91943604
+   0.944353    0.2904661  -0.919436    1.4134618   0.79616565  0.
+  -1.4134554 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 90 ---
+Current price: 0.28
+Current position: CLOSED
+Current shares: 0
+Current balance: 9998.00
+Current net worth: 9998.00
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0010, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9998.00
+New net worth: 9998.00
+New observation shape: (1, 13)
+New observation: [[-0.869902   -0.823887   -0.9110191  -0.98698777 -0.6056228  -0.91943604
+   0.944353    0.2904661  -0.919436    1.4482315  -1.25602     0.
+  -1.4482243 ]]
+Incremented step counter to: 91
+Post-action: Position: Closed, Shares: 0, Balance: 9998.000000000002
+
+=== Loop Step: 91/100, Env Step: 91 ===
+Current time: 2025-02-07 05:31:00, Price: 0.2839
+Position: Closed, Shares: 0, Balance: 9998.000000000002
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-0.869902   -0.823887   -0.9110191  -0.98698777 -0.6056228  -0.91943604
+   0.944353    0.2904661  -0.919436    1.4482315  -1.25602     0.
+  -1.4482243 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 91 ---
+Current price: 0.28
+Current position: CLOSED
+Current shares: 0
+Current balance: 9998.00
+Current net worth: 9998.00
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9714.10
+New net worth: 9998.00
+New observation shape: (1, 13)
+New observation: [[-1.033651   -1.0689822  -1.0903558  -0.94450253 -0.53244776  1.0876232
+  -0.9526609   0.2904661   1.0876232   1.483001   -1.25602     0.
+  -1.4829932 ]]
+Incremented step counter to: 92
+Post-action: Position: Open, Shares: 1000, Balance: 9714.100000000002
+
+=== Loop Step: 92/100, Env Step: 92 ===
+Current time: 2025-02-07 05:32:00, Price: 0.2811
+Position: Open, Shares: 1000, Balance: 9714.100000000002
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.033651   -1.0689822  -1.0903558  -0.94450253 -0.53244776  1.0876232
+  -0.9526609   0.2904661   1.0876232   1.483001   -1.25602     0.
+  -1.4829932 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: SELL (2)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 92 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9714.10
+Current net worth: 9998.00
+Position profit: -0.99%
+Executing action: [2] (SELL)
+Action result - Reward: -2.8000, Done: False
+New position: CLOSED
+New shares: 0
+New balance: 9995.20
+New net worth: 9995.20
+New observation shape: (1, 13)
+New observation: [[-1.2792777  -1.0689822  -1.2541     -1.1427726  -0.5983591  -0.91943604
+   0.9256448   0.14898175 -0.919436    1.5177706  -1.25602     0.
+  -1.5177642 ]]
+Incremented step counter to: 93
+Post-action: Position: Closed, Shares: 0, Balance: 9995.200000000003
+
+=== Loop Step: 93/100, Env Step: 93 ===
+Current time: 2025-02-07 05:33:00, Price: 0.2834
+Position: Closed, Shares: 0, Balance: 9995.200000000003
+
+Action masks: [ True  True False]
+Valid actions: [0 1]
+
+Observation shape: (1, 13)
+Observation: [[-1.2792777  -1.0689822  -1.2541     -1.1427726  -0.5983591  -0.91943604
+   0.9256448   0.14898175 -0.919436    1.5177706  -1.25602     0.
+  -1.5177642 ]]
+Valid actions: [0, 1] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: BUY (1)
+[ACTION] Valid actions: ['HOLD', 'BUY']
+
+--- Step 93 ---
+Current price: 0.28
+Current position: CLOSED
+Current shares: 0
+Current balance: 9995.20
+Current net worth: 9995.20
+Executing action: [1] (BUY)
+Action result - Reward: -0.0100, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9711.80
+New net worth: 9995.20
+New observation shape: (1, 13)
+New observation: [[-1.1304132  -1.0501276  -1.0045879  -0.9799076  -0.6782598   1.0876232
+  -0.9680281   0.14898175  1.0876232   1.5525403  -1.25602     0.
+  -1.5525331 ]]
+Incremented step counter to: 94
+Post-action: Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+=== Loop Step: 94/100, Env Step: 94 ===
+Current time: 2025-02-07 05:34:00, Price: 0.2803
+Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.1304132  -1.0501276  -1.0045879  -0.9799076  -0.6782598   1.0876232
+  -0.9680281   0.14898175  1.0876232   1.5525403  -1.25602     0.
+  -1.5525331 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 94 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9711.80
+Current net worth: 9995.20
+Position profit: -1.09%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9711.80
+New net worth: 9992.10
+New observation shape: (1, 13)
+New observation: [[-1.0262088  -1.0941205  -1.0825595  -1.1994222  -0.66561556  1.0876232
+  -0.9680281  -0.00770216  1.0876232   1.5873101  -1.25602     0.
+  -1.5873021 ]]
+Incremented step counter to: 95
+Post-action: Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+=== Loop Step: 95/100, Env Step: 95 ===
+Current time: 2025-02-07 05:35:00, Price: 0.2798
+Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.0262088  -1.0941205  -1.0825595  -1.1994222  -0.66561556  1.0876232
+  -0.9680281  -0.00770216  1.0876232   1.5873101  -1.25602     0.
+  -1.5873021 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 95 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9711.80
+Current net worth: 9992.10
+Position profit: -1.27%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9711.80
+New net worth: 9991.60
+New observation shape: (1, 13)
+New observation: [[-1.219731   -1.2637992  -1.1449387  -1.2348274  -0.66023505  1.0876232
+  -0.9680281  -0.03296898  1.0876232   1.6220797  -1.25602     0.
+  -1.622071  ]]
+Incremented step counter to: 96
+Post-action: Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+=== Loop Step: 96/100, Env Step: 96 ===
+Current time: 2025-02-07 05:36:00, Price: 0.279
+Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.219731   -1.2637992  -1.1449387  -1.2348274  -0.66023505  1.0876232
+  -0.9680281  -0.03296898  1.0876232   1.6220797  -1.25602     0.
+  -1.622071  ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 96 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9711.80
+Current net worth: 9991.60
+Position profit: -1.55%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9711.80
+New net worth: 9990.80
+New observation shape: (1, 13)
+New observation: [[-1.2941643  -1.2637992  -1.2385052  -1.291475   -0.57064945  1.0876232
+  -0.9680281  -0.07338603  1.0876232   1.6568494  -1.25602     0.
+  -1.656842  ]]
+Incremented step counter to: 97
+Post-action: Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+=== Loop Step: 97/100, Env Step: 97 ===
+Current time: 2025-02-07 05:37:00, Price: 0.2778
+Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.2941643  -1.2637992  -1.2385052  -1.291475   -0.57064945  1.0876232
+  -0.9680281  -0.07338603  1.0876232   1.6568494  -1.25602     0.
+  -1.656842  ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 97 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9711.80
+Current net worth: 9990.80
+Position profit: -1.98%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9711.80
+New net worth: 9989.60
+New observation shape: (1, 13)
+New observation: [[-1.3611532  -1.2449464  -1.2541     -1.3764497  -0.50823545  1.0876232
+  -0.9680281  -0.13403627  1.0876232   1.6916189  -1.25602     0.
+  -1.6916109 ]]
+Incremented step counter to: 98
+Post-action: Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+=== Loop Step: 98/100, Env Step: 98 ===
+Current time: 2025-02-07 05:38:00, Price: 0.2806
+Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+Action masks: [ True False  True]
+Valid actions: [0 2]
+
+Observation shape: (1, 13)
+Observation: [[-1.3611532  -1.2449464  -1.2541     -1.3764497  -0.50823545  1.0876232
+  -0.9680281  -0.13403627  1.0876232   1.6916189  -1.25602     0.
+  -1.6916109 ]]
+Valid actions: [0, 2] (0=HOLD, 1=BUY, 2=SELL)
+
+[ACTION] Model chose: HOLD (0)
+[ACTION] Valid actions: ['HOLD', 'SELL']
+
+--- Step 98 ---
+Current price: 0.28
+Current position: OPEN
+Current shares: 1000
+Current balance: 9711.80
+Current net worth: 9989.60
+Position profit: -0.99%
+Executing action: [0] (HOLD)
+Action result - Reward: 0.0050, Done: False
+New position: OPEN
+New shares: 1000
+New balance: 9711.80
+New net worth: 9992.40
+New observation shape: (1, 13)
+New observation: [[-1.4430288  -1.2763683  -1.355465   -1.1781776  -0.62310946  1.0876232
+  -0.9680281   0.00749742  1.0876232   1.7263886  -1.25602     0.
+  -1.7263799 ]]
+Incremented step counter to: 99
+Post-action: Position: Open, Shares: 1000, Balance: 9711.800000000003
+
+==================== REWARD SUMMARY ====================
+Total reward: -4.17
+Number of BUY actions: 19
+Number of SELL actions: 18
+
+Detailed reward per step:
+
+=== REWARD SUMMARY ===
+
+Step   | Action  | Close      | Reward     | Description
+--------------------------------------------------------------------------------
+0      | BUY     | 0.3386     | -0.0100    | BUY 1000 @ 0.3386
+1      | SELL    | 0.3265     | -13.3100   | SELL 1000 | Bought @ 0.3386 | Sold @ 0.3265 (Pre-Market +10%) | Profit: $-13.31 (-3.57%)
+2      | HOLD    | 0.3288     | 0.0010     | 
+3      | HOLD    | 0.3123     | 0.0010     | 
+4      | BUY     | 0.3124     | -0.0100    | BUY 1000 @ 0.3124
+5      | SELL    | 0.3011     | -12.4300   | SELL 1000 | Bought @ 0.3124 | Sold @ 0.3011 (Pre-Market +10%) | Profit: $-12.43 (-3.62%)
+6      | HOLD    | 0.3069     | 0.0010     | 
+7      | BUY     | 0.3115     | -0.0100    | BUY 1000 @ 0.3115
+8      | HOLD    | 0.3137     | 0.0050     | Holding 1000 shares
+9      | SELL    | 0.3046     | -7.5900    | SELL 1000 | Bought @ 0.3115 | Sold @ 0.3046 (Pre-Market +10%) | Profit: $-7.59 (-2.22%)
+10     | HOLD    | 0.2954     | 0.0010     | 
+11     | BUY     | 0.2950     | -0.0100    | BUY 1000 @ 0.2950
+12     | HOLD    | 0.3062     | 0.0050     | Holding 1000 shares
+13     | HOLD    | 0.3042     | 0.0050     | Holding 1000 shares
+14     | SELL    | 0.3022     | 7.9400     | SELL 1000 | Bought @ 0.2950 | Sold @ 0.3022 (Pre-Market +10%) | Profit: $7.92 (+2.44%)
+15     | HOLD    | 0.3005     | 0.0010     | 
+16     | BUY     | 0.2955     | -0.0100    | BUY 1000 @ 0.2955
+17     | HOLD    | 0.2985     | 0.0050     | Holding 1000 shares
+18     | HOLD    | 0.3000     | 0.0050     | Holding 1000 shares
+19     | HOLD    | 0.3086     | 0.0050     | Holding 1000 shares
+20     | SELL    | 0.3159     | 22.4600    | SELL 1000 | Bought @ 0.2955 | Sold @ 0.3159 (Pre-Market +10%) | Profit: $22.44 (+6.90%)
+21     | HOLD    | 0.3096     | 0.0010     | 
+22     | HOLD    | 0.3100     | 0.0010     | 
+23     | HOLD    | 0.3068     | 0.0010     | 
+24     | HOLD    | 0.3025     | 0.0010     | 
+25     | HOLD    | 0.3051     | 0.0010     | 
+26     | HOLD    | 0.3034     | 0.0010     | 
+27     | BUY     | 0.3027     | -0.0100    | BUY 1000 @ 0.3027
+28     | SELL    | 0.3071     | 4.8600     | SELL 1000 | Bought @ 0.3027 | Sold @ 0.3071 (Pre-Market +10%) | Profit: $4.84 (+1.45%)
+29     | HOLD    | 0.3114     | 0.0010     | 
+30     | BUY     | 0.3070     | -0.0100    | BUY 1000 @ 0.3070
+31     | HOLD    | 0.3109     | 0.0050     | Holding 1000 shares
+32     | SELL    | 0.3136     | 6.6200     | SELL 1000 | Bought @ 0.3070 | Sold @ 0.3136 | Profit: $6.60 (+2.15%)
+33     | HOLD    | 0.3128     | 0.0010     | 
+34     | HOLD    | 0.3080     | 0.0010     | 
+35     | BUY     | 0.3096     | -0.0100    | BUY 1000 @ 0.3096
+36     | SELL    | 0.3087     | -0.9000    | SELL 1000 | Bought @ 0.3096 | Sold @ 0.3087 | Profit: $-0.90 (-0.29%)
+37     | HOLD    | 0.3098     | 0.0010     | 
+38     | HOLD    | 0.3100     | 0.0010     | 
+39     | HOLD    | 0.3097     | 0.0010     | 
+40     | HOLD    | 0.3073     | 0.0010     | 
+41     | HOLD    | 0.3080     | 0.0010     | 
+42     | HOLD    | 0.3076     | 0.0010     | 
+43     | BUY     | 0.3066     | -0.0100    | BUY 1000 @ 0.3066
+44     | SELL    | 0.3067     | 0.1200     | SELL 1000 | Bought @ 0.3066 | Sold @ 0.3067 | Profit: $0.10 (+0.03%)
+45     | BUY     | 0.3047     | -0.0100    | BUY 1000 @ 0.3047
+46     | SELL    | 0.3010     | -3.7000    | SELL 1000 | Bought @ 0.3047 | Sold @ 0.3010 | Profit: $-3.70 (-1.21%)
+47     | BUY     | 0.2972     | -0.0100    | BUY 1000 @ 0.2972
+48     | SELL    | 0.2922     | -5.0000    | SELL 1000 | Bought @ 0.2972 | Sold @ 0.2922 | Profit: $-5.00 (-1.68%)
+49     | HOLD    | 0.2980     | 0.0010     | 
+50     | HOLD    | 0.2998     | 0.0010     | 
+51     | BUY     | 0.3010     | -0.0100    | BUY 1000 @ 0.3010
+52     | HOLD    | 0.3008     | 0.0050     | Holding 1000 shares
+53     | SELL    | 0.2991     | -1.9000    | SELL 1000 | Bought @ 0.3010 | Sold @ 0.2991 | Profit: $-1.90 (-0.63%)
+54     | BUY     | 0.2993     | -0.0100    | BUY 1000 @ 0.2993
+55     | SELL    | 0.2969     | -2.4000    | SELL 1000 | Bought @ 0.2993 | Sold @ 0.2969 | Profit: $-2.40 (-0.80%)
+56     | HOLD    | 0.2994     | 0.0010     | 
+57     | HOLD    | 0.2957     | 0.0010     | 
+58     | HOLD    | 0.2982     | 0.0010     | 
+59     | HOLD    | 0.2971     | 0.0010     | 
+60     | HOLD    | 0.2977     | 0.0010     | 
+61     | BUY     | 0.2964     | -0.0100    | BUY 1000 @ 0.2964
+62     | SELL    | 0.2946     | -1.9800    | SELL 1000 | Bought @ 0.2964 | Sold @ 0.2946 (Pre-Market +10%) | Profit: $-1.98 (-0.61%)
+63     | HOLD    | 0.2903     | 0.0010     | 
+64     | HOLD    | 0.2874     | 0.0010     | 
+65     | HOLD    | 0.2840     | 0.0010     | 
+66     | HOLD    | 0.2777     | 0.0010     | 
+67     | BUY     | 0.2780     | -0.0100    | BUY 1000 @ 0.2780
+68     | HOLD    | 0.2686     | 0.0050     | Holding 1000 shares
+69     | HOLD    | 0.2722     | 0.0050     | Holding 1000 shares
+70     | HOLD    | 0.2761     | 0.0050     | Holding 1000 shares
+71     | HOLD    | 0.2777     | 0.0050     | Holding 1000 shares
+72     | HOLD    | 0.2750     | 0.0050     | Holding 1000 shares
+73     | HOLD    | 0.2730     | 0.0050     | Holding 1000 shares
+74     | HOLD    | 0.2788     | 0.0050     | Holding 1000 shares
+75     | HOLD    | 0.2806     | 0.0050     | Holding 1000 shares
+76     | HOLD    | 0.2800     | 0.0050     | Holding 1000 shares
+77     | HOLD    | 0.2822     | 0.0050     | Holding 1000 shares
+78     | HOLD    | 0.2845     | 0.0050     | Holding 1000 shares
+79     | SELL    | 0.2872     | 10.1400    | SELL 1000 | Bought @ 0.2780 | Sold @ 0.2872 (Pre-Market +10%) | Profit: $10.12 (+3.31%)
+80     | HOLD    | 0.2909     | 0.0010     | 
+81     | HOLD    | 0.2902     | 0.0010     | 
+82     | HOLD    | 0.2877     | 0.0010     | 
+83     | BUY     | 0.2867     | -0.0100    | BUY 1000 @ 0.2867
+84     | HOLD    | 0.2859     | 0.0050     | Holding 1000 shares
+85     | SELL    | 0.2822     | -4.9500    | SELL 1000 | Bought @ 0.2867 | Sold @ 0.2822 (Pre-Market +10%) | Profit: $-4.95 (-1.57%)
+86     | HOLD    | 0.2778     | 0.0010     | 
+87     | HOLD    | 0.2819     | 0.0010     | 
+88     | BUY     | 0.2852     | -0.0100    | BUY 1000 @ 0.2852
+89     | SELL    | 0.2858     | 0.6800     | SELL 1000 | Bought @ 0.2852 | Sold @ 0.2858 (Pre-Market +10%) | Profit: $0.66 (+0.21%)
+90     | HOLD    | 0.2833     | 0.0010     | 
+91     | BUY     | 0.2839     | -0.0100    | BUY 1000 @ 0.2839
+92     | SELL    | 0.2811     | -2.8000    | SELL 1000 | Bought @ 0.2839 | Sold @ 0.2811 | Profit: $-2.80 (-0.99%)
+93     | BUY     | 0.2834     | -0.0100    | BUY 1000 @ 0.2834
+94     | HOLD    | 0.2803     | 0.0050     | Holding 1000 shares
+95     | HOLD    | 0.2798     | 0.0050     | Holding 1000 shares
+96     | HOLD    | 0.2790     | 0.0050     | Holding 1000 shares
+97     | HOLD    | 0.2778     | 0.0050     | Holding 1000 shares
+98     | HOLD    | 0.2806     | 0.0050     | Holding 1000 shares
+
+================================================================================
+Total Trades: 18
+Total Profit: $-4.28
+
+================================================================================
+
+Trade signals saved to 'test_output/A0004_output_100_bars_10000_timesteps_20250612_064425/trade_signals_final_model_100_bars_10000_timesteps_20250612_064425.csv'

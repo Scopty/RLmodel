@@ -190,12 +190,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Plot trading signals from CSV files')
     parser.add_argument('--input', type=str, default='test_results',
                       help='Input directory containing test results (default: test_results)')
-    parser.add_argument('--output', type=str, default='plot_results',
-                      help='Output directory for plots (default: plot_results)')
     parser.add_argument('--debug', action='store_true',
                       help='Enable debug output')
     args = parser.parse_args()
     
+    output_basedir = 'plot_results'
+    os.makedirs(output_basedir, exist_ok=True)
+
     # Find all CSV files in the input directory
     csv_files = find_csv_files(args.input)
     
@@ -212,7 +213,7 @@ if __name__ == "__main__":
             input_dir_name = os.path.basename(os.path.normpath(args.input))
             
             # Create output directory with input directory name as subdirectory
-            output_dir = ensure_dir(os.path.join(args.output, input_dir_name))
+            output_dir = ensure_dir(os.path.join(output_basedir, input_dir_name))
             
             print(f"\nProcessing: {csv_file}")
             print(f"Output directory: {output_dir}")

@@ -1,0 +1,319 @@
+import importlib
+import common_imports
+importlib.reload(common_imports)
+from common_imports import *
+import time
+import os
+import sys
+import shutil
+import json
+import argparse
+from datetime import datetime
+
+# === Configuration ===
+DEBUG_MODE = False  # Set to True to enable verbose output and debugging
+
+# === Minimal Output Mode ===
+MINIMAL_OUTPUT = True  # Set to True for minimal console output
+
+# Default training parameters
+DEFAULT_MAX_STEPS = 100
+DEFAULT_TOTAL_TIMESTEPS = 500000
+DEFAULT_NUM_CPU = 12  # Use more CPUs for parallel training
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Train a trading model with specified parameters')
+    parser.add_argument('--max_steps', type=int, default=DEFAULT_MAX_STEPS,
+                      help=f'Maximum number of steps per episode (default: {DEFAULT_MAX_STEPS})')
+    parser.add_argument('--total_timesteps', type=int, default=DEFAULT_TOTAL_TIMESTEPS,
+                      help=f'Total number of timesteps for training (default: {DEFAULT_TOTAL_TIMESTEPS:,})')
+    parser.add_argument('--num_cpu', type=int, default=DEFAULT_NUM_CPU,
+                      help=f'Number of parallel environments (default: {DEFAULT_NUM_CPU})')
+    parser.add_argument('--debug', action='store_true',
+                      help='Enable debug output')
+    return parser.parse_args()
+
+# Parse command line arguments
+args = parse_arguments()
+max_steps = args.max_steps
+total_timesteps = args.total_timesteps
+num_cpu = args.num_cpu
+
+if args.debug:
+    DEBUG_MODE = True
+    MINIMAL_OUTPUT = False
+    print("Debug mode enabled. Verbose output will be shown.")
+
+def get_next_run_id():
+    """Get the next run ID in sequence (A0001, A0002, etc.)"""
+    print("\n=== Starting get_next_run_id() ===")
+    
+    # Create training_output directory if it doesn't exist
+    print("Ensuring training_output directory exists...")
+    os.makedirs("training_output", exist_ok=True)
+    
+    # Get list of all A* directories (only actual directories, not files)
+    print("\nScanning for existing run directories...")
+    existing_dirs = []
+    all_items = os.listdir("training_output")
+    print(f"Found {len(all_items)} items in training_output/")
+    
+    for name in all_items:
+        full_path = os.path.join("training_output", name)
+        is_dir = os.path.isdir(full_path)
+        print(f"  - Item: {name} (is_dir: {is_dir})")
+        
+        if not is_dir:
+            continue
+            
+        # Check if directory name matches pattern A####_*
+        if (name.startswith('A') and 
+            len(name) >= 6 and 
+            name[5] == '_' and 
+            name[1:5].isdigit()):
+            try:
+                run_num = int(name[1:5])
+                existing_dirs.append(run_num)
+                print(f"    ✓ Valid run directory: {name} (number: {run_num})")
+            except (ValueError, IndexError) as e:
+                print(f"    ✗ Skipping {name}: {e}")
+                continue
+    
+    # Find the next available number
+    next_serial = 1
+    if existing_dirs:
+        next_serial = max(existing_dirs) + 1
+    
+    # Keep trying numbers until we find an available one
+    max_attempts = 10
+    print(f"\nLooking for next available run ID starting from A{next_serial:04d}...")
+    
+    for attempt in range(max_attempts):
+        # Generate the directory name to test
+        test_dir = f"A{next_serial:04d}_test"
+        test_path = os.path.join("training_output", test_dir)
+        
+        print(f"\nAttempt {attempt + 1}/{max_attempts}: Trying {test_dir}")
+        print(f"  Checking if {test_path} exists...")
+        
+        if os.path.exists(test_path):
+            print(f"  ✗ {test_path} already exists")
+            next_serial += 1
+            continue
+            
+        try:
+            # Try to create the directory
+            print(f"  Creating test directory: {test_path}")
+            os.mkdir(test_path)
+            print("  ✓ Directory created successfully")
+            
+            # Verify we can remove it
+            print("  Attempting to remove test directory...")
+            os.rmdir(test_path)
+            print("  ✓ Directory removed successfully")
+            
+            print(f"\n✅ Successfully verified A{next_serial:04d} is available")
+            return f"A{next_serial:04d}"
+            
+        except FileExistsError:
+            print(f"  ✗ Race condition: {test_path} was just created by another process")
+            next_serial += 1
+            continue
+            
+        except Exception as e:
+            print(f"  ✗ Error during directory test: {e}")
+            next_serial += 1
+            
+        print(f"  Will try next number: A{next_serial:04d}")
+    
+    # If we've tried too many times, fall back to timestamp
+    print(f"Warning: Could not find available run ID after {max_attempts} attempts")
+    return f"T{int(time.time())}"
+
+def save_training_info(output_dir, **kwargs):
+    """Save training information to a file."""
+    info_file = os.path.join(output_dir, "training_info.txt")
+    with open(info_file, 'w') as f:
+        f.write("=== Training Information ===\n")
+        for key, value in kwargs.items():
+            f.write(f"{key}: {value}\n")
+
+def setup_output_dir():
+    """Set up the output directory with a sequential run ID."""
+    # Get the next run ID
+    run_id = get_next_run_id()
+    
+    # Generate the timestamp for the output files
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    # Create the file suffix and output directory name
+    global file_suffix, output_dir
+    file_suffix = f"{max_steps}_bars_{total_timesteps}_timesteps_{timestamp}"
+    output_dir = os.path.join("training_output", f"{run_id}_output_{file_suffix}")
+    
+    # Create the directory
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Save initial training info
+    save_training_info(
+        output_dir,
+        run_id=run_id,
+        start_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        max_steps=max_steps,
+        total_timesteps=total_timesteps,
+        num_cpu=num_cpu,
+        status="Started"
+    )
+    
+    return file_suffix, output_dir
+
+def make_env():
+    env = TradingEnv(df, max_steps=max_steps)  # Pass max_steps to TradingEnv
+    check_env(env, warn=True)
+    return env
+
+if __name__ == "__main__":
+    # Record start time
+    start_time = time.time()
+    
+    # Load the data
+    df, _ = load_data(max_steps=max_steps)
+    
+    # Set up output directory with timestamp
+    file_suffix, output_dir = setup_output_dir()
+    
+    # Save a copy of this script to the output directory for reference
+    script_path = os.path.abspath(__file__)
+    shutil.copy2(script_path, os.path.join(output_dir, "training_script.py.bak"))
+    
+    # Add timing measurements
+    print(f"Starting training at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Output will be saved to: {os.path.abspath(output_dir)}")
+    
+    # Create parallel environments using SubprocVecEnv
+    train_env = SubprocVecEnv([make_env for _ in range(num_cpu)])
+    train_env = VecMonitor(train_env)
+    train_env = VecNormalize(train_env, training=True, norm_reward=True, norm_obs=True)
+
+    # Create parallel environments for evaluation
+    eval_env = SubprocVecEnv([make_env for _ in range(1)])
+    eval_env = VecMonitor(eval_env)
+    eval_env = VecNormalize(eval_env, training=False, norm_reward=False)
+    
+    # Create directory for logs
+    log_dir = os.path.join(output_dir, 'logs')
+    os.makedirs(log_dir, exist_ok=True)
+    
+    # Set best model path with timestamp suffix and .zip extension
+    best_model_path = os.path.join(output_dir, f'best_model_{file_suffix}.zip')
+    # Evaluate every 500 timesteps for better feedback during short training runs
+    eval_callback = DebugEvalCallback(
+        eval_env,
+        best_model_save_path=best_model_path,  # This will create best_model_<timestamp>.zip in output_dir
+        log_path=log_dir,
+        eval_freq=500,  # More frequent evaluation for short runs
+        deterministic=True,
+        render=False,
+        n_eval_episodes=10,
+        verbose=1
+    )
+    # Create and train the model with enhanced PPO settings
+    model = MaskablePPO(
+        MaskableActorCriticPolicy,
+        train_env,
+        verbose=0,  # Always silent mode
+        tensorboard_log=log_dir,
+        learning_rate=1e-4,
+        ent_coef=0.02,
+        gamma=0.995,
+        gae_lambda=0.98,
+        n_steps=128,
+        clip_range=0.2,
+        clip_range_vf=0.2,
+        n_epochs=20,
+        batch_size=64,
+        max_grad_norm=0.5,
+        vf_coef=0.5,
+        normalize_advantage=True,
+        policy_kwargs=dict(
+            net_arch=dict(
+                pi=[512, 512, 256],
+                vf=[512, 512, 256]
+            )
+        )
+    )
+    
+    # Train the model with minimal output
+    print("Training started...")
+    try:
+        model.learn(
+            total_timesteps=total_timesteps,
+            callback=[eval_callback],
+            tb_log_name=os.path.basename(output_dir)
+        )
+        
+        # Calculate training duration
+        training_duration = time.time() - start_time
+        hours, rem = divmod(training_duration, 3600)
+        minutes, seconds = divmod(rem, 60)
+        duration_str = "{:0>2}:{:0>2}:{:05.2f}".format(int(hours), int(minutes), seconds)
+        
+        # Save the final model
+        final_model_path = os.path.join(output_dir, f"final_model_{file_suffix}")
+        model.save(final_model_path)
+        print(f"Final model saved to {final_model_path}")
+        
+        # Update training info with completion time and duration
+        save_training_info(
+            output_dir,
+            end_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            training_duration=duration_str,
+            status="Completed"
+        )
+        
+        # Save a copy of the training script for reference
+        training_script_path = os.path.join(output_dir, "training_script.py.bak")
+        shutil.copy2(__file__, training_script_path)
+        
+        # Save training configuration
+        config = {
+            'max_steps': max_steps,
+            'total_timesteps': total_timesteps,
+            'start_time': datetime.fromtimestamp(start_time).strftime('%Y-%m-%d %H:%M:%S'),
+            'end_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'model_architecture': str(model.policy),
+            'env_parameters': str(train_env.get_attr('envs')[0].env.get_parameters() if hasattr(train_env, 'envs') else {})
+        }
+        
+        with open(os.path.join(output_dir, 'training_config.json'), 'w') as f:
+            json.dump(config, f, indent=4)
+            
+        # Save normalization stats
+        vec_normalize_path = os.path.join(output_dir, f'vec_normalize_{file_suffix}.pkl')
+        model.get_vec_normalize_env().save(vec_normalize_path)
+        
+        print("\n=== Training completed successfully ===")
+        print(f"Final model saved to: {final_model_path}")
+        print(f"Best model saved to: {best_model_path}")
+        print(f"Normalization stats saved to: {vec_normalize_path}")
+        
+    except Exception as e:
+        print(f"\n!!! Training failed with error: {str(e)}")
+        # Save partial results if possible
+        try:
+            final_model_path = os.path.join(output_dir, f'final_model_{file_suffix}')
+            model.save(final_model_path)
+            print(f"Final model saved to {final_model_path}")
+            print(f"Best model saved to: {best_model_path}")
+        except Exception as save_error:
+            print(f"Failed to save partial model: {str(save_error)}")
+        raise
+    
+    finally:
+        # Always calculate and print training time
+        end_time = time.time()
+        training_time = end_time - start_time
+        hours, rem = divmod(training_time, 3600)
+        minutes, seconds = divmod(rem, 60)
+        print(f"\nTotal training time: {int(hours):02d}:{int(minutes):02d}:{int(seconds):02d} (h:m:s)")
+        print(f"Output directory: {os.path.abspath(output_dir)}")
