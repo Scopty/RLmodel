@@ -1,4 +1,0 @@
-=== Training Information ===
-end_time: 2025-06-11 11:33:34
-training_duration: 00:14:29.08
-status: Completed

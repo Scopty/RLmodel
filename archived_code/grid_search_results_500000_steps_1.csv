@@ -1,2 +1,0 @@
-ent_coef,gamma,gae_lambda,n_steps,clip_range,n_epochs,batch_size,total_reward,model_filename
-0.0,0.99,0.9,4096,0.1,5,128,25.10000000000007,./saved_models/model_ent_coef=0.0_gamma=0.99_gae_lambda=0.9_n_steps=4096_clip_range=0.1_n_epochs=5_batch_size=128_timesteps=500000.zip

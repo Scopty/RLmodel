@@ -1,0 +1,30 @@
+TradingEnv Debug Log - 2025-06-18 02:44:16
+Dataset: 960 rows, 6 columns
+Date range: 2025-02-07 04:00:00 to 2025-02-07 19:59:00
+================================================================================
+
+
+Market day duration: 960 minutes
+Normalized time (first row): 0.0
+Normalized time until close (first row): 1.0
+
+Debug information for session periods:
+4:00 AM - Start of day:
+Is pre-market: True
+Is after-hours: False
+
+9:30 AM - End of pre-market:
+Is pre-market: False
+Is after-hours: False
+
+4:00 PM - Start of after-hours:
+Is pre-market: False
+Is after-hours: True
+
+7:59 PM - End of day:
+Is pre-market: False
+Is after-hours: True
+
+8:00 PM - Market close:
+Is pre-market: False
+Is after-hours: True

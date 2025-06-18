@@ -10,7 +10,7 @@ from pathlib import Path
 import sys
 
 class TradingEnv(Env):
-    def __init__(self, df, debug=True, max_steps=None, model_name=None, input_dir_name=None, test_mode=False, stoploss=False, stoploss_min=0.01, stoploss_max=1.0):
+    def __init__(self, df, debug=False, max_steps=None, model_name=None, input_dir_name=None, test_mode=False, stoploss=False, stoploss_min=0.01, stoploss_max=1.0):
         super().__init__()
         
         self.total_reward = 0
@@ -94,28 +94,19 @@ class TradingEnv(Env):
         self.round_trip_trades = 0  # Counter for buy-sell cycles
         self.debug = debug
         self.model_name = model_name
-        self.done = False  # Initialize done flag
         self.input_dir_name = input_dir_name or 'default'
         self.test_mode = test_mode
         
-        # Use a fixed debug log filename in the project root
-        self.debug_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'training_debug.txt')
+        # Always use training_debut.txt in project root for debug logging
+        self.debug_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'training_debut.txt')
         # Overwrite the debug file on every new environment initialization
         with open(self.debug_file, 'w') as f:
-            timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            timestamp = '2025-06-13 10:53:02'
             f.write(f"TradingEnv Debug Log - {timestamp}\n")
             if self.model_name:
                 f.write(f"Model: {self.model_name}\n")
-            if self.df is not None:
-                f.write(f"Dataset: {self.df.shape[0]} rows, {self.df.shape[1]} columns\n")
-                f.write(f"Date range: {self.df['datetime'].min()} to {self.df['datetime'].max()}\n")
-            f.write("=" * 80 + "\n\n")
+            f.write("=" * 40 + "\n\n")
             f.flush()
-        
-        if self.debug:
-            print(f"[DEBUG] Logging to: {os.path.abspath(self.debug_file)}")
-            if self.df is not None:
-                print(f"[DEBUG] Loaded dataset with {len(self.df)} rows")
 
         # Preprocess time information
         if df is not None:
@@ -126,16 +117,17 @@ class TradingEnv(Env):
         print(f"[SAFE_PRINT] Debug logging to: {os.path.abspath(self.debug_file)}")
 
     def _debug_print(self, message):
-        """Write debug message to training_debug.txt in project root."""
-        if not self.debug and not self.test_mode:
+        """Write debug message to training_debut.txt in project root."""
+        # Skip market hours debug messages
+        if 'Market day duration:' in message or 'Is pre-market:' in message or 'Is after-hours:' in message:
             return
-            
+        debug_message = message
         try:
             with open(self.debug_file, 'a') as f:
-                f.write(f"{message}\n")
-                f.flush()  # Ensure immediate write
+                f.write(f"{debug_message}\n")
+                f.flush()
         except Exception as e:
-            print(f"Error writing to {self.debug_file}: {e}", file=sys.stderr)
+            print(f"Error writing to training_debut.txt: {e}", file=sys.stderr)
 
     def _preprocess_time(self):
         """Calculate time-based features."""
@@ -159,18 +151,17 @@ class TradingEnv(Env):
 
         # Calculate time since market open (in minutes)
         # Convert current time to minutes since midnight
-        current_minutes = self.df['hour'] * 60 + self.df['minute']
-        self.df['time_since_open'] = np.maximum(0, current_minutes - market_open_minutes)
+        self.df['time_since_open'] = (self.df['hour'] * 60 + self.df['minute']) - market_open_minutes
         
         # Normalize time since open to [0, 1] using market hours
-        # For the first row, this should be 0 (market just opened)
         self.df['normalized_time'] = self.df['time_since_open'] / market_minutes
         if self.debug:
             self._debug_print(f"Normalized time (first row): {self.df['normalized_time'].iloc[0]}")
         
         # Calculate time until market close (in minutes)
-        # For the first row, this should be market_minutes (full session remaining)
-        self.df['time_until_close'] = np.maximum(0, market_close_minutes - current_minutes)
+        # 7:59 PM is market close, so calculate time remaining
+        # Ensure time_until_close is always non-negative
+        self.df['time_until_close'] = np.maximum(0, ((self.market_close.hour * 60 + self.market_close.minute) - (self.df['hour'] * 60 + self.df['minute'])))
         self.df['normalized_time_until_close'] = self.df['time_until_close'] / market_minutes
         if self.debug:
             self._debug_print(f"Normalized time until close (first row): {self.df['normalized_time_until_close'].iloc[0]}")
@@ -185,11 +176,9 @@ class TradingEnv(Env):
                                  (self.df['minute'] < 30)).astype(float)
         
         # Calculate is_after_hours
-        # After-hours is from 4:00 PM to 7:59 PM (market close is at 8:00 PM)
         self.df['is_after_hours'] = ((self.df['hour'] >= 16) & 
-                                   ((self.df['hour'] < self.market_close.hour) | 
-                                   ((self.df['hour'] == self.market_close.hour - 1) & 
-                                    (self.df['minute'] < 60)))).astype(float)
+                                   (self.df['hour'] < self.market_close.hour) & 
+                                   (self.df['minute'] < 59)).astype(float)
         
         # Debug print for specific hours
         if self.debug:
@@ -207,14 +196,8 @@ class TradingEnv(Env):
             self._debug_print(f"Is after-hours: {((16 >= 16) and (16 < 19) and (0 < 59))}")
             
             self._debug_print("\n7:59 PM - End of day:")
-            # 7:59 PM should be after-hours
             self._debug_print(f"Is pre-market: {((19 >= 4) and (19 < 9.5) and (59 < 30))}")
-            self._debug_print(f"Is after-hours: {((19 >= 16) and ((19 < 20) or ((19 == 19) and (59 < 60))))}")
-            
-            # Also check 8:00 PM (market close)
-            self._debug_print("\n8:00 PM - Market close:")
-            self._debug_print(f"Is pre-market: {((20 >= 4) and (20 < 9.5) and (0 < 30))}")
-            self._debug_print(f"Is after-hours: {((20 >= 16) and ((20 < 20) or ((20 == 20) and (0 < 60))))}")
+            self._debug_print(f"Is after-hours: {((19 >= 16) and (19 < 19) and (59 < 59))}")
 
     def get_obs(self):
         # Get current row from the dataframe
@@ -385,44 +368,25 @@ class TradingEnv(Env):
         return reward
 
     def _update_state(self, action, current_row):
-        """Update environment state based on the action taken. Supports stoploss logic.
-        
-        Args:
-            action: Either an integer action (when stoploss=False) or a tuple of (action_type, stoploss_distance)
-            current_row: Current market data row
-            
-        Note:
-            When stoploss is enabled, the stoploss_distance is only used during BUY actions.
-            For HOLD and SELL actions, the stoploss_distance in the action tuple is ignored.
-        """
+        """Update environment state based on the action taken. Supports stoploss logic."""
         prev_position_open = self.position_open
         prev_shares = self.shares
-        
-        # Default values
-        action_type = None
-        stoploss_distance = None
-        
-        # Parse action based on whether stoploss is enabled
+
         if self.stoploss:
             if isinstance(action, (tuple, list, np.ndarray)) and len(action) == 2:
                 action_type = int(action[0])
-                # Only process stoploss distance for BUY actions
-                if action_type == 1:  # BUY
-                    stoploss_distance = float(action[1])
-                    stoploss_distance = np.clip(stoploss_distance, self.stoploss_min, self.stoploss_max)
+                stoploss_distance = float(action[1])
+                stoploss_distance = np.clip(stoploss_distance, self.stoploss_min, self.stoploss_max)
             else:
                 raise ValueError("Action must be (action_type, stoploss_distance) when stoploss is enabled.")
         else:
             action_type = int(action)
+            stoploss_distance = None
 
         if action_type == 1:  # Buy
-            # Calculate number of shares we can buy (let's use 10 shares for now)
-            shares_to_buy = 1000
-            cost = current_row['close'] * shares_to_buy
-            
-            if not self.position_open and self.balance >= cost:
-                self.shares = shares_to_buy
-                self.balance -= cost
+            if not self.position_open and self.balance >= current_row['close'] * 1000:
+                self.shares = 1000
+                self.balance -= current_row['close'] * 1000
                 self.position_open = True
                 self.buy_price = current_row['close']
                 self.buy_step = self.current_step
@@ -430,25 +394,14 @@ class TradingEnv(Env):
                 self.max_net_worth = max(self.max_net_worth, self.net_worth)
                 if self.stoploss:
                     self.stoploss_distance = stoploss_distance
-                    # Calculate stoploss price
-                    self.stoploss_price = self.buy_price * (1 - self.stoploss_distance)
-                    
-                    # Get the number of decimal places from the current price
-                    price_str = f"{current_row['close']:.10f}"
-                    # Remove trailing zeros and split on decimal point
-                    price_parts = price_str.rstrip('0').split('.')
-                    # If there's a decimal point, count digits after it
-                    decimals = len(price_parts[1]) if len(price_parts) > 1 else 0
-                    # Ensure we have at least 2 decimal places for currency
-                    decimals = max(2, decimals)
-                    
-                    # Round the stoploss price to match the stock price's decimal places
+                    # stoploss_distance is a percentage (e.g., 0.01 = 1%)
+                    price_str = f"{self.buy_price:.10f}"
+                    decimals = len(price_str.rstrip('0').split('.')[-1])
+                    decimals = max(2, min(decimals, 3))  # Clamp to 2 or 3
+                    self.stoploss_price = self.buy_price - (self.buy_price * self.stoploss_distance)
                     self.stoploss_price = round(self.stoploss_price, decimals)
-                    
                     if self.debug:
-                        self._debug_print(f"[DEBUG_STOPLOSS] BUY: buy_price={self.buy_price:.{decimals}f}, "
-                                        f"stoploss_pct={self.stoploss_distance*100:.2f}%, "
-                                        f"stoploss_price={self.stoploss_price:.{decimals}f} (rounded to {decimals} decimals)")
+                        self._debug_print(f"[DEBUG_STOPLOSS] BUY: buy_price={self.buy_price}, stoploss_pct={self.stoploss_distance}, decimals={decimals}, stoploss_price={self.stoploss_price}")
                 # Record successful buy signal
                 if self.debug:
                     self._debug_print(f"[DEBUG] BUY executed at {current_row['datetime']} - "
@@ -530,86 +483,40 @@ class TradingEnv(Env):
             valid_actions.append(2)
         return valid_actions
 
-    def get_action_mask(self):
+    def get_action_mask(self) -> np.ndarray:
         """
         Returns a binary mask indicating valid actions.
         True indicates a valid action, False indicates an invalid action.
         Handles both Discrete and Tuple action spaces.
-        
-        For Tuple action spaces (when stoploss is enabled):
-        - The discrete part masks HOLD/BUY/SELL actions
-        - The continuous part (stoploss) is only enabled when BUY is a valid action
         """
-        valid_actions = self.get_valid_actions()
-        
-        if isinstance(self.action_space, gymnasium.spaces.Discrete):
-            # For discrete action space, return a mask for the 3 actions
-            mask = np.zeros(3, dtype=np.int8)
-            for action in valid_actions:
-                mask[action] = 1
-            return mask
-        elif isinstance(self.action_space, gymnasium.spaces.Tuple):
-            # For Tuple action space, we need to handle both discrete and continuous parts
-            # The mask will be a tuple of (discrete_mask, continuous_mask)
-            
-            # Discrete part: HOLD, BUY, SELL
-            discrete_mask = np.zeros(3, dtype=np.int8)
-            for action in valid_actions:
-                discrete_mask[action] = 1
-            
-            # Continuous part: Only enable if BUY is a valid action
-            # This means the stoploss value will be masked (0) when BUY is not a valid action
-            continuous_mask = np.ones(1, dtype=np.int8) if 1 in valid_actions else np.zeros(1, dtype=np.int8)
-            
-            if self.debug and 1 not in valid_actions and np.any(continuous_mask):
-                self._debug_print("[DEBUG_MASK] Masking stoploss component - BUY is not a valid action")
-                
-            return (discrete_mask, continuous_mask)
+        if hasattr(self.action_space, 'n'):
+            num_actions = self.action_space.n
+        elif hasattr(self.action_space, 'spaces') and hasattr(self.action_space.spaces[0], 'n'):
+            num_actions = self.action_space.spaces[0].n
         else:
-            raise ValueError(f"Unsupported action space type: {type(self.action_space)}")
+            raise ValueError("Unsupported action space for action masking.")
+        action_mask = np.zeros(num_actions, dtype=bool)
+        for act in self.get_valid_actions():
+            action_mask[act] = True
+        return action_mask
 
-    def action_masks(self):
+    def action_masks(self) -> np.ndarray:
         """
         Returns a binary mask indicating valid actions.
         True indicates a valid action, False indicates an invalid action.
-        This is an alias for get_action_mask() for compatibility with RLlib.
         """
-        return self.get_action_mask()
+        action_mask = np.zeros(self.action_space.n, dtype=bool)
+        for act in self.get_valid_actions():
+            action_mask[act] = True
+        return action_mask
 
     def step(self, action):
         if self.df is None:
             raise ValueError("TradingEnv was initialized with df=None. Please provide a valid DataFrame before calling step().")
             
-        # Get current row for price information
-        current_row = self.df.iloc[self.current_step]
-        
         # Get valid actions and action mask BEFORE processing the action
-        valid_actions = self.get_valid_actions()
-        action_mask = self.get_action_mask()
-        
-        # Log input observations and action mask
-        if self.debug:
-            obs = self.get_obs()  # Get current observation
-            self._debug_print("\n[DEBUG_STEP] === Step {} ===".format(self.current_step))
-            self._debug_print("[DEBUG_OBS] Raw observation:")
-            self._debug_print(f"  - OHLC: {obs['obs'][0]:.4f}, {obs['obs'][1]:.4f}, {obs['obs'][2]:.4f}, {obs['obs'][3]:.4f}")
-            self._debug_print(f"  - Volume: {obs['obs'][4]:.4f}")
-            self._debug_print(f"  - Position: shares={obs['obs'][5]:.4f}, balance={obs['obs'][6]:.4f}, net_worth={obs['obs'][7]:.4f}")
-            self._debug_print(f"  - Position open: {bool(obs['obs'][8])}")
-            self._debug_print(f"  - Time features: norm_time={obs['obs'][9]:.4f}, is_pre={bool(obs['obs'][10])}, is_after={bool(obs['obs'][11])}, time_to_close={obs['obs'][12]:.4f}")
-            
-            # Log action mask
-            if isinstance(action_mask, tuple):
-                self._debug_print(f"[DEBUG_MASK] Action mask (discrete, continuous): {action_mask[0].tolist()}, {action_mask[1].tolist()}")
-            else:
-                self._debug_print(f"[DEBUG_MASK] Action mask: {action_mask.tolist()}")
-            
-            # Log the action being taken
-            action_names = {0: 'HOLD', 1: 'BUY', 2: 'SELL'}
-            if self.stoploss and isinstance(action, (tuple, list, np.ndarray)) and len(action) == 2:
-                self._debug_print(f"[DEBUG_ACTION] Taking action: {action_names.get(int(action[0]), 'UNKNOWN')} with stoploss={action[1]:.4f}")
-            else:
-                self._debug_print(f"[DEBUG_ACTION] Taking action: {action_names.get(int(action), 'UNKNOWN')}")
+        valid_actions_before = self.get_valid_actions()
+        action_mask_before = self.get_action_mask()
         
         # If stoploss is enabled, unpack action
         if self.stoploss:
@@ -627,35 +534,16 @@ class TradingEnv(Env):
             action_type = int(action)
             stoploss_distance = None
             
-        # Debug log the action before enforcing mask
-        action_names = {0: 'HOLD', 1: 'BUY', 2: 'SELL'}
-        if self.debug:
-            self._debug_print(f"\n[STEP] Step {self.current_step}: Action {action_names.get(action_type, action_type)}" + 
-                            (f", Stoploss {stoploss_distance}" if self.stoploss else ""))
+        # Check if action is valid
+        is_invalid = action_type not in valid_actions_before
         
-        # Enforce action mask - if action is not in valid_actions, force HOLD
-        original_action = action_type
-        if action_type not in valid_actions:
-            if self.debug:
-                self._debug_print(f"[DEBUG_MASK] Invalid action {action_names.get(action_type, action_type)} "
-                                f"taken when valid actions are {[action_names.get(a, a) for a in valid_actions]}")
-            
-            # Force HOLD action
+        if is_invalid and self.debug:
+            action_names = {0: 'HOLD', 1: 'BUY', 2: 'SELL'}
+            self._debug_print(f"[WARNING] Invalid action {action_names.get(action_type, action_type)} "
+                            f"taken when valid actions are {[action_names.get(a, a) for a in valid_actions_before]}")
+            # Force a HOLD action if invalid
             action_type = 0
             stoploss_distance = None
-            
-            # Log the reason for the forced HOLD
-            if self.debug:
-                if original_action == 1 and self.position_open:
-                    self._debug_print("[DEBUG_MASK] Forcing HOLD: Cannot BUY when position is already open")
-                elif original_action == 1 and self.balance < current_row['close']:
-                    self._debug_print(f"[DEBUG_MASK] Forcing HOLD: Insufficient balance for BUY (need {current_row['close']:.4f}, have {self.balance:.2f})")
-                elif original_action == 2 and not self.position_open:
-                    self._debug_print("[DEBUG_MASK] Forcing HOLD: Cannot SELL when no position is open")
-                elif original_action == 2 and self.shares <= 0:
-                    self._debug_print("[DEBUG_MASK] Forcing HOLD: No shares to sell")
-                else:
-                    self._debug_print(f"[DEBUG_MASK] Forcing HOLD: Action {action_names.get(original_action, original_action)} not in valid actions")
 
         if self.debug:
             action_names = {0: 'HOLD', 1: 'BUY', 2: 'SELL'}
@@ -692,32 +580,14 @@ class TradingEnv(Env):
             if self.debug:
                 self._debug_print(f"[DEBUG_STOPLOSS] Reward for stoploss-triggered SELL: {reward}")
         else:
-            # Execute the action if not stopped out
-            if action_type == 1:  # BUY
-                if not self.position_open:  # Only buy if not in a position
-                    self.buy_price = current_row['close']
-                    self.shares = self.balance // self.buy_price
-                    if self.shares > 0:  # Only update if we can afford at least 1 share
-                        self.balance -= self.shares * self.buy_price
-                        self.position_open = True
-                        self.buy_step = self.current_step
-                        if self.stoploss and stoploss_distance is not None:
-                            self.stoploss_distance = stoploss_distance
-                            self.stoploss_price = self.buy_price * (1 - self.stoploss_distance)
-                            if self.debug:
-                                self._debug_print(f"[DEBUG] BUY executed at {current_row['datetime']} - "
-                                               f"Price: {self.buy_price}, "
-                                               f"Shares: {self.shares}, "
-                                               f"Stoploss: {self.stoploss_price:.4f} ({self.stoploss_distance*100:.1f}%)")
-                    else:
-                        if self.debug:
-                            self._debug_print(f"[DEBUG] Insufficient balance to buy at price {self.buy_price}")
-            
-            # Calculate reward for the current action - pass the full action if stoploss is enabled
-            reward_action = action if self.stoploss else action_type
-            reward = self._calculate_reward(reward_action, current_row)
+            if self.debug:
+                self._debug_print(f"[DEBUG] BUY executed at {current_row['datetime']} - "
+                                 f"Price: {current_row['close']}, "
+                                 f"Shares: {self.shares}, "
+                                 f"Balance: {self.balance}, "
+                                 f"Net Worth: {self.net_worth}, "
+                                 f"Stoploss: {self.stoploss_price if self.stoploss else None}")
         
-        # Handle SELL action
         if action_type == 2:  # Sell
             if self.position_open and self.shares > 0:
                 sell_value = current_row['close'] * self.shares
@@ -809,101 +679,89 @@ class TradingEnv(Env):
         Returns a binary mask indicating valid actions.
         True indicates a valid action, False indicates an invalid action.
         """
+        action_mask = np.zeros(self.action_space.n, dtype=bool)
+        for act in self.get_valid_actions():
+            action_mask[act] = True
+        return action_mask
+
     def step(self, action):
-        # Get current row from the dataframe
+        """Take a step in the environment, supporting stoploss if enabled."""
         current_row = self.df.iloc[self.current_step]
-        
-        # Unpack action if using stoploss
-        if self.stoploss and isinstance(action, (tuple, list, np.ndarray)):
-            action_type = int(action[0])
-            stoploss_distance = float(action[1]) if len(action) > 1 else self.stoploss_min
-            stoploss_distance = np.clip(stoploss_distance, self.stoploss_min, self.stoploss_max)
+        print(f"[DEBUG] current_row set at step {self.current_step}: {current_row.to_dict()}")
+
+        # Unpack action
+        if self.stoploss:
+            if isinstance(action, (tuple, list, np.ndarray)) and len(action) == 2:
+                action_type = int(action[0])
+                stoploss_distance = float(action[1])
+                stoploss_distance = np.clip(stoploss_distance, self.stoploss_min, self.stoploss_max)
+            else:
+                # Fallback if action is not a tuple (for backward compatibility)
+                action_type = int(action)
+                stoploss_distance = (self.stoploss_min + self.stoploss_max) / 2  # Default stoploss distance
+                if self.debug:
+                    self._debug_print(f"[WARNING] Expected tuple action with stoploss, got {action}. Using default stoploss: {stoploss_distance}")
         else:
-            action_type = int(action)
+            # Handle non-stoploss case (regular discrete actions)
+            if isinstance(action, (tuple, list, np.ndarray)) and len(action) > 0:
+                action_type = int(action[0])  # Use first element if action is a sequence
+            else:
+                action_type = int(action)  # Direct conversion if not a sequence
             stoploss_distance = None
-        
+
         # Get valid actions and action mask BEFORE updating the state
         action_names = {0: 'HOLD', 1: 'BUY', 2: 'SELL'}
         valid_actions_before = self.get_valid_actions()
         action_mask_before = self.get_action_mask()
-        
-        # Check if the action is valid
-        if action_type not in valid_actions_before:
-            # If the action is invalid, force HOLD
-            if self.debug:
-                self._debug_print(f"[DEBUG_ACTION] Invalid action {action_type} - Forcing HOLD")
-            action_type = 0  # HOLD
-        
+
         # Log the action that will be executed
         if self.debug:
-            self._debug_print(f"[DEBUG_ACTION] Executing action: {action_names.get(action_type, 'UNKNOWN')} "
-                            f"(raw: {action}, type: {type(action)})")
+            try:
+                if isinstance(action, (tuple, list, np.ndarray)):
+                    action_key = int(action[0])
+                elif hasattr(action, 'item'):
+                    action_key = int(action.item())
+                else:
+                    action_key = int(action)
+            except Exception:
+                action_key = action
+            self._debug_print(f"[DEBUG_ACTION] Model action: {action_names.get(action_key, 'UNKNOWN')} ({action})")
+
+            # If you have an executed_action variable, log it here (otherwise comment out)
+            # try:
+            #     if isinstance(executed_action, (tuple, list, np.ndarray)):
+            #         executed_action_key = int(executed_action[0])
+            #     elif hasattr(executed_action, 'item'):
+            #         executed_action_key = int(executed_action.item())
+            #     else:
+            #         executed_action_key = int(executed_action)
+            # except Exception:
+            #     executed_action_key = executed_action
+            # self._debug_print(f"[DEBUG_ACTION] Executing action: {action_names.get(executed_action_key, 'UNKNOWN')} ({executed_action})")
+
             self._debug_print(f"[DEBUG_ACTION] Valid actions: {[action_names.get(a, '?') for a in valid_actions_before]}")
-            if self.position_open:
-                self._debug_print(f"[DEBUG_ACTION] Position open - Buy price: {self.buy_price}, "
-                                f"Current price: {current_row['close']}")
-        
+
         # Calculate reward
         reward = self._calculate_reward(action_type, current_row)
-        self.total_reward += reward
-        
-        # Log reward information
-        if self.debug:
-            self._debug_print(f"[DEBUG_REWARD] Reward: {reward:.4f}, Total reward: {self.total_reward:.4f}")
-            
-            # Log position information after action
-            self._debug_print(f"[DEBUG_STATE] Position open: {self.position_open}, Shares: {self.shares}, "
-                            f"Buy price: {self.buy_price:.4f}, Current price: {current_row['close']:.4f}")
-            if self.position_open and self.stoploss and self.stoploss_price is not None:
-                self._debug_print(f"[DEBUG_STOPLOSS] Stop price: {self.stoploss_price:.4f}, "
-                                f"Distance: {abs(current_row['close'] - self.stoploss_price)/current_row['close']*100:.2f}%")
-            self._debug_print(f"[DEBUG_STATE] Balance: ${self.balance:.2f}, Net worth: ${self.net_worth:.2f}, "
-                            f"Max net worth: ${self.max_net_worth:.2f}")
-        
-        # Update environment state
-        self._update_state((action_type, stoploss_distance) if stoploss_distance is not None else action_type, current_row)
         
         # Get the next observation (which includes action mask)
         obs = self.get_obs()
         
-        # Check if we've reached the end of the data
-        if self.current_step >= len(self.df) - 1:
-            self.done = True
-            return self.get_obs(), 0.0, self.done, False, {}
-            
-        # Move to the next step
-        self.current_step += 1
+        # Check if episode is done
+        done = self.current_step >= len(self.df) - 1
         
-        # Debug output for first 10 steps
-        if self.current_step <= 10 and self.debug:
-            self._debug_print(f"\n=== Step {self.current_step} ===")
-            current_row = self.df.iloc[self.current_step]
-            self._debug_print(f"Time: {current_row['datetime']}")
-            self._debug_print(f"Price: {current_row['close']}")
-            self._debug_print(f"Position: {'OPEN' if self.position_open else 'CLOSED'}")
-            if self.position_open:
-                self._debug_print(f"Buy Price: {self.buy_price}")
-                self._debug_print(f"Shares: {self.shares}")
-                if self.stoploss and self.stoploss_price is not None:
-                    self._debug_print(f"Stoploss: {self.stoploss_price} ({(self.buy_price - self.stoploss_price)/self.buy_price*100:.2f}%)")
-            self._debug_print(f"Balance: {self.balance:.2f}")
-            self._debug_print(f"Net Worth: {self.net_worth:.2f}")
-            self._debug_print(f"Action: {action_names.get(action_type, 'UNKNOWN')}, "
-                            f"Reward: {reward:.4f}, "
-                            f"Done: {self.done}")
-
         # Log the step results
         if self.debug:
             self._debug_print(f"[DEBUG_STEP] Step: {self.current_step}, "
                             f"Action: {action_names.get(action_type, 'UNKNOWN')}, "
                             f"Reward: {reward:.4f}, "
-                            f"Done: {self.done}")
+                            f"Done: {done}")
             self._debug_print(f"[DEBUG_STEP] Balance: ${self.balance:.2f}, "
                             f"Shares: {self.shares}, "
                             f"Position Open: {self.position_open}")
         
         # Return the standard RLlib step return: obs, reward, done, truncated, info
-        return obs, float(reward), self.done, False, {}
+        return obs, float(reward), done, False, {}
 
     def reset(self, *, seed=None, options=None):
         if self.debug:

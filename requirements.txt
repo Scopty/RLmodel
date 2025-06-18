@@ -1,0 +1,5 @@
+# RLlib and Ray for scalable RL with hybrid action spaces
+ray[rllib]==2.10.0
+pandas
+numpy
+gymnasium
